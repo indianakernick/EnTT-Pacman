@@ -7,7 +7,7 @@
 #define __CURSES_INTERNALS__ 1
 
 #define CURSES_LIBRARY
-#include <curses.h>
+#include <pdcurses.h>
 
 #if defined(__TURBOC__) || defined(__EMX__) || defined(__DJGPP__) || \
     defined(__CYGWIN__) || defined(__MINGW32__) || defined(__WATCOMC__)
