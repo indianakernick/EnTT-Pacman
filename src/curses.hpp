@@ -6,6 +6,13 @@
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-// Deal will cross platform stuff here
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__CYGWIN__)
+
+#include <pdcwin.h>
+#include <pdcurses.h>
+
+#else
 
 #include <ncurses.h>
+
+#endif
