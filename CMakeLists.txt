@@ -7,9 +7,10 @@ add_executable(Game
 )
 
 if(WIN32 OR MSVC)
-        set(CURSES_INCLUDE_DIRECTORIES)
-        set(CURSES_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/pdcurses.a pdcurses)
-        link_directories(${CMAKE_SOURCE_DIR}/lib)
+        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+        find_package(PDCurses REQUIRED)
+        set(CURSES_INCLUDE_DIRECTORIES PDCURSES_INCLUDE_DIR)
+        set(CURSES_LIBRARIES PDCURSES_LIBRARIES)
 else()
         set(CURSES_NEED_NCURSES TRUE)
         find_package(Curses REQUIRED)

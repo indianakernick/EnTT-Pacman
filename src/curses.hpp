@@ -6,9 +6,12 @@
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__CYGWIN__)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 
-#include <pdcwin.h>
+// one of them will work
+#include <curses.h>
+#include <pdcurses.h>
+#include <ncurses.h>
 
 #else
 
