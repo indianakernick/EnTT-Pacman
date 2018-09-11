@@ -8,7 +8,7 @@ add_executable(Game
 
 if(WIN32 OR MSVC)
         set(CURSES_INCLUDE_DIRECTORIES)
-        set(CURSES_LIBRARIES pdcurses)
+        set(CURSES_LIBRARIES pdcurses.dll)
         link_directories(${CMAKE_SOURCE_DIR}/lib)
 else()
         set(CURSES_NEED_NCURSES TRUE)
