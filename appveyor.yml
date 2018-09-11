@@ -17,5 +17,4 @@ before_build:
 
 build:
   parallel: true
-  project: build/entt-example.sln
   verbosity: minimal
