@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.8)
 project(EnTT_Example)
 
+add_executable(Game
+        "src/main.cpp"
+        "src/curses.hpp"
+)
+
 if(WIN32 OR MSVC)
         set(CURSES_INCLUDE_DIRECTORIES)
         set(CURSES_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/pdcurses.a)
@@ -18,11 +23,6 @@ target_include_directories(Game
 target_link_libraries(Game
         PRIVATE
         ${CURSES_LIBRARIES}
-)
-
-add_executable(Game
-        "src/main.cpp"
-        "src/curses.hpp"
 )
 
 target_compile_features(Game
