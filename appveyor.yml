@@ -13,7 +13,7 @@ configuration:
 
 before_build:
   - cd %BUILD_DIR%
-  - cmake .. -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 2015"
+  - cmake .. -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 14 2015"
 
 build:
   parallel: true
