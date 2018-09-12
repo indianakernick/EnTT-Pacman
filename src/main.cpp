@@ -10,7 +10,7 @@
 #include <random>
 #include <cassert>
 #include <Simpleton/Grid/grid.hpp>
-//#include <entt/entity/registry.hpp>
+#include <entt/entity/registry.hpp>
 
 enum class Color : uint8_t {
   black,
