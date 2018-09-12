@@ -17,6 +17,7 @@ matrix:
     osx_image: xcode8
     compiler: clang
     env: COMPILER=clang++
+    before_script: "brew upgrade cmake"
   - os: linux
     compiler: clang
     addons:
