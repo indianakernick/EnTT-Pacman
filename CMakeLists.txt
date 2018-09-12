@@ -11,7 +11,11 @@ if(WIN32 OR MSVC)
         target_link_libraries(Game
                 PRIVATE
                 PDcurses
-        )        
+        )
+        target_include_directories(Game
+                PRIVATE
+                include
+        ) 
 else()
         set(CURSES_NEED_NCURSES TRUE)
         find_package(Curses REQUIRED)
