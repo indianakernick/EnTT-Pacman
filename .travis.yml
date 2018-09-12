@@ -13,6 +13,10 @@ matrix:
     osx_image: xcode9
     compiler: clang
     env: COMPILER=clang++
+  - os: osx
+      osx_image: xcode8
+      compiler: clang
+      env: COMPILER=clang++
   - os: linux
     compiler: clang
     addons:
@@ -27,6 +31,13 @@ matrix:
         sources: ["ubuntu-toolchain-r-test"]
         packages: ["g++-7"]
     env: COMPILER=g++-7
+  - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources: ["ubuntu-toolchain-r-test"]
+          packages: ["g++-6"]
+      env: COMPILER=g++-6
 
 before_install:
 - export CXX=${COMPILER}
