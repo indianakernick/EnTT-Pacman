@@ -8,7 +8,7 @@
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 
-#include <curses.h>
+#include <pdcurses.h>
 
 #else
 
