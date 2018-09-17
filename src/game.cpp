@@ -24,10 +24,12 @@ void runGame(WINDOW *win) {
   const auto flowerSprite = makeFlower();
   const auto monsterSprite = makeMonster();
 
-  while (true) {
+  bool quit = false;
+  while (!quit) {
     int ch;
   	while ((ch = wgetch(win)) != ERR) {
       if (ch == 'q') {
+  	    quit = true;
   	    break;
   	  } else if (ch == KEY_RESIZE) {
   	    screen.resize(getWindowSize(win));
