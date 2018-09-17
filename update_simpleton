@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rm -dfR include/Simpleton
+mkdir include/Simpleton
+cp -RpX /usr/local/include/Simpleton/ include/Simpleton
+git add include/Simpleton
