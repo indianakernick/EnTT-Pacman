@@ -9,23 +9,21 @@
 #include "curses.hpp"
 #include <random>
 #include <cassert>
-#include <Simpleton/Grid/grid.hpp>
+#include <Simpleton/Grid/blit.hpp>
 #include <entt/entity/registry.hpp>
 
 enum class Color : uint8_t {
-  black,
-  red,
-  green,
-  yellow,
-  blue,
-  magenta,
-  cyan,
-  white,
-
-  count_
+  black   = COLOR_BLACK,
+  red     = COLOR_RED,
+  green   = COLOR_GREEN,
+  yellow  = COLOR_YELLOW,
+  blue    = COLOR_BLUE,
+  magenta = COLOR_MAGENTA,
+  cyan    = COLOR_CYAN,
+  white   = COLOR_WHITE
 };
 
-constexpr uint8_t color_count = static_cast<uint8_t>(Color::count_);
+constexpr uint8_t color_count = 8;
 
 uint8_t colorPair(const uint8_t fore, const uint8_t back) {
   assert(0 <= fore && fore < color_count);
@@ -95,27 +93,52 @@ void configure(WINDOW *win) {
   }
 }
 
+using PlayerSprite = Grid::Grid<Cell, 3, 3>;
+
+PlayerSprite makePlayer() {
+  PlayerSprite player;
+  /*
+   O
+  -|-
+  / \
+  */
+  player(0, 0) = {' ',  Color::white, Color::black};
+  player(1, 0) = {'O',  Color::white, Color::black};
+  player(2, 0) = {' ',  Color::white, Color::black};
+  player(0, 1) = {'-',  Color::white, Color::black};
+  player(1, 1) = {'|',  Color::white, Color::black};
+  player(2, 1) = {'-',  Color::white, Color::black};
+  player(0, 2) = {'/',  Color::white, Color::black};
+  player(1, 2) = {' ',  Color::white, Color::black};
+  player(2, 2) = {'\\', Color::white, Color::black};
+  return player;
+}
+
 void run(WINDOW *win) {
   configure(win);
   initColorPairs();
   ScreenBuf screen{getSize(win)};
 
-  std::mt19937 gen;
-  std::uniform_int_distribution<Grid::Coord> xdist(0, screen.width() - 1);
-  std::uniform_int_distribution<Grid::Coord> ydist(0, screen.height() - 1);
-  std::uniform_int_distribution<int> colordist(1, color_count - 1);
-
+  Grid::Pos playerPos = screen.size() / 2u;
+  PlayerSprite playerSprite = makePlayer();
   while (true) {
   	const int ch = wgetch(win);
-  	if (ch != ERR) {
-  	  if (ch == 'q') {
-  	  	break;
-  	  }
-  	  Cell &cell = screen(xdist(gen), ydist(gen));
-  	  cell.ch = ch;
-  	  cell.fore = static_cast<Color>(colordist(gen));
+  	if (ch == 'q') {
+  	  break;
+  	} else if (ch == KEY_RESIZE) {
+  	  screen.resize(getSize(win));
+  	} else if (ch == KEY_UP) {
+  	  --playerPos.y;
+  	} else if (ch == KEY_RIGHT) {
+  	  ++playerPos.x;
+  	} else if (ch == KEY_DOWN) {
+  	  ++playerPos.y;
+  	} else if (ch == KEY_LEFT) {
+  	  --playerPos.x;
   	}
+  	Grid::blit(screen, playerSprite, playerPos);
   	renderScreen(win, screen);
+  	screen.fill(Cell{});
   }
   // delwin(win);
 }

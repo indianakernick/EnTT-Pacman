@@ -92,9 +92,11 @@ namespace Grid {
       }
       
       Tile &operator[](const size_t index) {
+        assert(index < that().mTiles.size());
         return that().mTiles[index];
       }
       const Tile &operator[](const size_t index) const {
+        assert(index < that().mTiles.size());
         return that().mTiles[index];
       }
       Tile &at(const size_t index) {
@@ -154,17 +156,20 @@ namespace Grid {
       return Width * Height;
     }
     
-    bool outOfRange(const Pos pos) const {
+    static bool outOfRange(const Pos pos) {
       return pos.x >= Width || pos.y >= Height;
     }
-    bool outOfRange(const size_t index) const {
-      return index >= mTiles.size();
+    static bool outOfRange(const size_t index) {
+      return index >= Width * Height;
     }
 
     static size_t toIndex(const Pos pos) {
+      assert(pos.x < Width);
+      assert(pos.y < Height);
       return pos.y * Width + pos.x;
     }
     static Pos toPos(const size_t index) {
+      assert(index < Width * Height);
       const Coord cindex = static_cast<Coord>(index);
       return {cindex % Width, cindex / Width};
     }
@@ -219,9 +224,12 @@ namespace Grid {
     }
     
     size_t toIndex(const Pos pos) const {
+      assert(pos.x < mSize.x);
+      assert(pos.y < mSize.y);
       return pos.y * mSize.x + pos.x;
     }
     Pos toPos(const size_t index) const {
+      assert(index < mTiles.size());
       const Coord cindex = static_cast<Coord>(index);
       return {cindex % mSize.x, cindex / mSize.x};
     }
