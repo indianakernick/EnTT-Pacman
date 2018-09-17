@@ -18,12 +18,25 @@ uint8_t colorPair(const uint8_t fore, const uint8_t back) {
   return fore * color_count + back + 1;
 }
 
+int textAttribute(const Attr attr) {
+  switch (attr) {
+  	case Attr::normal:
+  	  return A_NORMAL;
+  	case Attr::dim:
+  	  return A_DIM;
+  	case Attr::bold:
+  	  return A_BOLD;
+  	default:
+  	  assert(false);
+  }
+}
+
 void renderCell(WINDOW *win, const Cell cell) {
-  const short pairIndex = colorPair(
+  const uint8_t pairIndex = colorPair(
     static_cast<uint8_t>(cell.fore), 
     static_cast<uint8_t>(cell.back)
   );
-  wattron(win, COLOR_PAIR(pairIndex));
+  wattrset(win, COLOR_PAIR(pairIndex) | textAttribute(cell.attr));
   waddch(win, cell.ch);
 }
 

@@ -8,6 +8,8 @@ add_executable(Game
         "src/graphics.hpp"
         "src/game.cpp"
         "src/game.hpp"
+        "src/sprites.cpp"
+        "src/sprites.hpp"
 )
 
 if(WIN32 OR MSVC)

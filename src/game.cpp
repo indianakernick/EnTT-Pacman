@@ -8,33 +8,9 @@
 
 #include "game.hpp"
 
+#include "sprites.hpp"
 #include "graphics.hpp"
 #include <Simpleton/Grid/blit.hpp>
-
-namespace {
-
-using PlayerSprite = Grid::Grid<Cell, 3, 3>;
-
-PlayerSprite makePlayer() {
-  PlayerSprite player;
-  /*
-   O
-  -|-
-  / \
-  */
-  player(0, 0) = {' ',  Color::white, Color::black};
-  player(1, 0) = {'O',  Color::white, Color::black};
-  player(2, 0) = {' ',  Color::white, Color::black};
-  player(0, 1) = {'-',  Color::white, Color::black};
-  player(1, 1) = {'|',  Color::white, Color::black};
-  player(2, 1) = {'-',  Color::white, Color::black};
-  player(0, 2) = {'/',  Color::white, Color::black};
-  player(1, 2) = {' ',  Color::white, Color::black};
-  player(2, 2) = {'\\', Color::white, Color::black};
-  return player;
-}
-
-}
 
 void runGame(WINDOW *win) {
   configureWindow(win);
@@ -42,23 +18,34 @@ void runGame(WINDOW *win) {
   ScreenBuf screen{getWindowSize(win)};
 
   Grid::Pos playerPos = screen.size() / 2u;
-  PlayerSprite playerSprite = makePlayer();
+  const auto playerSprite = makePlayer();
+  const auto rockSprite = makeRock();
+  const auto treeSprite = makeTree();
+  const auto flowerSprite = makeFlower();
+  const auto monsterSprite = makeMonster();
+
   while (true) {
-  	const int ch = wgetch(win);
-  	if (ch == 'q') {
-  	  break;
-  	} else if (ch == KEY_RESIZE) {
-  	  screen.resize(getWindowSize(win));
-  	} else if (ch == KEY_UP) {
-  	  --playerPos.y;
-  	} else if (ch == KEY_RIGHT) {
-  	  ++playerPos.x;
-  	} else if (ch == KEY_DOWN) {
-  	  ++playerPos.y;
-  	} else if (ch == KEY_LEFT) {
-  	  --playerPos.x;
+    int ch;
+  	while ((ch = wgetch(win)) != ERR) {
+      if (ch == 'q') {
+  	    break;
+  	  } else if (ch == KEY_RESIZE) {
+  	    screen.resize(getWindowSize(win));
+  	  } else if (ch == KEY_UP) {
+  	    --playerPos.y;
+  	  } else if (ch == KEY_RIGHT) {
+  	    ++playerPos.x;
+  	  } else if (ch == KEY_DOWN) {
+  	    ++playerPos.y;
+  	  } else if (ch == KEY_LEFT) {
+  	    --playerPos.x;
+   	  }
   	}
-  	Grid::blit(screen, playerSprite, playerPos);
+  	Grid::blit(screen, rockSprite, screen.size() / 4u);
+  	Grid::blit(screen, treeSprite, screen.size() / 4u * 3u);
+  	Grid::blit(screen, flowerSprite, {screen.width() / 4u, screen.height() / 4u * 3u});
+  	Grid::blit(screen, monsterSprite, {screen.width() / 4u * 3u, screen.height() / 4u});
+    Grid::blit(screen, playerSprite, playerPos);
   	renderScreen(win, screen);
   	screen.fill(Cell{});
   }
