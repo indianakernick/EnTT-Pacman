@@ -15,8 +15,8 @@ namespace Grid {
   /// Finds the path between two points but assumes that there is only one path.
   /// Hangs on loops and returns {} on dead ends. This is much faster than A* if
   /// there is only one path.
-  template <typename Tile, typename Function>
-  std::vector<Pos> onePath(const Grid<Tile> &, Function &&, Pos, Pos);
+  template <typename Tile, Coord Width, Coord Height, typename Function>
+  std::vector<Pos> onePath(const Grid<Tile, Width, Height> &, Function &&, Pos, Pos);
 }
 
 #include "one path.inl"

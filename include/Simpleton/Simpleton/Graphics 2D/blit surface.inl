@@ -31,6 +31,9 @@ inline void G2D::blit(
   const uint8_t *srcRow = src.data();
   const uint8_t *const srcEnd = src.dataEnd();
   
+  // assumes the src surface lies completly within the dst surface
+  // should probably assert this and write another function that handles it
+  // at the cost of being slightly slower
   while (srcRow != srcEnd) {
     std::memcpy(dstRow, srcRow, width);
     dstRow += dstPitch;

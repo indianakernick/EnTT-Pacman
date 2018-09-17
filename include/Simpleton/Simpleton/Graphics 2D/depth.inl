@@ -30,3 +30,7 @@ constexpr float G2D::depth(const float d) {
 constexpr float G2D::depth(const double d) {
   return d;
 }
+
+constexpr float G2D::depth(const long double d) {
+  return d;
+}

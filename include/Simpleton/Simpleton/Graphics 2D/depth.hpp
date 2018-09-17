@@ -15,6 +15,7 @@ namespace G2D {
   constexpr float depth(Enum);
   constexpr float depth(float);
   constexpr float depth(double);
+  constexpr float depth(long double);
 }
 
 #include "depth.inl"

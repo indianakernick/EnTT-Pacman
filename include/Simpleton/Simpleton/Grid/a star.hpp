@@ -14,8 +14,8 @@
 namespace Grid {
   /// The A* search algorithm. Returns the shortest path or an empty vector if
   /// there is no path.
-  template <typename Tile, typename Function>
-  std::vector<Pos> astar(const Grid<Tile> &, Function &&, Pos, Pos);
+  template <typename Tile, Coord Width, Coord Height, typename Function>
+  std::vector<Pos> astar(const Grid<Tile, Width, Height> &, Function &&, Pos, Pos);
 }
 
 #include "a star.inl"

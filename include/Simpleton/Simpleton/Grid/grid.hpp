@@ -107,11 +107,13 @@ namespace Grid {
       } 
     };
   }
+  
+  constexpr Coord runtime = 0;
 
-  template <typename Tile_, Coord Width_ = 0, Coord Height_ = 0>
+  template <typename Tile_, Coord Width_ = runtime, Coord Height_ = runtime>
   class Grid final : public detail::GridBase<Grid<Tile_, Width_, Height_>, Tile_> {
   public:
-    friend detail::GridBase<Grid<Tile_, Width_, Height_>, Tile_>;
+    friend detail::GridBase<Grid, Tile_>;
   
     using Tile = Tile_;
     static constexpr Coord Width = Width_;
@@ -120,12 +122,20 @@ namespace Grid {
     
     static_assert(Width > 0, "Width must be greater than 0");
     static_assert(Height > 0, "Height must be greater than 0");
-
-    Grid(Grid &&) = default;
-    Grid &operator=(Grid &&) = default;
     
     Grid() = default;
-    // explicit Grid(const Tile &tile)
+    // So that dynamic and static grids have compatible interfaces
+    explicit Grid(const Pos size) {
+      assert(size.x == Width);
+      assert(size.y == Height);
+    }
+    Grid(const Pos size, const Tile &tile)
+      : Grid{size} {
+      mTiles.fill(tile);
+    }
+    explicit Grid(const Tile &tile) {
+      mTiles.fill(tile);
+    }
 
     void fill(const Tile &tile) {
       mTiles.fill(tile);
@@ -164,15 +174,12 @@ namespace Grid {
   };
 
   template <typename Tile_>
-  class Grid<Tile_, 0, 0> final : public detail::GridBase<Grid<Tile_, 0, 0>, Tile_> {
+  class Grid<Tile_, runtime, runtime> final : public detail::GridBase<Grid<Tile_, runtime, runtime>, Tile_> {
   public:
-    friend detail::GridBase<Grid<Tile_, 0, 0>, Tile_>;
+    friend detail::GridBase<Grid, Tile_>;
   
     using Tile = Tile_;
     using Tiles = std::vector<Tile>;
-  
-    Grid(Grid &&) = default;
-    Grid &operator=(Grid &&) = default;
   
     Grid()
       : mSize(0, 0) {}

@@ -8,9 +8,9 @@
 
 #include "dir.hpp"
 
-template <typename Tile, typename Function>
+template <typename Tile, Grid::Coord Width, Grid::Coord Height, typename Function>
 std::vector<Grid::Pos> Grid::onePath(
-  const Grid<Tile> &grid,
+  const Grid<Tile, Width, Height> &grid,
   Function &&notPath,
   const Pos start,
   const Pos end
