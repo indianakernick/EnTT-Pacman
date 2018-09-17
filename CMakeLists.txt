@@ -4,6 +4,10 @@ project(EnTT_Example)
 add_executable(Game
         "src/main.cpp"
         "src/curses.hpp"
+        "src/graphics.cpp"
+        "src/graphics.hpp"
+        "src/game.cpp"
+        "src/game.hpp"
 )
 
 if(WIN32 OR MSVC)

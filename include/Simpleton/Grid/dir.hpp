@@ -89,6 +89,16 @@ namespace Grid {
     NONE = DirType(-COUNT)
   };
   
+  ///Convert a direction to a number
+  constexpr DirType operator+(const Dir dir) {
+    return static_cast<DirType>(dir);
+  }
+  
+  ///Convert an axis to a number
+  constexpr DirType operator+(const Axis axis) {
+    return static_cast<DirType>(axis);
+  }
+  
   ///Ensure that a Dir is not Dir::NONE by returning Dir::UP instead of
   ///Dir::NONE
   constexpr Dir filterNone(const Dir dir) {
