@@ -9,16 +9,8 @@
 #ifndef GRAPHICS_HPP
 #define GRAPHICS_HPP
 
-#include "color.hpp"
 #include "curses.hpp"
-#include <Simpleton/Grid/grid.hpp>
-
-struct Cell {
-  char ch = ' ';
-  ColIdx color = color_sys(Color::white);
-};
-
-using ScreenBuf = Grid::Grid<Cell>;
+#include "framebuf.hpp"
 
 void initColorPairs();
 Grid::Pos getWindowSize(WINDOW *);

@@ -13,11 +13,13 @@ template <
   Grid::Coord DstWidth,
   Grid::Coord DstHeight,
   Grid::Coord SrcWidth,
-  Grid::Coord SrcHeight
+  Grid::Coord SrcHeight,
+  typename Func
 >
 void Grid::blit(
   Grid<Tile, DstWidth, DstHeight> &dst,
   const Grid<Tile, SrcWidth, SrcHeight> &src,
+  Func &&copy,
   const Pos pos
 ) {
   // I realise now that Coord should be signed
@@ -37,7 +39,24 @@ void Grid::blit(
   const Coord hiY = smin(loY + src.height(), dst.height());
   for (Coord y = smax(loY, 0); y != smax(hiY, 0); ++y) {
     for (Coord x = smax(loX, 0); x != smax(hiX, 0); ++x) {
-      dst(x, y) = src(x - pos.x, y - pos.y);
+      copy(dst(x, y), src(x - pos.x, y - pos.y));
     }
   }
+}
+
+template <
+  typename Tile,
+  Grid::Coord DstWidth,
+  Grid::Coord DstHeight,
+  Grid::Coord SrcWidth,
+  Grid::Coord SrcHeight
+>
+void Grid::blit(
+  Grid<Tile, DstWidth, DstHeight> &dst,
+  const Grid<Tile, SrcWidth, SrcHeight> &src,
+  const Pos pos
+) {
+  blit(dst, src, [] (Tile &dstTile, const Tile &srcTile) {
+    dstTile = srcTile;
+  }, pos);
 }

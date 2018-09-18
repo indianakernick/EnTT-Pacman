@@ -12,6 +12,14 @@
 #include "grid.hpp"
 
 namespace Grid {
+  template <typename Tile, Coord DstWidth, Coord DstHeight, Coord SrcWidth, Coord SrcHeight, typename Func>
+  void blit(
+    Grid<Tile, DstWidth, DstHeight> &,
+    const Grid<Tile, SrcWidth, SrcHeight> &,
+    Func &&,
+    Pos = {0, 0}
+  );
+  
   template <typename Tile, Coord DstWidth, Coord DstHeight, Coord SrcWidth, Coord SrcHeight>
   void blit(
     Grid<Tile, DstWidth, DstHeight> &,

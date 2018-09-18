@@ -67,7 +67,7 @@ Sprite<4, 4> makeTree() {
 
   const Cell none = {};
   const Cell leaf = {'#', color_rgb(0, 5, 0)};
-  const Cell bark = {'|', color_rgb(3, 3, 0)};
+  const Cell bark = {'|', color_rgb(3, 1, 0)};
 
   tree(0, 0) = none;
   tree(1, 0) = leaf;

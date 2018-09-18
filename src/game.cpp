@@ -43,11 +43,11 @@ void runGame(WINDOW *win) {
   	    --playerPos.x;
    	  }
   	}
-  	Grid::blit(screen, rockSprite, screen.size() / 4u);
-  	Grid::blit(screen, treeSprite, screen.size() / 4u * 3u);
-  	Grid::blit(screen, flowerSprite, {screen.width() / 4u, screen.height() / 4u * 3u});
-  	Grid::blit(screen, monsterSprite, {screen.width() / 4u * 3u, screen.height() / 4u});
-    Grid::blit(screen, playerSprite, playerPos);
+  	blit(screen, rockSprite, screen.size() / 4u);
+  	blit(screen, treeSprite, screen.size() / 4u * 3u);
+  	blit(screen, flowerSprite, {screen.width() / 4u, screen.height() / 4u * 3u});
+  	blit(screen, monsterSprite, {screen.width() / 4u * 3u, screen.height() / 4u});
+    blit(screen, playerSprite, playerPos);
   	renderScreen(win, screen);
   	screen.fill(Cell{});
   }
