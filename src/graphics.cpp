@@ -46,6 +46,12 @@ void configureWindow(WINDOW *win) {
   if (start_color() == ERR) {
   	throw std::runtime_error("Failed to enable colors");
   }
+  if (COLORS < 256) {
+  	throw std::runtime_error("Terminal not in 256 color mode");
+  }
+  if (COLOR_PAIRS < 256) {
+  	throw std::runtime_error("Not enough color pairs available");
+  }
   // wgetch is non-blocking and returns ERR if there is no character available
   if (nodelay(win, TRUE) == ERR) {
   	throw std::runtime_error("Failed to set nodelay mode");
