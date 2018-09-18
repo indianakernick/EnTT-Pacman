@@ -66,7 +66,7 @@ void configureWindow(WINDOW *win) {
   }
 }
 
-void renderScreen(WINDOW *win, const ScreenBuf &screen) {
+void renderScreen(WINDOW *win, const FrameBuf &screen) {
   wmove(win, 0, 0);
   for (const Grid::Coord y : screen.vert()) {
   	for (const Grid::Coord x : screen.hori()) {

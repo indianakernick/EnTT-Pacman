@@ -11,10 +11,10 @@
 
 #include "framebuf.hpp"
 
-Sprite<3, 3> makePlayer();
-Sprite<4, 3> makeRock();
-Sprite<4, 4> makeTree();
-Sprite<1, 2> makeFlower();
-Sprite<4, 4> makeMonster();
+FrameBuf makePlayer();
+FrameBuf makeRock();
+FrameBuf makeTree();
+FrameBuf makeFlower();
+FrameBuf makeMonster();
 
 #endif

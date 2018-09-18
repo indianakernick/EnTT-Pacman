@@ -10,8 +10,8 @@
 
 // Imagine we're loading these from a files
 
-Sprite<3, 3> makePlayer() {
-  Sprite<3, 3> player;
+FrameBuf makePlayer() {
+  FrameBuf player{3, 3};
   /*
    O
   -|-
@@ -29,8 +29,8 @@ Sprite<3, 3> makePlayer() {
   return player;
 }
 
-Sprite<4, 3> makeRock() {
-  Sprite<4, 3> rock;
+FrameBuf makeRock() {
+  FrameBuf rock{4, 3};
   /*
     __
    /  |
@@ -56,8 +56,8 @@ Sprite<4, 3> makeRock() {
   return rock;
 }
 
-Sprite<4, 4> makeTree() {
-  Sprite<4, 4> tree;
+FrameBuf makeTree() {
+  FrameBuf tree{4, 4};
   /*
    ##
   ####
@@ -89,8 +89,8 @@ Sprite<4, 4> makeTree() {
   return tree;
 }
 
-Sprite<1, 2> makeFlower() {
-  Sprite<1, 2> flower;
+FrameBuf makeFlower() {
+  FrameBuf flower{1, 2};
   /*
   @
   |
@@ -101,8 +101,8 @@ Sprite<1, 2> makeFlower() {
   return flower;
 }
 
-Sprite<4, 4> makeMonster() {
-  Sprite<4, 4> mon;
+FrameBuf makeMonster() {
+  FrameBuf mon{4, 4};
   /*
    
   /--\

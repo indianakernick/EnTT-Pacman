@@ -11,7 +11,9 @@ add_executable(Game
         "src/sprites.cpp"
         "src/sprites.hpp"
         "src/color.hpp"
+        "src/framebuf.cpp"
         "src/framebuf.hpp"
+        "src/sprite component.hpp"
 )
 
 if(WIN32 OR MSVC)

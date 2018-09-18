@@ -15,7 +15,7 @@
 void runGame(WINDOW *win) {
   configureWindow(win);
   initColorPairs();
-  ScreenBuf screen{getWindowSize(win)};
+  FrameBuf screen{getWindowSize(win)};
 
   Grid::Pos playerPos = screen.size() / 2u;
   const auto playerSprite = makePlayer();

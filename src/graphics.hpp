@@ -15,6 +15,6 @@
 void initColorPairs();
 Grid::Pos getWindowSize(WINDOW *);
 void configureWindow(WINDOW *);
-void renderScreen(WINDOW *, const ScreenBuf &);
+void renderScreen(WINDOW *, const FrameBuf &);
 
 #endif

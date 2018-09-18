@@ -127,10 +127,12 @@ namespace Grid {
     
     Grid() = default;
     // So that dynamic and static grids have compatible interfaces
-    explicit Grid(const Pos size) {
-      assert(size.x == Width);
-      assert(size.y == Height);
+    Grid(const Coord width, const Coord height) {
+      assert(width == Width);
+      assert(height == Height);
     }
+    explicit Grid(const Pos size)
+      : Grid{size.x, size.y} {}
     Grid(const Pos size, const Tile &tile)
       : Grid{size} {
       mTiles.fill(tile);
@@ -188,8 +190,10 @@ namespace Grid {
   
     Grid()
       : mSize(0, 0) {}
+    Grid(const Coord width, const Coord height, const Tile &tile = {})
+      : mTiles{width * height, tile}, mSize{width, height} {}
     explicit Grid(const Pos size, const Tile &tile = {})
-      : mTiles(size.x * size.y, tile), mSize(size) {}
+      : Grid{size.x, size.y, tile} {}
     
     void clear() {
       mTiles.clear();
