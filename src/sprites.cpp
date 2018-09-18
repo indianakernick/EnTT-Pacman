@@ -17,15 +17,15 @@ Sprite<3, 3> makePlayer() {
   -|-
   / \
   */
-  player(0, 0) = {' ',  Color::white,  Color::black};
-  player(1, 0) = {'O',  Color::yellow, Color::black};
-  player(2, 0) = {' ',  Color::white,  Color::black};
-  player(0, 1) = {'-',  Color::yellow, Color::black};
-  player(1, 1) = {'|',  Color::red,    Color::black};
-  player(2, 1) = {'-',  Color::yellow, Color::black};
-  player(0, 2) = {'/',  Color::blue,   Color::black};
-  player(1, 2) = {' ',  Color::white,  Color::black};
-  player(2, 2) = {'\\', Color::blue,   Color::black};
+  player(0, 0) = {' '};
+  player(1, 0) = {'O',  color_sys(Color::yellow)};
+  player(2, 0) = {' '};
+  player(0, 1) = {'-',  color_sys(Color::yellow)};
+  player(1, 1) = {'|',  color_sys(Color::red)};
+  player(2, 1) = {'-',  color_sys(Color::yellow)};
+  player(0, 2) = {'/',  color_sys(Color::blue)};
+  player(1, 2) = {' '};
+  player(2, 2) = {'\\', color_sys(Color::blue)};
   return player;
 }
 
@@ -50,11 +50,9 @@ Sprite<4, 3> makeRock() {
   rock(3, 2).ch = ' ';
 
   for (Cell &cell : rock) {
-    cell.fore = Color::white;
-    cell.back = Color::black;
-  	cell.attr = Attr::dim;
+    cell.color = color_grey(8);
   }
-  
+
   return rock;
 }
 
@@ -68,9 +66,8 @@ Sprite<4, 4> makeTree() {
   */
 
   const Cell none = {};
-  const Cell leaf = {'#', Color::green, Color::black, Attr::normal};
-  // Hoping dim yellow is brown
-  const Cell bark = {'|', Color::yellow, Color::black, Attr::dim};
+  const Cell leaf = {'#', color_rgb(0, 5, 0)};
+  const Cell bark = {'|', color_rgb(3, 3, 0)};
 
   tree(0, 0) = none;
   tree(1, 0) = leaf;
@@ -99,8 +96,8 @@ Sprite<1, 2> makeFlower() {
   |
   */
 
-  flower(0, 0) = {'@', Color::magenta, Color::black, Attr::normal};
-  flower(0, 1) = {'|', Color::green, Color::black, Attr::normal};
+  flower(0, 0) = {'@', color_rgb(5, 0, 5)};
+  flower(0, 1) = {'|', color_rgb(0, 5, 0)};
   return flower;
 }
 
@@ -114,21 +111,21 @@ Sprite<4, 4> makeMonster() {
   /  \
   
   */
-  mon(0, 0) = {'/', Color::red};
-  mon(1, 0) = {'-', Color::red};
-  mon(2, 0) = {'-', Color::red};
-  mon(3, 0) = {'\\', Color::red};
-  mon(0, 1) = {'|', Color::red};
-  mon(1, 1) = {'`', Color::cyan};
-  mon(2, 1) = {'`', Color::cyan};
-  mon(3, 1) = {'|', Color::red};
-  mon(0, 2) = {'/', Color::yellow};
-  mon(1, 2) = {'~', Color::blue};
-  mon(2, 2) = {'~', Color::blue};
-  mon(3, 2) = {'\\', Color::yellow};
-  mon(0, 3) = {'/', Color::yellow};
-  mon(1, 3) = {' ', Color::white};
-  mon(2, 3) = {' ', Color::white};
-  mon(3, 3) = {'\\', Color::yellow};
+  mon(0, 0) = {'/', color_sys(Color::red)};
+  mon(1, 0) = {'-', color_sys(Color::red)};
+  mon(2, 0) = {'-', color_sys(Color::red)};
+  mon(3, 0) = {'\\', color_sys(Color::red)};
+  mon(0, 1) = {'|', color_sys(Color::red)};
+  mon(1, 1) = {'`', color_sys(Color::cyan)};
+  mon(2, 1) = {'`', color_sys(Color::cyan)};
+  mon(3, 1) = {'|', color_sys(Color::red)};
+  mon(0, 2) = {'/', color_sys(Color::yellow)};
+  mon(1, 2) = {'~', color_sys(Color::blue)};
+  mon(2, 2) = {'~', color_sys(Color::blue)};
+  mon(3, 2) = {'\\', color_sys(Color::yellow)};
+  mon(0, 3) = {'/', color_sys(Color::yellow)};
+  mon(1, 3) = {' ', color_sys(Color::white)};
+  mon(2, 3) = {' ', color_sys(Color::white)};
+  mon(3, 3) = {'\\', color_sys(Color::yellow)};
   return mon;
 }

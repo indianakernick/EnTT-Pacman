@@ -9,33 +9,13 @@
 #ifndef GRAPHICS_HPP
 #define GRAPHICS_HPP
 
+#include "color.hpp"
 #include "curses.hpp"
 #include <Simpleton/Grid/grid.hpp>
 
-enum class Color : uint8_t {
-  black   = COLOR_BLACK,
-  red     = COLOR_RED,
-  green   = COLOR_GREEN,
-  yellow  = COLOR_YELLOW,
-  blue    = COLOR_BLUE,
-  magenta = COLOR_MAGENTA,
-  cyan    = COLOR_CYAN,
-  white   = COLOR_WHITE
-};
-
-constexpr uint8_t color_count = 8;
-
-enum class Attr : uint8_t {
-  normal,
-  dim,
-  bold
-};
-
 struct Cell {
   char ch = ' ';
-  Color fore = Color::white;
-  Color back = Color::black;
-  Attr attr = Attr::normal;
+  ColIdx color = color_sys(Color::white);
 };
 
 using ScreenBuf = Grid::Grid<Cell>;

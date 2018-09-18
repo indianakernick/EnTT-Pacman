@@ -8,46 +8,19 @@
 
 #include "graphics.hpp"
 
-#include <cassert>
-
 namespace {
 
-uint8_t colorPair(const uint8_t fore, const uint8_t back) {
-  assert(0 <= fore && fore < color_count);
-  assert(0 <= back && back < color_count);
-  return fore * color_count + back + 1;
-}
-
-int textAttribute(const Attr attr) {
-  switch (attr) {
-  	case Attr::normal:
-  	  return A_NORMAL;
-  	case Attr::dim:
-  	  return A_DIM;
-  	case Attr::bold:
-  	  return A_BOLD;
-  	default:
-  	  assert(false);
-  }
-}
-
 void renderCell(WINDOW *win, const Cell cell) {
-  const uint8_t pairIndex = colorPair(
-    static_cast<uint8_t>(cell.fore), 
-    static_cast<uint8_t>(cell.back)
-  );
-  wattrset(win, COLOR_PAIR(pairIndex) | textAttribute(cell.attr));
+  wattrset(win, COLOR_PAIR(cell.color));
   waddch(win, cell.ch);
 }
 
 }
 
 void initColorPairs() {
-  for (uint8_t f = 0; f != color_count; ++f) {
-  	for (uint8_t b = 0; b != color_count; ++b) {
-  	  if (init_pair(colorPair(f, b), f, b) == ERR) {
-        throw std::runtime_error("Failed to initialize colors");
-  	  }
+  for (int c = 0; c != 256; ++c) {
+  	if (init_pair(c, c, -1) == ERR) {
+      throw std::runtime_error("Failed to initialize colors");
   	}
   }
 }
@@ -80,6 +53,10 @@ void configureWindow(WINDOW *win) {
   // wgetch will return KEY_RIGHT if the user presses the right arrow key
   if (keypad(win, TRUE) == ERR) {
   	throw std::runtime_error("Failed to enable handling of arrow keys");
+  }
+  // -1 is the default background or foreground color
+  if (use_default_colors() == ERR) {
+  	throw std::runtime_error("Failed to enable default colors");
   }
 }
 
