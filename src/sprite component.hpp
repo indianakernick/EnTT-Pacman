@@ -11,6 +11,8 @@
 
 #include "framebuf.hpp"
 
-using Sprite = FrameBuf;
+struct Sprite {
+  FrameBuf s;
+};
 
 #endif
