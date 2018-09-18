@@ -4,19 +4,27 @@ project(EnTT_Example)
 add_executable(Game
         "src/main.cpp"
         "src/curses.hpp"
+        "src/registry.hpp"
         "src/graphics.cpp"
         "src/graphics.hpp"
         "src/game.cpp"
         "src/game.hpp"
         "src/sprites.cpp"
         "src/sprites.hpp"
+        "src/factories.cpp"
+        "src/factories.hpp"
         "src/color.hpp"
         "src/framebuf.cpp"
         "src/framebuf.hpp"
         "src/sprite component.hpp"
         "src/position component.hpp"
         "src/player component.hpp"
-        "src/registry.hpp"
+        "src/blit sprites system.cpp"
+        "src/blit sprites system.hpp"
+        "src/move player system.cpp"
+        "src/move player system.hpp"
+        "src/get player pos system.cpp"
+        "src/get player pos system.hpp"
 )
 
 if(WIN32 OR MSVC)
@@ -47,7 +55,7 @@ endif()
 
 target_compile_features(Game
         PRIVATE
-        cxx_std_14
+        cxx_std_17
 )
 
 if (CMAKE_BUILD_TYPE MATCHES DEBUG)

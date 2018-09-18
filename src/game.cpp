@@ -8,21 +8,21 @@
 
 #include "game.hpp"
 
-#include "sprites.hpp"
 #include "graphics.hpp"
-#include <Simpleton/Grid/blit.hpp>
+#include "factories.hpp"
+#include "move player system.hpp"
+#include "blit sprites system.hpp"
+#include "get player pos system.hpp"
 
 void runGame(WINDOW *win) {
   configureWindow(win);
   initColorPairs();
-  FrameBuf screen{getWindowSize(win)};
 
-  Grid::Pos playerPos = screen.size() / 2u;
-  const auto playerSprite = makePlayer();
-  const auto rockSprite = makeRock();
-  const auto treeSprite = makeTree();
-  const auto flowerSprite = makeFlower();
-  const auto monsterSprite = makeMonster();
+  FrameBuf screen{getWindowSize(win)};
+  Registry reg;
+  makePlayer(reg, {0, 0});
+  makeRock(reg, {5, 7});
+  makeRock(reg, {2, 10});
 
   bool quit = false;
   while (!quit) {
@@ -34,20 +34,16 @@ void runGame(WINDOW *win) {
   	  } else if (ch == KEY_RESIZE) {
   	    screen.resize(getWindowSize(win));
   	  } else if (ch == KEY_UP) {
-  	    --playerPos.y;
+  	    movePlayer(reg, Grid::Dir::UP);
   	  } else if (ch == KEY_RIGHT) {
-  	    ++playerPos.x;
+  	    movePlayer(reg, Grid::Dir::RIGHT);
   	  } else if (ch == KEY_DOWN) {
-  	    ++playerPos.y;
+  	    movePlayer(reg, Grid::Dir::DOWN);
   	  } else if (ch == KEY_LEFT) {
-  	    --playerPos.x;
+  	    movePlayer(reg, Grid::Dir::LEFT);
    	  }
   	}
-  	blit(screen, rockSprite, screen.size() / 4u);
-  	blit(screen, treeSprite, screen.size() / 4u * 3u);
-  	blit(screen, flowerSprite, {screen.width() / 4u, screen.height() / 4u * 3u});
-  	blit(screen, monsterSprite, {screen.width() / 4u * 3u, screen.height() / 4u});
-    blit(screen, playerSprite, playerPos);
+  	blitSprites(reg, screen, screen.size() / 2u - getPlayerPos(reg));
   	renderScreen(win, screen);
   	screen.fill(Cell{});
   }
