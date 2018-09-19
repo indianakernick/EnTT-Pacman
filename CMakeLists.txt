@@ -19,12 +19,17 @@ add_executable(Game
         "src/sprite component.hpp"
         "src/position component.hpp"
         "src/player component.hpp"
+        "src/desired dir component.hpp"
         "src/blit sprites system.cpp"
         "src/blit sprites system.hpp"
-        "src/move player system.cpp"
-        "src/move player system.hpp"
-        "src/get player pos system.cpp"
-        "src/get player pos system.hpp"
+        "src/movement system.cpp"
+        "src/movement system.hpp"
+        "src/get camera system.cpp"
+        "src/get camera system.hpp"
+        "src/player input system.cpp"
+        "src/player input system.hpp"
+        "src/clear desired dir system.cpp"
+        "src/clear desired dir system.hpp"
 )
 
 if(WIN32 OR MSVC)

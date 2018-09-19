@@ -1,20 +1,20 @@
 //
-//  move player system.cpp
+//  movement system.cpp
 //  EnTT Example
 //
 //  Created by Indi Kernick on 18/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include "move player system.hpp"
+#include "movement system.hpp"
 
-#include "player component.hpp"
 #include "position component.hpp"
+#include "desired dir component.hpp"
 
-void movePlayer(Registry &reg, const Grid::Dir dir) {
+void movement(Registry &reg) {
   using ToVec = Grid::ToVec<Grid::Coord, Grid::Dir::RIGHT, Grid::Dir::DOWN>;
-  auto view = reg.view<Player, Position>();
+  auto view = reg.view<Position, DesiredDir>();
   for (const Entity e : view) {
-  	view.get<Position>(e).p += ToVec::conv(dir);
+  	view.get<Position>(e).p += ToVec::conv(view.get<DesiredDir>(e).d);
   }
 }
