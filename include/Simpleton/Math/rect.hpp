@@ -10,8 +10,8 @@
 #define engine_math_rect_hpp
 
 #include <cmath>
-#include "../Grid/dir.hpp"
 #include <glm/vec2.hpp>
+#include "../Grid/dir.hpp"
 
 namespace Math {
   template <typename T, Grid::Dir POSITIVE_X, Grid::Dir POSITIVE_Y>
@@ -21,7 +21,7 @@ namespace Math {
   struct RectCS;
 
   ///A rectangle defined by a minimum point and a maximum point
-  template <typename T, Grid::Dir POSITIVE_X = Grid::Dir::RIGHT, Grid::Dir POSITIVE_Y = Grid::Dir::UP>
+  template <typename T, Grid::Dir POSITIVE_X = Grid::Dir::right, Grid::Dir POSITIVE_Y = Grid::Dir::up>
   struct RectPP {
     static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
     static_assert(!sameAxis(POSITIVE_X, POSITIVE_Y));
@@ -113,59 +113,59 @@ namespace Math {
     }
     
     Scalar top() const {
-      return side(Grid::Dir::TOP);
+      return side(Grid::Dir::top);
     }
     Scalar right() const {
-      return side(Grid::Dir::RIGHT);
+      return side(Grid::Dir::right);
     }
     Scalar bottom() const {
-      return side(Grid::Dir::BOTTOM);
+      return side(Grid::Dir::bottom);
     }
     Scalar left() const {
-      return side(Grid::Dir::LEFT);
+      return side(Grid::Dir::left);
     }
     
     void top(const Scalar val) {
-      side(Grid::Dir::TOP, val);
+      side(Grid::Dir::top, val);
     }
     void right(const Scalar val) {
-      side(Grid::Dir::RIGHT, val);
+      side(Grid::Dir::right, val);
     }
     void bottom(const Scalar val) {
-      side(Grid::Dir::BOTTOM, val);
+      side(Grid::Dir::bottom, val);
     }
     void left(const Scalar val) {
-      side(Grid::Dir::LEFT, val);
+      side(Grid::Dir::left, val);
     }
     
     Vector topLeft() const {
-      return {side(Grid::Dir::LEFT), side(Grid::Dir::TOP)};
+      return {side(Grid::Dir::left), side(Grid::Dir::top)};
     }
     Vector topRight() const {
-      return {side(Grid::Dir::RIGHT), side(Grid::Dir::TOP)};
+      return {side(Grid::Dir::right), side(Grid::Dir::top)};
     }
     Vector bottomRight() const {
-      return {side(Grid::Dir::RIGHT), side(Grid::Dir::BOTTOM)};
+      return {side(Grid::Dir::right), side(Grid::Dir::bottom)};
     }
     Vector bottomLeft() const {
-      return {side(Grid::Dir::LEFT), side(Grid::Dir::BOTTOM)};
+      return {side(Grid::Dir::left), side(Grid::Dir::bottom)};
     }
     
     void topLeft(const Vector val) {
-      side(Grid::Dir::LEFT, val.x);
-      side(Grid::Dir::TOP, val.y);
+      side(Grid::Dir::left, val.x);
+      side(Grid::Dir::top, val.y);
     }
     void topRight(const Vector val) {
-      side(Grid::Dir::RIGHT, val.x);
-      side(Grid::Dir::TOP, val.y);
+      side(Grid::Dir::right, val.x);
+      side(Grid::Dir::top, val.y);
     }
     void bottomRight(const Vector val) {
-      side(Grid::Dir::RIGHT, val.x);
-      side(Grid::Dir::BOTTOM, val.y);
+      side(Grid::Dir::right, val.x);
+      side(Grid::Dir::bottom, val.y);
     }
     void bottomLeft(const Vector val) {
-      side(Grid::Dir::LEFT, val.x);
-      side(Grid::Dir::BOTTOM, val.y);
+      side(Grid::Dir::left, val.x);
+      side(Grid::Dir::bottom, val.y);
     }
     
     Vector size() const {
@@ -228,7 +228,7 @@ namespace Math {
   };
   
   ///A rectangle defined by a negative point and a size
-  template <typename T, Grid::Dir POSITIVE_X = Grid::Dir::RIGHT, Grid::Dir POSITIVE_Y = Grid::Dir::UP>
+  template <typename T, Grid::Dir POSITIVE_X = Grid::Dir::right, Grid::Dir POSITIVE_Y = Grid::Dir::up>
   struct RectPS {
     static_assert(std::is_arithmetic<T>::value, "T must be an arithmetic type");
     static_assert(!sameAxis(POSITIVE_X, POSITIVE_Y));
@@ -321,29 +321,29 @@ namespace Math {
     }
     
     Scalar top() const {
-      return side(Grid::Dir::TOP);
+      return side(Grid::Dir::top);
     }
     Scalar right() const {
-      return side(Grid::Dir::RIGHT);
+      return side(Grid::Dir::right);
     }
     Scalar bottom() const {
-      return side(Grid::Dir::BOTTOM);
+      return side(Grid::Dir::bottom);
     }
     Scalar left() const {
-      return side(Grid::Dir::LEFT);
+      return side(Grid::Dir::left);
     }
     
     void top(const Scalar val) {
-      side(Grid::Dir::TOP, val);
+      side(Grid::Dir::top, val);
     }
     void right(const Scalar val) {
-      side(Grid::Dir::RIGHT, val);
+      side(Grid::Dir::right, val);
     }
     void bottom(const Scalar val) {
-      side(Grid::Dir::BOTTOM, val);
+      side(Grid::Dir::bottom, val);
     }
     void left(const Scalar val) {
-      side(Grid::Dir::LEFT, val);
+      side(Grid::Dir::left, val);
     }
     
     bool interceptsWith(const RectPS other) const {
@@ -388,7 +388,7 @@ namespace Math {
   };
   
   ///A rectangle defined by a center and a half size
-  template <typename T, Grid::Dir POSITIVE_X = Grid::Dir::RIGHT, Grid::Dir POSITIVE_Y = Grid::Dir::UP>
+  template <typename T, Grid::Dir POSITIVE_X = Grid::Dir::right, Grid::Dir POSITIVE_Y = Grid::Dir::up>
   struct RectCS {
     /*
     Using integers for this format doesn't really work. The only way to make it
@@ -505,29 +505,29 @@ namespace Math {
     }
     
     Scalar top() const {
-      return side(Grid::Dir::TOP);
+      return side(Grid::Dir::top);
     }
     Scalar right() const {
-      return side(Grid::Dir::RIGHT);
+      return side(Grid::Dir::right);
     }
     Scalar bottom() const {
-      return side(Grid::Dir::BOTTOM);
+      return side(Grid::Dir::bottom);
     }
     Scalar left() const {
-      return side(Grid::Dir::LEFT);
+      return side(Grid::Dir::left);
     }
     
     void top(const Scalar val) {
-      side(Grid::Dir::TOP, val);
+      side(Grid::Dir::top, val);
     }
     void right(const Scalar val) {
-      side(Grid::Dir::RIGHT, val);
+      side(Grid::Dir::right, val);
     }
     void bottom(const Scalar val) {
-      side(Grid::Dir::BOTTOM, val);
+      side(Grid::Dir::bottom, val);
     }
     void left(const Scalar val) {
-      side(Grid::Dir::LEFT, val);
+      side(Grid::Dir::left, val);
     }
     
     bool interceptsWith(const RectCS other) const {

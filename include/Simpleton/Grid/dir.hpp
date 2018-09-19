@@ -27,66 +27,66 @@ namespace Grid {
   enum class Dir : DirType {
     //don't reoder this
     
-    UP,
-    RIGHT,
-    DOWN,
-    LEFT,
-    COUNT,
+    up,
+    right,
+    down,
+    left,
+    count,
     
-    NORTH = UP,
-    EAST = RIGHT,
-    SOUTH = DOWN,
-    WEST = LEFT,
+    north = up,
+    east = right,
+    south = down,
+    west = left,
     
-    TOP = UP,
-    BOTTOM = DOWN,
+    top = up,
+    bottom = down,
     
-    FORWARD = UP,
-    BACKWARD = DOWN,
+    forward = up,
+    backward = down,
     
-    MIN = UP,
-    MAX = LEFT,
+    min = up,
+    max = left,
     
-    BEGIN = MIN,
-    END = COUNT,
+    begin = min,
+    end = count,
     
-    R_BEGIN = MAX,
-    R_END = DirType(-1),
+    r_begin = max,
+    r_end = DirType(-1),
     
     ///A direction that represents "no direction". Not many functions explicitly
-    ///handle NONE
-    NONE = DirType(-COUNT)
+    ///handle none
+    none = DirType(-count)
   };
   
   struct DirRange {
     static constexpr Dir begin() {
-      return Dir::BEGIN;
+      return Dir::begin;
     }
     static constexpr Dir end() {
-      return Dir::END;
+      return Dir::end;
     }
   };
   
   ///A range for iterating directions in a loop. Iterates in the order:
-  ///UP, RIGHT, DOWN, LEFT
-  constexpr DirRange DIR_RANGE = {};
+  ///up, right, down, left
+  constexpr DirRange dir_range = {};
   
   enum class Axis : DirType {
     //don't reoder this
     
-    VERT,
-    HORI,
-    COUNT,
+    vert,
+    hori,
+    count,
     
-    VERTICAL = VERT,
-    HORIZONTAL = HORI,
+    vertical = vert,
+    horizontal = hori,
     
-    UP_DOWN = VERT,
-    LEFT_RIGHT = HORI,
+    up_down = vert,
+    left_right = hori,
     
     ///An axis that represents "no axis". Not many functions explicitly
-    ///handle NONE
-    NONE = DirType(-COUNT)
+    ///handle none
+    none = DirType(-count)
   };
   
   ///Convert a direction to a number
@@ -102,71 +102,71 @@ namespace Grid {
   ///Ensure that a Dir is not Dir::NONE by returning Dir::UP instead of
   ///Dir::NONE
   constexpr Dir filterNone(const Dir dir) {
-    return static_cast<Dir>(static_cast<DirType>(dir) & DirType(0b11));
+    return static_cast<Dir>(static_cast<DirType>(dir) & DirType{0b11});
   }
   
-  ///Ensure that a Dir is not Dir::NONE by returning a custom Dir instead of
-  ///Dir::NONE
+  ///Ensure that a Dir is not Dir::none by returning a custom Dir instead of
+  ///Dir::none
   constexpr Dir filterNoneCustom(const Dir dir, const Dir noneDir) {
-    return dir == Dir::NONE ? noneDir : dir;
+    return dir == Dir::none ? noneDir : dir;
   }
   
   ///Ensure that an Axis is not Axis::NONE by returning Axis::VERT instead of
   ///Axis::NONE
   constexpr Axis filterNone(const Axis axis) {
-    return static_cast<Axis>(static_cast<DirType>(axis) & DirType(0b1));
+    return static_cast<Axis>(static_cast<DirType>(axis) & DirType{0b1});
   }
   
-  ///Ensure that n Axis is not Axis::NONE by returning a custom Axis instead of
-  ///Axis::NONE
+  ///Ensure that n Axis is not Axis::none by returning a custom Axis instead of
+  ///Axis::none
   constexpr Axis filterNoneCustom(const Axis axis, const Axis noneAxis) {
-    return axis == Axis::NONE ? noneAxis : axis;
+    return axis == Axis::none ? noneAxis : axis;
   }
   
   ///Check if a direction is valid
   constexpr bool valid(const Dir dir) {
-    return dir == Dir::UP ||
-           dir == Dir::RIGHT ||
-           dir == Dir::DOWN ||
-           dir == Dir::LEFT;
+    return dir == Dir::up ||
+           dir == Dir::right ||
+           dir == Dir::down ||
+           dir == Dir::left;
   }
   
   ///Check if a direction is either valid or equal to Dir::NONE
   constexpr bool validOrNone(const Dir dir) {
-    return valid(dir) || dir == Dir::NONE;
+    return valid(dir) || dir == Dir::none;
   }
   
   ///Check if an axis is valid
   constexpr bool valid(const Axis axis) {
-    return axis == Axis::VERT ||
-           axis == Axis::HORI;
+    return axis == Axis::vert ||
+           axis == Axis::hori;
   }
   
-  ///Check if an axis is either valid or equal to Axis::NONE
+  ///Check if an axis is either valid or equal to Axis::none
   constexpr bool validOrNone(const Axis axis) {
-    return valid(axis) || axis == Axis::NONE;
+    return valid(axis) || axis == Axis::none;
   }
   
   ///Get the opposite of a direction
   constexpr Dir opposite(const Dir dir) {
     //flip the second least significant bit
-    return static_cast<Dir>(static_cast<DirType>(dir) ^ DirType(0b10));
+    return static_cast<Dir>(static_cast<DirType>(dir) ^ DirType{0b10});
   }
   
   ///Get the opposite of an axis
   constexpr Axis opposite(const Axis axis) {
     //flip the least significant bit
-    return static_cast<Axis>(static_cast<DirType>(axis) ^ DirType(0b1));
+    return static_cast<Axis>(static_cast<DirType>(axis) ^ DirType{0b1});
   }
   
   ///Rotate a direction clockwise
   constexpr Dir rotateCW(const Dir dir, const DirType count = 1) {
-    return static_cast<Dir>((static_cast<DirType>(dir) + count) & DirType(0b11));
+    return static_cast<Dir>((static_cast<DirType>(dir) + count) & DirType{0b11});
   }
   
   ///Rotate a direction counter-clockwise (anti-clockwise)
   constexpr Dir rotateCCW(const Dir dir, const DirType count = 1) {
-    return static_cast<Dir>((static_cast<DirType>(dir) - count) & DirType(0b11));
+    return static_cast<Dir>((static_cast<DirType>(dir) - count) & DirType{0b11});
   }
   
   ///Rotate a direction. Clockwise if count is positive and counter-clockwise
@@ -178,10 +178,10 @@ namespace Grid {
   ///Get the distance between directions
   constexpr DirType dist(const Dir a, const Dir b) {
     assert(valid(a) && valid(b));
-    constexpr DirType distances[16] = {
+    constexpr DirType table[16] = {
       0, 1, 2, 1, 1, 0, 1, 2, 2, 1, 0, 1, 1, 2, 1, 0
     };
-    return distances[
+    return table[
       (static_cast<DirType>(a) << 2) |
       static_cast<DirType>(b)
     ];
@@ -190,10 +190,10 @@ namespace Grid {
   ///Get the difference between directions (signed distance from a to b)
   constexpr SignedDirType diff(const Dir a, const Dir b) {
     assert(valid(a) && valid(b));
-    constexpr SignedDirType differences[16] = {
+    constexpr SignedDirType table[16] = {
       0, 1, 2, -1, -1, 0, 1, 2, -2, -1, 0, 1, 1, -2, -1, 0
     };
-    return differences[
+    return table[
       (static_cast<DirType>(a) << 2) |
       static_cast<DirType>(b)
     ];
@@ -202,17 +202,17 @@ namespace Grid {
   ///Get the axis that a direction is on
   constexpr Axis getAxis(const Dir dir) {
     //get the least significant bit
-    return static_cast<Axis>(static_cast<DirType>(dir) & DirType(0b01));
+    return static_cast<Axis>(static_cast<DirType>(dir) & DirType{0b01});
   }
   
   ///Determine whether a direction is on the vertical axis
   constexpr bool isVert(const Dir dir) {
-    return getAxis(dir) == Axis::VERT;
+    return getAxis(dir) == Axis::vert;
   }
   
   ///Determine whether a direction is on the horizontal axis
   constexpr bool isHori(const Dir dir) {
-    return getAxis(dir) == Axis::HORI;
+    return getAxis(dir) == Axis::hori;
   }
   
   ///Are these directions on the same axis?
@@ -221,29 +221,29 @@ namespace Grid {
   }
   
   ///Configuration template for converting a direction to a 2D unit vector
-  template <typename Number_, Dir PLUS_X_ = Dir::RIGHT, Dir PLUS_Y_ = Dir::UP>
+  template <typename Number_, Dir PlusX = Dir::right, Dir PlusY = Dir::up>
   struct ToVec {
     using Number = Number_;
-    static constexpr Dir PLUS_X = PLUS_X_;
-    static constexpr Dir PLUS_Y = PLUS_Y_;
+    static constexpr Dir plusx = PlusX;
+    static constexpr Dir plusy = PlusY;
   
-    static_assert(!sameAxis(PLUS_X, PLUS_Y), "PLUS_X and PLUS_Y must be on different axes");
+    static_assert(!sameAxis(plusx, plusy), "PlusX and PlusY must be on different axes");
   
     ///Convert a direction to a 2D unit vector
-    static constexpr glm::tvec2<Number> conv(const Dir dir, const Number dist = Number(1)) {
-      constexpr Number ZERO(0);
+    constexpr glm::tvec2<Number> operator()(const Dir dir, const Number dist = Number{1}) const {
+      constexpr Number zero{0};
       
       switch (dir) {
-        case PLUS_X:
-          return {dist, ZERO};
-        case opposite(PLUS_X):
-          return {-dist, ZERO};
-        case PLUS_Y:
-          return {ZERO, dist};
-        case opposite(PLUS_Y):
-          return {ZERO, -dist};
-        case Dir::NONE:
-          return {ZERO, ZERO};
+        case plusx:
+          return {dist, zero};
+        case opposite(plusx):
+          return {-dist, zero};
+        case plusy:
+          return {zero, dist};
+        case opposite(plusy):
+          return {zero, -dist};
+        case Dir::none:
+          return {zero, zero};
         
         default:
           throw std::invalid_argument("Invalid direction");
@@ -251,40 +251,38 @@ namespace Grid {
     }
   };
   
-  // Grid::ToVec<int>::conv(Grid::Dir::UP, 2)
-  // Grid::toVec(Grid::Dir::UP, 2)
+  // Grid::ToVec<int>{}(Grid::Dir::up, 2)
+  // Grid::toVec(Grid::Dir::up, 2)
   
-  ///Helper function for converting directions to 2D unit vectors
+  ///Helper for converting directions to 2D unit vectors
   template <typename Number>
-  constexpr glm::tvec2<Number> toVec(const Dir dir, const Number dist = Number(1)) {
-    return ToVec<Number>::conv(dir, dist);
-  }
+  constexpr ToVec<Number> toVec {};
   
   ///Configuration template for converting a 2D unit vector to a direction
-  template <typename Number_, Dir PLUS_X_ = Dir::RIGHT, Dir PLUS_Y_ = Dir::UP, bool EXACT_ = true>
+  template <typename Number_, Dir PlusX = Dir::right, Dir PlusY = Dir::up, bool Exact = true>
   struct FromVec {
     using Number = Number_;
-    static constexpr Dir PLUS_X = PLUS_X_;
-    static constexpr Dir PLUS_Y = PLUS_Y_;
-    static constexpr bool EXACT = EXACT_;
+    static constexpr Dir plusx = PlusX;
+    static constexpr Dir plusy = PlusY;
+    static constexpr bool exact = Exact;
   
-    static_assert(!sameAxis(PLUS_X, PLUS_Y), "PLUS_X and PLUS_Y must be on different axes");
+    static_assert(!sameAxis(plusx, plusy), "PlusX and PlusY must be on different axes");
     
     ///Convert a 2D unit vector to a direction
-    static constexpr Dir conv(const glm::tvec2<Number> vec, const Number dist = Number(1)) {
+    constexpr Dir operator()(const glm::tvec2<Number> vec, const Number dist = Number{1}) const {
       using Vec = glm::tvec2<Number>;
-      constexpr Number ZERO(0);
+      constexpr Number zero{0};
       
-      if constexpr (EXACT) {
+      if constexpr (exact) {
       
-               if (vec == Vec(dist, ZERO)) {
-          return PLUS_X;
-        } else if (vec == Vec(-dist, ZERO)) {
-          return opposite(PLUS_X);
-        } else if (vec == Vec(ZERO, dist)) {
-          return PLUS_Y;
-        } else if (vec == Vec(ZERO, -dist)) {
-          return opposite(PLUS_Y);
+               if (vec == Vec(dist, zero)) {
+          return plusx;
+        } else if (vec == Vec(-dist, zero)) {
+          return opposite(plusx);
+        } else if (vec == Vec(zero, dist)) {
+          return plusy;
+        } else if (vec == Vec(zero, -dist)) {
+          return opposite(plusy);
         } else {
           throw std::invalid_argument("Vector cannot be converted to direction");
         }
@@ -295,16 +293,16 @@ namespace Grid {
           throw std::invalid_argument("Vector cannot be converted to direction");
         }
         if (std::abs(vec.x) > std::abs(vec.y)) {
-          if (vec.x > ZERO) {
-            return PLUS_X;
+          if (vec.x > zero) {
+            return plusx;
           } else {
-            return opposite(PLUS_X);
+            return opposite(plusx);
           }
         } else {
-          if (vec.y > ZERO) {
-            return PLUS_Y;
+          if (vec.y > zero) {
+            return plusy;
           } else {
-            return opposite(PLUS_Y);
+            return opposite(plusy);
           }
         }
         
@@ -312,20 +310,16 @@ namespace Grid {
     }
   };
   
-  // Grid::FromVec<int>::conv(vec, 1)
+  // Grid::FromVec<int>{}(vec, 1)
   // Grid::fromVec(vec, 1)
   
-  ///Helper function for converting 2D unit vectors to directions
+  ///Helper for converting 2D unit vectors to directions
   template <typename Number>
-  constexpr Dir fromVec(const glm::tvec2<Number> vec, const Number dist = Number(1)) {
-    return FromVec<Number>::conv(vec, dist);
-  }
+  constexpr FromVec<Number> fromVec {};
   
-  ///Helper function for converting inexact 2D unit vectors to directions
+  ///Helper for converting inexact 2D unit vectors to directions
   template <typename Number>
-  constexpr Dir fromVarVec(const glm::tvec2<Number> vec, const Number dist = Number(1)) {
-    return FromVec<Number, Dir::RIGHT, Dir::UP, false>::conv(vec, dist);
-  }
+  constexpr FromVec<Number, Dir::right, Dir::up, false> fromVarVec {};
   
   ///Convert a direction to a number
   template <typename Number>
@@ -350,15 +344,15 @@ namespace Grid {
   constexpr std::string_view toUpperCaseString(const Dir dir) {
     assert(validOrNone(dir));
     switch (dir) {
-      case Dir::UP:
+      case Dir::up:
         return "UP";
-      case Dir::RIGHT:
+      case Dir::right:
         return "RIGHT";
-      case Dir::DOWN:
+      case Dir::down:
         return "DOWN";
-      case Dir::LEFT:
+      case Dir::left:
         return "LEFT";
-      case Dir::NONE:
+      case Dir::none:
         return "NONE";
       default:
         return "";
@@ -368,15 +362,15 @@ namespace Grid {
   constexpr std::string_view toLowerCaseString(const Dir dir) {
     assert(validOrNone(dir));
     switch (dir) {
-      case Dir::UP:
+      case Dir::up:
         return "up";
-      case Dir::RIGHT:
+      case Dir::right:
         return "right";
-      case Dir::DOWN:
+      case Dir::down:
         return "down";
-      case Dir::LEFT:
+      case Dir::left:
         return "left";
-      case Dir::NONE:
+      case Dir::none:
         return "none";
       default:
         return "";
@@ -398,28 +392,28 @@ namespace Grid {
     };
     
     if (str.size() == 0) {
-      return Dir::NONE;
+      return Dir::none;
     } else if (equalTo("up")) {
-      return Dir::UP;
+      return Dir::up;
     } else if (equalTo("right")) {
-      return Dir::RIGHT;
+      return Dir::right;
     } else if (equalTo("down")) {
-      return Dir::DOWN;
+      return Dir::down;
     } else if (equalTo("left")) {
-      return Dir::LEFT;
+      return Dir::left;
     } else {
-      return Dir::NONE;
+      return Dir::none;
     }
   }
   
   ///Get the next direction. Used for iterating directions
   constexpr Dir next(const Dir dir) {
-    return static_cast<Dir>(static_cast<DirType>(dir) + DirType(1));
+    return static_cast<Dir>(static_cast<DirType>(dir) + DirType{1});
   }
   
   ///Get the previous direction. Used for iterating directions in reverse
   constexpr Dir prev(const Dir dir) {
-    return static_cast<Dir>(static_cast<DirType>(dir) - DirType(1));
+    return static_cast<Dir>(static_cast<DirType>(dir) - DirType{1});
   }
   
   ///Get the next direction. Used for iterating directions

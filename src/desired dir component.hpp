@@ -12,7 +12,7 @@
 #include <Simpleton/Grid/dir.hpp>
 
 struct DesiredDir {
-  Grid::Dir d = Grid::Dir::NONE;
+  Grid::Dir d = Grid::Dir::none;
 };
 
 #endif

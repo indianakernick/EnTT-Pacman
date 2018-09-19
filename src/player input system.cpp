@@ -17,13 +17,13 @@ Consumed playerInput(Registry &reg, const int key) {
   auto view = reg.view<Player, DesiredDir>();
   for (const Entity e : view) {
     if (key == KEY_UP) {
-      view.get<DesiredDir>(e).d = Grid::Dir::UP;
+      view.get<DesiredDir>(e).d = Grid::Dir::up;
   	} else if (key == KEY_RIGHT) {
-      view.get<DesiredDir>(e).d = Grid::Dir::RIGHT;
+      view.get<DesiredDir>(e).d = Grid::Dir::right;
     } else if (key == KEY_DOWN) {
-      view.get<DesiredDir>(e).d = Grid::Dir::DOWN;
+      view.get<DesiredDir>(e).d = Grid::Dir::down;
   	} else if (key == KEY_LEFT) {
-      view.get<DesiredDir>(e).d = Grid::Dir::LEFT;
+      view.get<DesiredDir>(e).d = Grid::Dir::left;
    	} else {
    	  return Consumed::no;
    	}

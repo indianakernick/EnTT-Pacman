@@ -13,6 +13,6 @@
 void clearDesiredDir(Registry &reg) {
   auto view = reg.view<DesiredDir>();
   for (const Entity e : view) {
-  	view.get(e).d = Grid::Dir::NONE;
+  	view.get(e).d = Grid::Dir::none;
   }
 }

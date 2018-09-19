@@ -22,12 +22,12 @@ std::vector<Grid::Pos> Grid::onePath(
   Pos pos = start;
   std::vector<Pos> path;
   path.push_back(start);
-  Dir prevDir = Dir::NONE;
+  Dir prevDir = Dir::none;
   
   do {
     bool deadEnd = true;
     
-    for (const Dir dir : DIR_RANGE) {
+    for (const Dir dir : dir_range) {
       if (dir == opposite(prevDir)) {
         continue;
       }

@@ -12,9 +12,9 @@
 #include "desired dir component.hpp"
 
 void movement(Registry &reg) {
-  using ToVec = Grid::ToVec<Grid::Coord, Grid::Dir::RIGHT, Grid::Dir::DOWN>;
+  constexpr Grid::ToVec<Grid::Coord, Grid::Dir::right, Grid::Dir::down> toVec {};
   auto view = reg.view<Position, DesiredDir>();
   for (const Entity e : view) {
-  	view.get<Position>(e).p += ToVec::conv(view.get<DesiredDir>(e).d);
+  	view.get<Position>(e).p += toVec(view.get<DesiredDir>(e).d);
   }
 }
