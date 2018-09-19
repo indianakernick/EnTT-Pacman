@@ -16,6 +16,7 @@ add_executable(Game
         "src/color.hpp"
         "src/framebuf.cpp"
         "src/framebuf.hpp"
+        "src/dir to vec.hpp"
         "src/sprite component.hpp"
         "src/position component.hpp"
         "src/player component.hpp"
@@ -33,6 +34,8 @@ add_executable(Game
         "src/clear desired dir system.hpp"
         "src/random movement system.cpp"
         "src/random movement system.hpp"
+        "src/limit movement system.cpp"
+        "src/limit movement system.hpp"
 )
 
 if(WIN32 OR MSVC)

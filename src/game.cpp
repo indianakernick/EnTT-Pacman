@@ -15,6 +15,7 @@
 #include "get camera system.hpp"
 #include "player input system.hpp"
 #include "blit sprites system.hpp"
+#include "limit movement system.hpp"
 #include "random movement system.hpp"
 #include "clear desired dir system.hpp"
 #include <Simpleton/Time/synchronizer.hpp>
@@ -50,6 +51,7 @@ void runGame(WINDOW *win) {
   	}
 
     randomMovement(reg, rand);
+    limitMovement(reg);
   	movement(reg);
   	clearDesiredDir(reg);
   	blitSprites(reg, screen, getCamera(reg, camFocus, screen.size()));
