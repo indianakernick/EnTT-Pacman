@@ -8,6 +8,7 @@
 
 #include "game.hpp"
 
+#include "sprites.hpp"
 #include "graphics.hpp"
 #include "factories.hpp"
 #include "move player system.hpp"
@@ -21,8 +22,10 @@ void runGame(WINDOW *win) {
   FrameBuf screen{getWindowSize(win)};
   Registry reg;
   makePlayer(reg, {0, 0});
-  makeRock(reg, {5, 7});
-  makeRock(reg, {2, 10});
+  makeObject(reg, {5, 5}, makeRockSprite());
+  makeObject(reg, {24, 2}, makeTreeSprite());
+  makeObject(reg, {-(12), -(1)}, makeMonsterSprite());
+  makeObject(reg, {-(25), 3}, makeFlowerSprite());
 
   bool quit = false;
   while (!quit) {

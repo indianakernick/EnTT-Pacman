@@ -10,7 +10,7 @@
 
 // Imagine we're loading these from a files
 
-FrameBuf makePlayer() {
+FrameBuf makePlayerSprite() {
   FrameBuf player{3, 3};
   /*
    O
@@ -29,24 +29,24 @@ FrameBuf makePlayer() {
   return player;
 }
 
-FrameBuf makeRock() {
+FrameBuf makeRockSprite() {
   FrameBuf rock{4, 3};
   /*
-    __
-   /  |
-   \_/
+    ##
+   ####
+    ##
   */
   rock(0, 0).ch = ' ';
-  rock(1, 0).ch = '_';
-  rock(2, 0).ch = '_';
+  rock(1, 0).ch = '#';
+  rock(2, 0).ch = '#';
   rock(3, 0).ch = ' ';
-  rock(0, 1).ch = '/';
-  rock(1, 1).ch = ' ';
-  rock(2, 1).ch = ' ';
-  rock(3, 1).ch = '|';
-  rock(0, 2).ch = '\\';
-  rock(1, 2).ch = '_';
-  rock(2, 2).ch = '/';
+  rock(0, 1).ch = '#';
+  rock(1, 1).ch = '#';
+  rock(2, 1).ch = '#';
+  rock(3, 1).ch = '#';
+  rock(0, 2).ch = ' ';
+  rock(1, 2).ch = '#';
+  rock(2, 2).ch = '#';
   rock(3, 2).ch = ' ';
 
   for (Cell &cell : rock) {
@@ -56,7 +56,7 @@ FrameBuf makeRock() {
   return rock;
 }
 
-FrameBuf makeTree() {
+FrameBuf makeTreeSprite() {
   FrameBuf tree{4, 4};
   /*
    ##
@@ -89,7 +89,7 @@ FrameBuf makeTree() {
   return tree;
 }
 
-FrameBuf makeFlower() {
+FrameBuf makeFlowerSprite() {
   FrameBuf flower{1, 2};
   /*
   @
@@ -101,7 +101,7 @@ FrameBuf makeFlower() {
   return flower;
 }
 
-FrameBuf makeMonster() {
+FrameBuf makeMonsterSprite() {
   FrameBuf mon{4, 4};
   /*
    

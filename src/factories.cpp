@@ -14,16 +14,14 @@
 #include "position component.hpp"
 
 Entity makePlayer(Registry &reg, const Grid::Pos pos) {
-  const Entity e = reg.create();
+  const Entity e = makeObject(reg, pos, makePlayerSprite());
   reg.assign<Player>(e);
-  reg.assign<Sprite>(e, makePlayer());
-  reg.assign<Position>(e, pos);
   return e;
 }
 
-Entity makeRock(Registry &reg, const Grid::Pos pos) {
+Entity makeObject(Registry &reg, const Grid::Pos pos, const FrameBuf &sprite) {
   const Entity e = reg.create();
-  reg.assign<Sprite>(e, makeRock());
+  reg.assign<Sprite>(e, sprite);
   reg.assign<Position>(e, pos);
   return e;
 }
