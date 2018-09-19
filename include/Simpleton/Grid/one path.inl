@@ -32,7 +32,7 @@ std::vector<Grid::Pos> Grid::onePath(
         continue;
       }
       
-      const Pos neighPos = pos + ToVec<Coord>::conv(dir);
+      const Pos neighPos = pos + toVec<Coord>(dir);
       if (grid.outOfRange(neighPos) || notPath(grid[neighPos])) {
         continue;
       }

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include <type_traits>
+#include <algorithm>
 
 template <
   typename Tile,
@@ -22,23 +22,12 @@ void Grid::blit(
   Func &&copy,
   const Pos pos
 ) {
-  // I realise now that Coord should be signed
-  // I think changing it will break stuff
-  // Oh dear!
-  using SCoord = std::make_signed_t<Coord>;
-  constexpr auto smin = [] (const Coord a, const Coord b) -> Coord {
-    return static_cast<SCoord>(a) < static_cast<SCoord>(b) ? a : b;
-  };
-  constexpr auto smax = [] (const Coord a, const Coord b) -> Coord {
-    return static_cast<SCoord>(a) > static_cast<SCoord>(b) ? a : b;
-  };
-
-  const Coord loX = smin(pos.x, dst.width());
-  const Coord loY = smin(pos.y, dst.height());
-  const Coord hiX = smin(loX + src.width(), dst.width());
-  const Coord hiY = smin(loY + src.height(), dst.height());
-  for (Coord y = smax(loY, 0); y != smax(hiY, 0); ++y) {
-    for (Coord x = smax(loX, 0); x != smax(hiX, 0); ++x) {
+  const Coord loX = std::min(pos.x, dst.width());
+  const Coord loY = std::min(pos.y, dst.height());
+  const Coord hiX = std::min(loX + src.width(), dst.width());
+  const Coord hiY = std::min(loY + src.height(), dst.height());
+  for (Coord y = std::max(loY, 0); y != std::max(hiY, 0); ++y) {
+    for (Coord x = std::max(loX, 0); x != std::max(hiX, 0); ++x) {
       copy(dst(x, y), src(x - pos.x, y - pos.y));
     }
   }

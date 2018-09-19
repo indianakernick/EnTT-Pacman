@@ -35,13 +35,13 @@ namespace Grid::detail {
 
 inline Grid::Morton Grid::toMorton(const Pos pos) {
   static_assert(std::is_same_v<Morton, uint64_t>);
-  static_assert(std::is_same_v<Coord, uint32_t>);
+  static_assert(std::is_same_v<Coord, int32_t>);
   return detail::splitBits(pos.x) | (detail::splitBits(pos.y) << 1);
 }
 
 inline Grid::Pos Grid::fromMorton(const Morton morton) {
   static_assert(std::is_same_v<Morton, uint64_t>);
-  static_assert(std::is_same_v<Coord, uint32_t>);
+  static_assert(std::is_same_v<Coord, int32_t>);
   return {
     detail::getSecondBits(morton),
     detail::getSecondBits(morton >> 1)

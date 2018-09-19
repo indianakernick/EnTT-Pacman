@@ -122,8 +122,8 @@ namespace Grid {
     static constexpr Coord Height = Height_;
     using Tiles = std::array<Tile, Width * Height>;
     
-    static_assert(Width > 0, "Width must be greater than 0");
-    static_assert(Height > 0, "Height must be greater than 0");
+    static_assert(Width > 0);
+    static_assert(Height > 0);
     
     Grid() = default;
     // So that dynamic and static grids have compatible interfaces
@@ -159,19 +159,18 @@ namespace Grid {
     }
     
     static bool outOfRange(const Pos pos) {
-      return pos.x >= Width || pos.y >= Height;
+      return pos.x < 0 || pos.y < 0 || pos.x >= Width || pos.y >= Height;
     }
     static bool outOfRange(const size_t index) {
       return index >= Width * Height;
     }
 
     static size_t toIndex(const Pos pos) {
-      assert(pos.x < Width);
-      assert(pos.y < Height);
+      assert(!outOfRange(pos));
       return pos.y * Width + pos.x;
     }
     static Pos toPos(const size_t index) {
-      assert(index < Width * Height);
+      assert(!outOfRange(index));
       const Coord cindex = static_cast<Coord>(index);
       return {cindex % Width, cindex / Width};
     }
@@ -191,7 +190,11 @@ namespace Grid {
     Grid()
       : mSize(0, 0) {}
     Grid(const Coord width, const Coord height, const Tile &tile = {})
-      : mTiles{width * height, tile}, mSize{width, height} {}
+      : mTiles{static_cast<size_t>(width * height), tile},
+        mSize{width, height} {
+      assert(width > 0);
+      assert(height > 0);
+    }
     explicit Grid(const Pos size, const Tile &tile = {})
       : Grid{size.x, size.y, tile} {}
     
@@ -200,7 +203,9 @@ namespace Grid {
       mSize = {0, 0};
     }
     void resize(const Pos size, const Tile &tile = {}) {
-      mTiles.resize(size.x * size.y, tile);
+      assert(size.x > 0);
+      assert(size.y > 0);
+      mTiles.resize(static_cast<size_t>(size.x * size.y), tile);
       mSize = size;
     }
     void fill(const Tile &tile) {
@@ -217,23 +222,22 @@ namespace Grid {
       return mSize.y;
     }
     Coord area() const {
-      return static_cast<Coord>(mTiles.size());
+      return mSize.x * mSize.y;
     }
     
     bool outOfRange(const Pos pos) const {
-      return pos.x >= mSize.x || pos.y >= mSize.y;
+      return pos.x < 0 || pos.y < 0 || pos.x >= mSize.x || pos.y >= mSize.y;
     }
     bool outOfRange(const size_t index) const {
       return index >= mTiles.size();
     }
     
     size_t toIndex(const Pos pos) const {
-      assert(pos.x < mSize.x);
-      assert(pos.y < mSize.y);
+      assert(!outOfRange(pos));
       return pos.y * mSize.x + pos.x;
     }
     Pos toPos(const size_t index) const {
-      assert(index < mTiles.size());
+      assert(!outOfRange(index));
       const Coord cindex = static_cast<Coord>(index);
       return {cindex % mSize.x, cindex / mSize.x};
     }

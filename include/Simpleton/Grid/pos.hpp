@@ -13,7 +13,7 @@
 #include <glm/vec2.hpp>
 
 namespace Grid {
-  using Coord = uint32_t;
+  using Coord = int32_t;
   using Pos = glm::tvec2<Coord>;
 }
 

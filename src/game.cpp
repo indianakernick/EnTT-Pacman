@@ -46,7 +46,7 @@ void runGame(WINDOW *win) {
   	    movePlayer(reg, Grid::Dir::LEFT);
    	  }
   	}
-  	blitSprites(reg, screen, screen.size() / 2u - getPlayerPos(reg));
+  	blitSprites(reg, screen, screen.size() / 2 - getPlayerPos(reg));
   	renderScreen(win, screen);
   	screen.fill(Cell{});
   }
