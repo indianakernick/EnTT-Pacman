@@ -10,7 +10,7 @@ notifications:
 matrix:
   include:
   - os: osx
-    osx_image: xcode9
+    osx_image: xcode10
     compiler: clang
     env: COMPILER=clang++
   - os: linux
@@ -27,14 +27,7 @@ matrix:
         sources: ["ubuntu-toolchain-r-test"]
         packages: ["g++-7"]
     env: COMPILER=g++-7
-  - os: linux
-    compiler: gcc
-    addons:
-      apt:
-        sources: ["ubuntu-toolchain-r-test"]
-        packages: ["g++-6"]
-    env: COMPILER=g++-6
-
+    
 before_install:
 - export CXX=${COMPILER}
 
