@@ -26,6 +26,7 @@ FrameBuf makePlayerSprite() {
   player(0, 2) = {'/',  color_sys(Color::blue)};
   player(1, 2) = {' '};
   player(2, 2) = {'\\', color_sys(Color::blue)};
+  
   return player;
 }
 
@@ -111,21 +112,29 @@ FrameBuf makeMonsterSprite() {
   /  \
   
   */
-  mon(0, 0) = {'/', color_sys(Color::red)};
-  mon(1, 0) = {'-', color_sys(Color::red)};
-  mon(2, 0) = {'-', color_sys(Color::red)};
-  mon(3, 0) = {'\\', color_sys(Color::red)};
-  mon(0, 1) = {'|', color_sys(Color::red)};
-  mon(1, 1) = {'`', color_sys(Color::cyan)};
-  mon(2, 1) = {'`', color_sys(Color::cyan)};
-  mon(3, 1) = {'|', color_sys(Color::red)};
-  mon(0, 2) = {'/', color_sys(Color::yellow)};
-  mon(1, 2) = {'~', color_sys(Color::blue)};
-  mon(2, 2) = {'~', color_sys(Color::blue)};
-  mon(3, 2) = {'\\', color_sys(Color::yellow)};
-  mon(0, 3) = {'/', color_sys(Color::yellow)};
-  mon(1, 3) = {' ', color_sys(Color::white)};
-  mon(2, 3) = {' ', color_sys(Color::white)};
-  mon(3, 3) = {'\\', color_sys(Color::yellow)};
+
+  const ColIdx topHead = color_rgb(2, 0, 0);
+  const ColIdx sideHead = color_rgb(3, 0, 1);
+  const ColIdx arms = color_rgb(4, 1, 0);
+  const ColIdx chest = color_rgb(2, 0, 2);
+  const ColIdx eyes = color_rgb(0, 5, 5);
+   
+  mon(0, 0) = {'/', topHead};
+  mon(1, 0) = {'-', topHead};
+  mon(2, 0) = {'-', topHead};
+  mon(3, 0) = {'\\', topHead};
+  mon(0, 1) = {'|', sideHead};
+  mon(1, 1) = {'`', eyes};
+  mon(2, 1) = {'`', eyes};
+  mon(3, 1) = {'|', sideHead};
+  mon(0, 2) = {'/', arms};
+  mon(1, 2) = {'~', chest};
+  mon(2, 2) = {'~', chest};
+  mon(3, 2) = {'\\', arms};
+  mon(0, 3) = {'/', arms};
+  mon(1, 3) = {' '};
+  mon(2, 3) = {' '};
+  mon(3, 3) = {'\\', arms};
+  
   return mon;
 }
