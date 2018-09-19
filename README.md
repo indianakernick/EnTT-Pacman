@@ -5,7 +5,7 @@
 
 An example of how to use the ECS part of the [EnTT Framework](https://github.com/skypjack/entt)
 
-If you're on MacOS or Linux, we'll use ncurses which is probably already installed on your system. If you're on windows, we'll build pdcurses from sources. All other dependencies are bundled in the repo.
+If the target is MacOS or Linux, ncurses will be located on the system. If the target is Windows, pdcurses will be build from sources. All other dependencies are bundled in the repo.
 
 ```bash
 cd build
