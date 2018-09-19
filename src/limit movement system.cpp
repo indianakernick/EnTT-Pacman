@@ -18,7 +18,7 @@ void limitMovement(Registry &reg) {
   	const Grid::Pos pos = view.get<Position>(e).p;
   	Grid::Dir &dir = view.get<DesiredDir>(e).d;
   	const Grid::Pos nextPos = (pos + toVec(dir)) * toVec(dir);
-  	if (std::max(nextPos.x, nextPos.y) >= 50) {
+  	if (nextPos.x >= 50 || nextPos.y >= 20) {
   	  dir = Grid::Dir::none;
   	}
   }
