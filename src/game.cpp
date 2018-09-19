@@ -16,6 +16,7 @@
 #include "player input system.hpp"
 #include "blit sprites system.hpp"
 #include "clear desired dir system.hpp"
+#include <Simpleton/Time/synchronizer.hpp>
 
 void runGame(WINDOW *win) {
   configureWindow(win);
@@ -31,6 +32,8 @@ void runGame(WINDOW *win) {
 
   bool quit = false;
   while (!quit) {
+    Time::Synchronizer sync{std::chrono::nanoseconds{1'000'000'000 / 20}};
+
     int ch;
   	while ((ch = wgetch(win)) != ERR) {
       if (ch == 'q') {

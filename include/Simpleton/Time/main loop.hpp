@@ -81,7 +81,7 @@ namespace Time {
         const Duration elapsed = getPoint<Duration>() - start;
         if (elapsed.count() < step) {
           #ifndef __MINGW32__
-          std::this_thread::sleep_for(Duration(step));
+          std::this_thread::sleep_for(Duration(step) - elapsed);
           #endif
         }
       }
