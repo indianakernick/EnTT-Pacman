@@ -12,11 +12,18 @@
 #include "player component.hpp"
 #include "sprite component.hpp"
 #include "position component.hpp"
+#include "random dir component.hpp"
 #include "desired dir component.hpp"
 
 Entity makePlayer(Registry &reg, const Grid::Pos pos) {
   const Entity e = makeObject(reg, pos, makePlayerSprite());
   reg.assign<Player>(e);
+  return e;
+}
+
+Entity makeMonster(Registry &reg, const Grid::Pos pos) {
+  const Entity e = makeObject(reg, pos, makeMonsterSprite());
+  reg.assign<RandomDir>(e);
   return e;
 }
 

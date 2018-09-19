@@ -13,25 +13,23 @@
 #include <iterator>
 
 namespace Math {
-  template <typename Generator, typename BeginIterator, typename EndIterator>
-  size_t weightedRand(const BeginIterator begin, const EndIterator end) {
-    using Traits = std::iterator_traits<BeginIterator>;
-    using Num = typename Traits::value_type;
+  template <typename Gen, typename BeginIter, typename EndIter>
+  size_t weightedRand(Gen &gen, const BeginIter begin, const EndIter end) {
+    using Prob = typename std::iterator_traits<BeginIter>::value_type;
     
     size_t size = 0;
-    Num sum(0);
-    for (BeginIterator w = begin; w != end; ++w) {
+    Prob sum(0);
+    for (BeginIter w = begin; w != end; ++w) {
       sum += *w;
       ++size;
     }
     
-    std::uniform_int_distribution<Num> dist(Num(0), sum);
-    Generator gen;
-    Num choice = dist(gen);
-    BeginIterator w = begin;
+    std::uniform_int_distribution<Prob> dist(Prob(0), sum);
+    Prob choice = dist(gen);
+    BeginIter w = begin;
     
     for (size_t i = 0; i != size; ++i, ++w) {
-      const Num weight = *w;
+      const Prob weight = *w;
       if (choice < weight) {
         return i;
       }

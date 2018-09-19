@@ -20,6 +20,7 @@ add_executable(Game
         "src/position component.hpp"
         "src/player component.hpp"
         "src/desired dir component.hpp"
+        "src/random dir component.hpp"
         "src/blit sprites system.cpp"
         "src/blit sprites system.hpp"
         "src/movement system.cpp"
@@ -30,6 +31,8 @@ add_executable(Game
         "src/player input system.hpp"
         "src/clear desired dir system.cpp"
         "src/clear desired dir system.hpp"
+        "src/random movement system.cpp"
+        "src/random movement system.hpp"
 )
 
 if(WIN32 OR MSVC)

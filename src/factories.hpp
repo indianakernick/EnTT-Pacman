@@ -18,6 +18,7 @@
 // just in case you need it later.
 
 Entity makePlayer(Registry &, Grid::Pos);
+Entity makeMonster(Registry &, Grid::Pos);
 Entity makeObject(Registry &, Grid::Pos, const FrameBuf &);
 
 #endif
