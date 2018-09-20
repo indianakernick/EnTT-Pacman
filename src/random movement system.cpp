@@ -17,12 +17,12 @@ void randomMovement(Registry &reg, std::mt19937 &rand) {
   for (const Entity e : view) {
   	Grid::Dir &prevDir = view.get<RandomDir>(e).prevDir;
     Grid::Dir &newDir = view.get<DesiredDir>(e).d;
-  	const float dist[5] = {
-  	  0.4f, // same dir
-  	  0.2f, // other
-  	  0.1f, // opposite dir
-  	  0.2f, // other
-  	  0.1f  // stop
+  	const int dist[5] = {
+  	  4, // same dir
+  	  2, // other
+  	  1, // opposite dir
+  	  2, // other
+  	  1  // stop
   	};
   	const size_t choice = Math::weightedRand(rand, std::cbegin(dist), std::cend(dist));
   	if (choice == 4) {
