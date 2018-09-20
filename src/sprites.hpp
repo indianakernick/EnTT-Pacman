@@ -16,5 +16,6 @@ FrameBuf makeRockSprite();
 FrameBuf makeTreeSprite();
 FrameBuf makeFlowerSprite();
 FrameBuf makeMonsterSprite();
+FrameBuf makeTestSprite();
 
 #endif

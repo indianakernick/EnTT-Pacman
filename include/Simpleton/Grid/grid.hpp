@@ -154,8 +154,8 @@ namespace Grid {
     static constexpr Coord height() {
       return Height;
     }
-    static constexpr Coord area() {
-      return Width * Height;
+    static constexpr size_t area() {
+      return static_cast<size_t>(Width * Height);
     }
     
     static bool outOfRange(const Pos pos) {
@@ -221,8 +221,8 @@ namespace Grid {
     Coord height() const {
       return mSize.y;
     }
-    Coord area() const {
-      return mSize.x * mSize.y;
+    size_t area() const {
+      return mTiles.size();
     }
     
     bool outOfRange(const Pos pos) const {

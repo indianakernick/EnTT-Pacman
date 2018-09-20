@@ -33,6 +33,7 @@ void runGame(WINDOW *win) {
   makeObject(reg, {24, 2}, makeTreeSprite());
   makeMonster(reg, {-12, -1});
   makeObject(reg, {-25, 3}, makeFlowerSprite());
+  makeObject(reg, {60, 8}, makeTestSprite());
 
   bool quit = false;
   while (!quit) {

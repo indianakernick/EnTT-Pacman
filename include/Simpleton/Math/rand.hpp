@@ -18,13 +18,13 @@ namespace Math {
     using Prob = typename std::iterator_traits<BeginIter>::value_type;
     
     size_t size = 0;
-    Prob sum(0);
+    Prob sum{0};
     for (BeginIter w = begin; w != end; ++w) {
       sum += *w;
       ++size;
     }
     
-    std::uniform_int_distribution<Prob> dist(Prob(0), sum);
+    std::uniform_int_distribution<Prob> dist(Prob{0}, sum);
     Prob choice = dist(gen);
     BeginIter w = begin;
     
