@@ -37,8 +37,6 @@ target_link_libraries(Game
         "${SDL2_LIBRARY}"
 )
 
-message(STATUS "${SDL2_LIBRARY}")
-
 target_compile_features(Game
         PRIVATE
         cxx_std_17

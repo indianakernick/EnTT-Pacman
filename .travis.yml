@@ -19,14 +19,14 @@ matrix:
     addons:
       apt:
         sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-6.0"]
-        packages: ['clang-6.0', 'g++-7', "libsdl2-2.0"]
+        packages: ["clang-6.0", "g++-7", "libsdl2-dev"]
     env: COMPILER=clang++-6.0
   - os: linux
     compiler: gcc
     addons:
       apt:
         sources: ["ubuntu-toolchain-r-test"]
-        packages: ["g++-7", "libsdl2-2.0"]
+        packages: ["g++-7", "libsdl2-dev"]
     env: COMPILER=g++-7
     
 before_install:
