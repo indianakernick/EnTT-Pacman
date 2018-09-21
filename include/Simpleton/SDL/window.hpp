@@ -45,16 +45,12 @@ namespace SDL {
     void relMouse(bool);
     bool relMouse() const;
     
-    void captureMouse(bool);
-    bool captureMouse() const;
-    
     void raise();
     void fullscreen(bool);
     void toggleFullscreen();
     
   private:
     SDL_Window *window;
-    bool mouseCaptured = false;
   };
 }
 

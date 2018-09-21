@@ -59,16 +59,6 @@ inline bool SDL::Window::relMouse() const {
   return SDL_GetRelativeMouseMode() && SDL_GetMouseFocus() == window;
 }
 
-inline void SDL::Window::captureMouse(const bool status) {
-  assert(SDL_GetMouseFocus() == window);
-  CHECK_SDL_ERROR(SDL_CaptureMouse(static_cast<SDL_bool>(status)));
-  mouseCaptured = status;
-}
-
-inline bool SDL::Window::captureMouse() const {
-  return mouseCaptured;
-}
-
 inline void SDL::Window::raise() {
   SDL_RaiseWindow(window);
 }
