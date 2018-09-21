@@ -59,10 +59,6 @@ void runGame(WINDOW *win) {
 
   	renderScreen(win, screen);
   	screen.fill(Cell{});
-
-  	#ifdef DISABLE_MAINLOOP
-  	quit = true;
-  	#endif
   }
   // delwin(win);
 }

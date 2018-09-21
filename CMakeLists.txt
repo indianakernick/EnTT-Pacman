@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 project(EnTT_Example)
 
-set(ENV{TERM} "xterm-256color")
-
 add_executable(Game
         "src/main.cpp"
         "src/curses.hpp"
@@ -78,13 +76,6 @@ if (CMAKE_BUILD_TYPE MATCHES DEBUG)
                 # GLM 0.9.9.1 Suddenly produces a bunch of warnings
                 # They should sort it out in 0.9.9.2
                 -Wno-gnu-anonymous-struct -Wno-nested-anon-types
-        )
-endif()
-
-if (DISABLE_MAINLOOP)
-        target_compile_definitions(Game
-                PRIVATE
-                -DDISABLE_MAINLOOP
         )
 endif()
 
