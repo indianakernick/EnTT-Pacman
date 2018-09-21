@@ -30,7 +30,7 @@ namespace Math {
     
     for (size_t i = 0; i != size; ++i, ++w) {
       const Prob weight = *w;
-      if (choice < weight) {
+      if (choice <= weight) {
         return i;
       }
       choice -= weight;

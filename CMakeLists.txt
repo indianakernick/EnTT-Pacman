@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 project(EnTT_Example)
 
+set(ENV{TERM} "xterm-256color")
+
 add_executable(Game
         "src/main.cpp"
         "src/curses.hpp"
