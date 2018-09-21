@@ -13,33 +13,26 @@ matrix:
     osx_image: xcode10
     compiler: clang
     env: COMPILER=clang++
+    before_install: brew install sdl2
   - os: linux
     compiler: clang
     addons:
       apt:
-        sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-6.0']
-        packages: ['clang-6.0', 'g++-7']
+        sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-6.0"]
+        packages: ['clang-6.0', 'g++-7', "libsdl2-2.0"]
     env: COMPILER=clang++-6.0
   - os: linux
     compiler: gcc
     addons:
       apt:
         sources: ["ubuntu-toolchain-r-test"]
-        packages: ["g++-7"]
+        packages: ["g++-7", "libsdl2-2.0"]
     env: COMPILER=g++-7
     
 before_install:
 - export CXX=${COMPILER}
-- travis_retry curl -L https://www.libsdl.org/release/SDL2-2.0.8.tar.gz | tar xz
-- cd SDL2-2.0.8
-- mkdir build
-- cd build
-- cmake -DCMAKE_BUILD_TYPE=Release ..
-- make
-- sudo make install
-- cd ../..
 
 script:
 - cd build
 - cmake -DCMAKE_BUILD_TYPE=Release ..
-- make VERBOSE=1
+- make

@@ -10,7 +10,6 @@
 #define engine_utils_instance_limiter_hpp
 
 #include <exception>
-#include "type name.hpp"
 
 namespace Utils {
   class TooManyInstances : public std::exception {};

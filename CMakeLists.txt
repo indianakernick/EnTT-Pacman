@@ -31,8 +31,6 @@ target_include_directories(Game
         "${SDL2_INCLUDE_DIR}"
         "${CMAKE_SOURCE_DIR}/include"
 )
-
-link_directories("${SDL2_LIBRARY}")
        
 target_link_libraries(Game
         PRIVATE
