@@ -10,9 +10,7 @@
 #define BLIT_SPRITES_SYSTEM_HPP
 
 #include "registry.hpp"
-#include "framebuf.hpp"
-#include <Simpleton/Grid/pos.hpp>
 
-void blitSprites(Registry &, FrameBuf &, Grid::Pos);
+void blitSprites(Registry &);
 
 #endif

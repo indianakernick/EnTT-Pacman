@@ -12,7 +12,6 @@
 #include <string_view>
 #include <type_traits>
 #include "quad writer.hpp"
-#include "../Utils/function alias.hpp"
 
 namespace G2D {
   /// Text alignment

@@ -11,10 +11,9 @@
 #include "sprite component.hpp"
 #include "position component.hpp"
 
-void blitSprites(Registry &reg, FrameBuf &screen, const Grid::Pos camera) {
+void blitSprites(Registry &reg) {
   const auto view = reg.view<Sprite, Position>();
   for (const Entity e : view) {
-    const FrameBuf &sprite = view.get<Sprite>(e).s;
-  	blit(screen, sprite, view.get<Position>(e).p + camera - sprite.size() / 2);
+
   }
 }

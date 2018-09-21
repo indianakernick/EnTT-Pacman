@@ -7,17 +7,17 @@
 //
 
 #include "game.hpp"
+#include <iostream>
 #include <exception>
+#include <Simpleton/SDL/library.hpp>
 
 int main() {
-  WINDOW *win = initscr();
+  SDL::Library lib = SDL::makeLibrary(SDL_INIT_VIDEO);
   try {
-    runGame(win);
+    runGame();
   } catch (std::exception &e) {
-  	endwin();
-  	printf("%s\n", e.what());
+    std::cout << e.what() << '\n';
   	return 1;
   }
-  endwin();
   return 0;
 }

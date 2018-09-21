@@ -8,12 +8,12 @@
 
 #include "factories.hpp"
 
-#include "sprites.hpp"
 #include "player component.hpp"
 #include "sprite component.hpp"
 #include "position component.hpp"
-#include "random dir component.hpp"
 #include "desired dir component.hpp"
+
+/*
 
 Entity makePlayer(Registry &reg, const Grid::Pos pos) {
   const Entity e = makeObject(reg, pos, makePlayerSprite());
@@ -34,3 +34,5 @@ Entity makeObject(Registry &reg, const Grid::Pos pos, const FrameBuf &sprite) {
   reg.assign<DesiredDir>(e);
   return e;
 }
+
+*/

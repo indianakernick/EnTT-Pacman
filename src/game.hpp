@@ -9,8 +9,6 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "curses.hpp"
-
-void runGame(WINDOW *);
+void runGame();
 
 #endif

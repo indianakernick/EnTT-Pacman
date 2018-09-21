@@ -10,12 +10,13 @@
 #define PLAYER_INPUT_SYSTEM_HPP
 
 #include "registry.hpp"
+#include <SDL2/SDL_scancode.h>
 
 enum class Consumed {
   no,
   yes
 };
 
-Consumed playerInput(Registry &, int);
+Consumed playerInput(Registry &, SDL_Scancode);
 
 #endif

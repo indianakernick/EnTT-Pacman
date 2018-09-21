@@ -3,66 +3,39 @@ project(EnTT_Example)
 
 add_executable(Game
         "src/main.cpp"
-        "src/curses.hpp"
         "src/registry.hpp"
-        "src/graphics.cpp"
-        "src/graphics.hpp"
         "src/game.cpp"
         "src/game.hpp"
-        "src/sprites.cpp"
-        "src/sprites.hpp"
         "src/factories.cpp"
         "src/factories.hpp"
-        "src/color.hpp"
-        "src/framebuf.cpp"
-        "src/framebuf.hpp"
         "src/dir to vec.hpp"
         "src/sprite component.hpp"
         "src/position component.hpp"
         "src/player component.hpp"
         "src/desired dir component.hpp"
-        "src/random dir component.hpp"
         "src/blit sprites system.cpp"
         "src/blit sprites system.hpp"
         "src/movement system.cpp"
         "src/movement system.hpp"
-        "src/get camera system.cpp"
-        "src/get camera system.hpp"
         "src/player input system.cpp"
         "src/player input system.hpp"
         "src/clear desired dir system.cpp"
         "src/clear desired dir system.hpp"
-        "src/random movement system.cpp"
-        "src/random movement system.hpp"
-        "src/limit movement system.cpp"
-        "src/limit movement system.hpp"
 )
 
-if(WIN32 OR MSVC)
-        add_subdirectory(pdcurses)
-        target_link_libraries(Game
-                PRIVATE
-                PDcurses
-        )
-        target_include_directories(Game
-                PRIVATE
-                include
-        ) 
-else()
-        set(CURSES_NEED_NCURSES TRUE)
-        find_package(Curses REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+find_package(SDL2 REQUIRED)
 
-        target_include_directories(Game
-                PRIVATE
-                ${CURSES_INCLUDE_DIRECTORIES}
-                ${CMAKE_SOURCE_DIR}/include
-        )
+target_include_directories(Game
+        PRIVATE
+        ${SDL2_INCLUDE_DIR}
+        ${CMAKE_SOURCE_DIR}/include
+)
         
-        target_link_libraries(Game
-                PRIVATE
-                ${CURSES_LIBRARIES}
-        )
-endif()
+target_link_libraries(Game
+        PRIVATE
+        ${SDL2_LIBRARY}
+)
 
 target_compile_features(Game
         PRIVATE

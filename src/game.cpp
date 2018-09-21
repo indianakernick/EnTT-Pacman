@@ -8,57 +8,33 @@
 
 #include "game.hpp"
 
-#include "sprites.hpp"
-#include "graphics.hpp"
-#include "factories.hpp"
-#include "movement system.hpp"
-#include "get camera system.hpp"
-#include "player input system.hpp"
-#include "blit sprites system.hpp"
-#include "limit movement system.hpp"
-#include "random movement system.hpp"
-#include "clear desired dir system.hpp"
+#include "registry.hpp"
+#include <Simpleton/SDL/library.hpp>
 #include <Simpleton/Time/synchronizer.hpp>
 
-void runGame(WINDOW *win) {
-  configureWindow(win);
-  initColorPairs();
+SDL::Window::Desc getWinDesc() {
+  SDL::Window::Desc desc;
+  desc.title = "Pacman";
+  desc.size = {19*8*4, 22*8*4};
+  desc.resizable = false;
+  desc.openGL = false;
+  return desc;
+}
 
-  FrameBuf screen{getWindowSize(win)};
+void runGame() {
+  SDL::Window window = SDL::makeWindow(getWinDesc());
   Registry reg;
-  std::mt19937 rand{std::random_device{}()};
-  
-  const Entity camFocus = makePlayer(reg, {0, 4});
-  makeGhost(reg, {0, 0}, makeBlinkySprite());
-  makeGhost(reg, {0, 0}, makePinkySprite());
-  makeGhost(reg, {0, 0}, makeInkySprite());
-  makeGhost(reg, {0, 0}, makeClydeSprite());
-  makeObject(reg, {0, 0}, makeMazeSprite());
 
   bool quit = false;
   while (!quit) {
     Time::Synchronizer sync{std::chrono::nanoseconds{1000'000'000 / 10}};
 
-    int ch;
-  	while ((ch = wgetch(win)) != ERR) {
-      if (ch == 'q') {
-  	    quit = true;
-  	    break;
-  	  } else if (ch == KEY_RESIZE) {
-  	    screen.resize(getWindowSize(win));
-  	  } else {
-  	  	playerInput(reg, ch);
-  	  }
-  	}
-
-    randomMovement(reg, rand);
-    limitMovement(reg);
-  	movement(reg);
-  	//clearDesiredDir(reg);
-  	blitSprites(reg, screen, getCamera(reg, camFocus, screen.size()));
-
-  	renderScreen(win, screen);
-  	screen.fill(Cell{});
+    SDL_Event e;
+    while (SDL_PollEvent(&e)) {
+      if (e.type == SDL_QUIT) {
+      	quit = true;
+      	break;
+      }
+    }
   }
-  // delwin(win);
 }

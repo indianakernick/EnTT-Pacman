@@ -25,6 +25,8 @@ namespace Time {
     ~Synchronizer() {
       std::this_thread::sleep_for(step - (Clock::now() - start));
     }
+    Synchronizer(Synchronizer &&) = default;
+    Synchronizer &operator=(Synchronizer &&) = default;
   
   private:
     const Point start;

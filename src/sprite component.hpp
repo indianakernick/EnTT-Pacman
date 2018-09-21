@@ -9,10 +9,6 @@
 #ifndef SPRITE_COMPONENT_HPP
 #define SPRITE_COMPONENT_HPP
 
-#include "framebuf.hpp"
-
-struct Sprite {
-  FrameBuf s;
-};
+struct Sprite {};
 
 #endif
