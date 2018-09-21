@@ -28,14 +28,16 @@ find_package(SDL2 REQUIRED)
 
 target_include_directories(Game
         PRIVATE
-        ${SDL2_INCLUDE_DIR}
-        ${CMAKE_SOURCE_DIR}/include
+        "${SDL2_INCLUDE_DIR}"
+        "${CMAKE_SOURCE_DIR}/include"
 )
         
 target_link_libraries(Game
         PRIVATE
-        ${SDL2_LIBRARY}
+        "${SDL2_LIBRARY}"
 )
+
+message(STATUS "${SDL2_LIBRARY}")
 
 target_compile_features(Game
         PRIVATE
