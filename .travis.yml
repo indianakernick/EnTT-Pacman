@@ -33,5 +33,6 @@ before_install:
 
 script:
 - cd build
-- cmake -DCMAKE_BUILD_TYPE=Release ..
+- cmake -DCMAKE_BUILD_TYPE=Release -DDISABLE_MAINLOOP ..
 - make
+- ./example

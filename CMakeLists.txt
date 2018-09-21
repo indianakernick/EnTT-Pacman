@@ -79,6 +79,13 @@ if (CMAKE_BUILD_TYPE MATCHES DEBUG)
         )
 endif()
 
+if (DISABLE_MAINLOOP)
+        target_compile_definitions(Game
+                PRIVATE
+                -DDISABLE_MAINLOOP
+        )
+endif()
+
 set_target_properties(Game
         PROPERTIES OUTPUT_NAME "example"
 )
