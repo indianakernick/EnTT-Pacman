@@ -12,10 +12,10 @@
 #include "framebuf.hpp"
 
 FrameBuf makePlayerSprite();
-FrameBuf makeRockSprite();
-FrameBuf makeTreeSprite();
-FrameBuf makeFlowerSprite();
-FrameBuf makeMonsterSprite();
-FrameBuf makeTestSprite();
+FrameBuf makeBlinkySprite();
+FrameBuf makePinkySprite();
+FrameBuf makeInkySprite();
+FrameBuf makeClydeSprite();
+FrameBuf makeMazeSprite();
 
 #endif

@@ -28,12 +28,12 @@ void runGame(WINDOW *win) {
   Registry reg;
   std::mt19937 rand{std::random_device{}()};
   
-  const Entity camFocus = makePlayer(reg, {0, 0});
-  makeObject(reg, {5, 5}, makeRockSprite());
-  makeObject(reg, {24, 2}, makeTreeSprite());
-  makeMonster(reg, {-12, -1});
-  makeObject(reg, {-25, 3}, makeFlowerSprite());
-  makeObject(reg, {60, 8}, makeTestSprite());
+  const Entity camFocus = makePlayer(reg, {0, 4});
+  makeGhost(reg, {0, 0}, makeBlinkySprite());
+  makeGhost(reg, {0, 0}, makePinkySprite());
+  makeGhost(reg, {0, 0}, makeInkySprite());
+  makeGhost(reg, {0, 0}, makeClydeSprite());
+  makeObject(reg, {0, 0}, makeMazeSprite());
 
   bool quit = false;
   while (!quit) {
@@ -54,7 +54,7 @@ void runGame(WINDOW *win) {
     randomMovement(reg, rand);
     limitMovement(reg);
   	movement(reg);
-  	clearDesiredDir(reg);
+  	//clearDesiredDir(reg);
   	blitSprites(reg, screen, getCamera(reg, camFocus, screen.size()));
 
   	renderScreen(win, screen);

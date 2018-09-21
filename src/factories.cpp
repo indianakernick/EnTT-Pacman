@@ -21,8 +21,8 @@ Entity makePlayer(Registry &reg, const Grid::Pos pos) {
   return e;
 }
 
-Entity makeMonster(Registry &reg, const Grid::Pos pos) {
-  const Entity e = makeObject(reg, pos, makeMonsterSprite());
+Entity makeGhost(Registry &reg, const Grid::Pos pos, const FrameBuf &sprite) {
+  const Entity e = makeObject(reg, pos, sprite);
   reg.assign<RandomDir>(e);
   return e;
 }
