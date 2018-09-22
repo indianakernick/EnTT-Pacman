@@ -9,12 +9,14 @@
 #include "factories.hpp"
 
 #include "player component.hpp"
+#include "target component.hpp"
 #include "position component.hpp"
 #include "sprite id component.hpp"
 #include "actual dir component.hpp"
 #include "desired dir component.hpp"
 #include "maze sprite component.hpp"
 #include "ghost sprite component.hpp"
+#include "blinky target component.hpp"
 
 Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
@@ -36,9 +38,11 @@ Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
 Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
   reg.assign<GhostSprite>(e);
+  reg.assign<BlinkyTarget>(e);
   reg.assign<DesiredDir>(e, Grid::Dir::left);
   reg.assign<ActualDir>(e, Grid::Dir::left);
   reg.assign<Position>(e, Grid::Pos{9, 8});
+  reg.assign<Target>(e);
   reg.assign<SpriteID>(e, sheet.getIDfromName("blinky 0"));
   return e;
 }

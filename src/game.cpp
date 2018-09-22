@@ -9,6 +9,7 @@
 #include "game.hpp"
 
 #include "factories.hpp"
+#include "target system.hpp"
 #include "eat dots system.hpp"
 #include "movement system.hpp"
 #include "dot render system.hpp"
@@ -17,11 +18,12 @@
 #include "wall collide system.hpp"
 #include "ghost render system.hpp"
 #include "player render system.hpp"
+#include "blinky target system.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
   makeMaze(reg, sheet);
-  makePlayer(reg, sheet);
+  player = makePlayer(reg, sheet);
   makeBlinky(reg, sheet);
   dotSprite = sheet.getIDfromName("dot 0");
 }
@@ -34,6 +36,8 @@ bool Game::logic() {
   movement(reg);
   wallCollide(reg, maze);
   score += eatDots(reg, maze);
+  blinkyTarget(reg, player);
+  target(reg, maze);
   return true;
 }
 

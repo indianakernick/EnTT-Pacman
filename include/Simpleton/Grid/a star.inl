@@ -6,16 +6,8 @@
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include <cmath>
 #include "dir.hpp"
-
-namespace Grid::detail {
-  inline float distance(const Pos a, const Pos b) {
-    const float dx = static_cast<float>(a.x) - b.x;
-    const float dy = static_cast<float>(a.y) - b.y;
-    return std::sqrt(dx*dx + dy*dy);
-  }
-}
+#include "distance.hpp"
 
 template <typename Tile, Grid::Coord Width, Grid::Coord Height, typename Function>
 std::vector<Grid::Pos> Grid::astar(
@@ -46,7 +38,7 @@ std::vector<Grid::Pos> Grid::astar(
   std::vector<Node> queue;
   std::vector<Node> popped;
   
-  queue.push_back({end, end, 0, detail::distance(start, end)});
+  queue.push_back({end, end, 0, euclid(start, end)});
   
   do {
     if (queue.empty()) {
@@ -86,7 +78,7 @@ std::vector<Grid::Pos> Grid::astar(
         neighPos,
         topNode.pos,
         neighPathCost,
-        neighPathCost + detail::distance(neighPos, start)
+        neighPathCost + euclid(neighPos, start)
       };
       
       // check if the current neighbor is already in the queue

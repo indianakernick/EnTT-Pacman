@@ -20,6 +20,8 @@ add_executable(Game
         "src/desired dir component.hpp"
         "src/actual dir component.hpp"
         "src/maze sprite component.hpp"
+        "src/target component.hpp"
+        "src/blinky target component.hpp"
         "src/movement system.cpp"
         "src/movement system.hpp"
         "src/player input system.cpp"
@@ -38,6 +40,10 @@ add_executable(Game
         "src/eat dots system.hpp"
         "src/ghost render system.cpp"
         "src/ghost render system.hpp"
+        "src/target system.cpp"
+        "src/target system.hpp"
+        "src/blinky target system.cpp"
+        "src/blinky target system.hpp"
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
