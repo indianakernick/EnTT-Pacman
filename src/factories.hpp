@@ -10,16 +10,12 @@
 #define FACTORIES_HPP
 
 #include "registry.hpp"
-#include <Simpleton/Grid/pos.hpp>
+#include <Simpleton/Sprite/sheet.hpp>
 
 // You typically don't need to store the entity ID after making an entity.
 // Sometimes you do so it's probably a good idea to return the entity ID
 // just in case you need it later.
 
-/*
-Entity makePlayer(Registry &, Grid::Pos);
-Entity makeGhost(Registry &, Grid::Pos, const FrameBuf &);
-Entity makeObject(Registry &, Grid::Pos, const FrameBuf &);
-*/
+Entity makeMaze(Registry &, const Sprite::Sheet &);
 
 #endif

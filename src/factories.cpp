@@ -8,31 +8,12 @@
 
 #include "factories.hpp"
 
-#include "player component.hpp"
-#include "position component.hpp"
 #include "sprite id component.hpp"
-#include "desired dir component.hpp"
+#include "maze sprite component.hpp"
 
-/*
-
-Entity makePlayer(Registry &reg, const Grid::Pos pos) {
-  const Entity e = makeObject(reg, pos, makePlayerSprite());
-  reg.assign<Player>(e);
-  return e;
-}
-
-Entity makeGhost(Registry &reg, const Grid::Pos pos, const FrameBuf &sprite) {
-  const Entity e = makeObject(reg, pos, sprite);
-  reg.assign<RandomDir>(e);
-  return e;
-}
-
-Entity makeObject(Registry &reg, const Grid::Pos pos, const FrameBuf &sprite) {
+Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
-  reg.assign<Sprite>(e, sprite);
-  reg.assign<Position>(e, pos);
-  reg.assign<DesiredDir>(e);
+  reg.assign<SpriteID>(e, sheet.getIDfromName("maze"));
+  reg.assign<MazeSprite>(e);
   return e;
 }
-
-*/
