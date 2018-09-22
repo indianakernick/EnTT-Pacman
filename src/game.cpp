@@ -10,9 +10,11 @@
 
 #include "factories.hpp"
 #include "maze render system.hpp"
+#include "player render system.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   makeMaze(reg, sheet);
+  makePlayer(reg, sheet);
 }
 
 void Game::input(const SDL_Scancode key) {
@@ -25,4 +27,5 @@ bool Game::logic() {
 
 void Game::render(SDL::QuadWriter &writer, const int frame) {
   mazeRender(reg, writer);
-} 
+  playerRender(reg, writer, frame);
+}

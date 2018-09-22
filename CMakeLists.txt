@@ -16,6 +16,7 @@ add_executable(Game
         "src/position component.hpp"
         "src/player component.hpp"
         "src/desired dir component.hpp"
+        "src/actual dir component.hpp"
         "src/maze sprite component.hpp"
         "src/movement system.cpp"
         "src/movement system.hpp"
@@ -25,6 +26,8 @@ add_executable(Game
         "src/clear desired dir system.hpp"
         "src/maze render system.cpp"
         "src/maze render system.hpp"
+        "src/player render system.cpp"
+        "src/player render system.hpp"
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")

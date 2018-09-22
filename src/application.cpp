@@ -27,6 +27,7 @@ void runGame() {
   SDL::Window window = SDL::makeWindow(getWinDesc());
   SDL::Renderer renderer = SDL::makeRenderer(window, false);
   SDL::Texture maze = renderer.texture("sprites.png");
+  maze.blend(SDL_BLENDMODE_BLEND);
   Sprite::Sheet sheet = Sprite::makeSheet("sprites.atlas");
   CHECK_SDL_ERROR(SDL_RenderSetScale(renderer.get(), scale, scale));
   SDL::QuadWriter writer{renderer, sheet, maze};

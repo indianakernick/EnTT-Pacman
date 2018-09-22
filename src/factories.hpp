@@ -17,5 +17,6 @@
 // just in case you need it later.
 
 Entity makeMaze(Registry &, const Sprite::Sheet &);
+Entity makePlayer(Registry &, const Sprite::Sheet &);
 
 #endif
