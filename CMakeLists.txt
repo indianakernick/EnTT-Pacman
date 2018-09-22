@@ -34,6 +34,8 @@ add_executable(Game
         "src/wall collide system.hpp"
         "src/dot render system.cpp"
         "src/dot render system.hpp"
+        "src/eat dots system.cpp"
+        "src/eat dots system.hpp"
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")

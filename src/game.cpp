@@ -9,6 +9,7 @@
 #include "game.hpp"
 
 #include "factories.hpp"
+#include "eat dots system.hpp"
 #include "movement system.hpp"
 #include "dot render system.hpp"
 #include "maze render system.hpp"
@@ -30,6 +31,7 @@ void Game::input(const SDL_Scancode key) {
 bool Game::logic() {
   movement(reg);
   wallCollide(reg, maze);
+  score += eatDots(reg, maze);
   return true;
 }
 
