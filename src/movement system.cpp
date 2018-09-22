@@ -21,10 +21,10 @@ void movement(Registry &reg) {
 
     // the tunnel
     if (pos.y == 10) {
-      if (pos.x == -2 && dir == Grid::Dir::left) {
-  	    pos = {18, 10};
-  	  } else if (pos.x == 20 && dir == Grid::Dir::right) {
-  	    pos = {-1, 10};
+      if (pos.x <= -1 && dir == Grid::Dir::left) {
+  	    pos.x = 19;
+  	  } else if (pos.x >= 19 && dir == Grid::Dir::right) {
+  	    pos.x = -1;
   	  }
   	}
   }

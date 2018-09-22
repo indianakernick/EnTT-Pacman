@@ -26,8 +26,8 @@ void Game::input(const SDL_Scancode key) {
 }
 
 bool Game::logic() {
-  wallCollide(reg, maze);
   movement(reg);
+  wallCollide(reg, maze);
   return true;
 }
 

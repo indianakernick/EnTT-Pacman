@@ -50,15 +50,14 @@ void runGame() {
       }
     }
 
-    if (frame == tileSize) {
-      frame = 0;
+    if (frame % tileSize == 0) {
       if (!game.logic()) {
         quit = true;
       }
     }
 
     renderer.clear();
-    game.render(writer, frame);
+    game.render(writer, frame % tileSize);
     renderer.present();
     ++frame;
   }

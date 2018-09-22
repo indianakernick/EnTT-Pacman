@@ -22,7 +22,7 @@ void playerRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
     const Grid::Pos pos = view.get<Position>(e).p * tileSize;
     const Grid::Dir actualDir = view.get<ActualDir>(e).d;
     const double angle = Grid::toNum(view.get<DesiredDir>(e).d, 90.0);
-  	writer.tilePos(pos + toVec(actualDir, frame - 8), glm::ivec2(tileSize), angle);
+  	writer.tilePos(pos + toVec(actualDir, frame), glm::ivec2(tileSize), angle);
   	writer.tileTex(view.get<SpriteID>(e).id + frame);
   	writer.render();
   }
