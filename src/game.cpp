@@ -26,7 +26,7 @@ SDL::Window::Desc getWinDesc() {
 void runGame() {
   SDL::Window window = SDL::makeWindow(getWinDesc());
   SDL::Renderer renderer = SDL::makeRenderer(window, false);
-  SDL::Texture maze = renderer.texture("../assets/sprite/maze.png");
+  SDL::Texture maze = renderer.texture("sprites.png");
   Registry reg;
 
   bool quit = false;
@@ -43,7 +43,7 @@ void runGame() {
 
     renderer.clear();
 
-    renderer.render(maze);
+    renderer.render(maze, {0, 0, 152, 176}, {0, 0, 152*4, 176*4});
 
     renderer.present();
   }

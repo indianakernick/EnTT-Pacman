@@ -55,3 +55,10 @@ endif()
 set_target_properties(Game
         PROPERTIES OUTPUT_NAME "example"
 )
+
+add_custom_command(
+	    TARGET Game POST_BUILD
+	    COMMAND ${CMAKE_COMMAND} -E copy_directory
+	            ${CMAKE_SOURCE_DIR}/assets/sheet
+	            ${CMAKE_BINARY_DIR}
+)
