@@ -12,6 +12,8 @@ add_executable(Game
         "src/factories.hpp"
         "src/dir to vec.hpp"
         "src/dimensions.hpp"
+        "src/maze.cpp"
+        "src/maze.hpp"
         "src/sprite id component.hpp"
         "src/position component.hpp"
         "src/player component.hpp"
@@ -28,6 +30,8 @@ add_executable(Game
         "src/maze render system.hpp"
         "src/player render system.cpp"
         "src/player render system.hpp"
+        "src/wall collide system.cpp"
+        "src/wall collide system.hpp"
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")

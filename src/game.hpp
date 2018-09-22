@@ -9,6 +9,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include "maze.hpp"
 #include "registry.hpp"
 #include <SDL2/SDL_scancode.h>
 #include <Simpleton/Sprite/sheet.hpp>
@@ -23,6 +24,7 @@ public:
 
 private:
   Registry reg;
+  MazeState maze;
 };
 
 #endif

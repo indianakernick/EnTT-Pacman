@@ -38,7 +38,7 @@ void runGame() {
   int frame = 0;
   bool quit = false;
   while (!quit) {
-    Time::Synchronizer sync{std::chrono::nanoseconds{1000'000'000 / 10}};
+    Time::Synchronizer sync{std::chrono::nanoseconds{1000'000'000 / 20}};
 
     SDL_Event e;
     while (SDL_PollEvent(&e)) {

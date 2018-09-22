@@ -25,8 +25,8 @@ Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
 Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
   reg.assign<Player>(e);
-  reg.assign<DesiredDir>(e);
-  reg.assign<ActualDir>(e, Grid::Dir::left);
+  reg.assign<DesiredDir>(e, Grid::Dir::left);
+  reg.assign<ActualDir>(e);
   reg.assign<Position>(e, Grid::Pos{9, 16});
   reg.assign<SpriteID>(e, sheet.getIDfromName("pacman 0"));
   return e;

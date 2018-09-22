@@ -10,11 +10,22 @@
 
 #include "dir to vec.hpp"
 #include "position component.hpp"
-#include "desired dir component.hpp"
+#include "actual dir component.hpp"
 
 void movement(Registry &reg) {
-  auto view = reg.view<Position, DesiredDir>();
+  auto view = reg.view<Position, ActualDir>();
   for (const Entity e : view) {
-  	view.get<Position>(e).p += toVec(view.get<DesiredDir>(e).d);
+    Grid::Pos &pos = view.get<Position>(e).p;
+    const Grid::Dir dir = view.get<ActualDir>(e).d;
+  	pos += toVec(dir);
+
+    // the tunnel
+    if (pos.y == 10) {
+      if (pos.x == -1 && dir == Grid::Dir::left) {
+  	    pos = {22, 10};
+  	  } else if (pos.x == 22 && dir == Grid::Dir::right) {
+  	    pos = {-1, 10};
+  	  }
+  	}
   }
 }
