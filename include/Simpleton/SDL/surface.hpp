@@ -9,7 +9,6 @@
 #ifndef engine_sdl_surface_hpp
 #define engine_sdl_surface_hpp
 
-#include "error.hpp"
 #include <SDL2/SDL_surface.h>
 #include "../Utils/generic raii.hpp"
 
@@ -21,10 +20,6 @@ namespace SDL {
   private:
     SDL_Surface *surface;
   };
-  
-  inline Surface makeSurface(SDL_Surface *const surface) {
-    return Surface(CHECK_SDL_NULL(surface));
-  }
 }
 
 #endif

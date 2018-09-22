@@ -9,8 +9,10 @@
 #include "game.hpp"
 
 #include "registry.hpp"
+#include <Simpleton/SDL/texture.hpp>
 #include <Simpleton/SDL/library.hpp>
 #include <Simpleton/Time/synchronizer.hpp>
+#include <Simpleton/Graphics 2D/load surface.hpp>
 
 SDL::Window::Desc getWinDesc() {
   SDL::Window::Desc desc;
@@ -23,6 +25,8 @@ SDL::Window::Desc getWinDesc() {
 
 void runGame() {
   SDL::Window window = SDL::makeWindow(getWinDesc());
+  SDL::Renderer renderer = SDL::makeRenderer(window, false);
+  SDL::Texture maze = renderer.texture("../assets/sprite/maze.png");
   Registry reg;
 
   bool quit = false;
@@ -36,5 +40,11 @@ void runGame() {
       	break;
       }
     }
+
+    renderer.clear();
+
+    renderer.render(maze);
+
+    renderer.present();
   }
 }
