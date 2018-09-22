@@ -27,16 +27,6 @@ inline void SDL::Renderer::clear(const Color color) {
   CHECK_SDL_ERROR(SDL_RenderClear(renderer));
 }
 
-inline SDL::Texture SDL::Renderer::texture(
-  const uint32_t format,
-  const SDL_TextureAccess access,
-  const glm::ivec2 size
-) {
-  return Texture{CHECK_SDL_NULL(SDL_CreateTexture(
-    renderer, format, access, size.x, size.y
-  ))};
-}
-
 inline SDL::Texture SDL::Renderer::texture(const SDL::Surface &surface) {
   return Texture{CHECK_SDL_NULL(SDL_CreateTextureFromSurface(
     renderer, surface.get()
@@ -73,20 +63,4 @@ inline SDL::Texture SDL::Renderer::texture(const G2D::Surface &surface) {
 
 inline SDL::Texture SDL::Renderer::texture(const std::string_view path) {
   return texture(G2D::loadSurface(path));
-}
-
-inline void SDL::Renderer::render(const Texture &texture) {
-  CHECK_SDL_ERROR(SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr));
-}
-
-inline void SDL::Renderer::render(const Texture &texture, const SDL_Rect dst) {
-  CHECK_SDL_ERROR(SDL_RenderCopy(renderer, texture.get(), nullptr, &dst));
-}
-
-inline void SDL::Renderer::render(
-  const Texture &texture,
-  const SDL_Rect src,
-  const SDL_Rect dst
-) {
-  CHECK_SDL_ERROR(SDL_RenderCopy(renderer, texture.get(), &src, &dst));
 }

@@ -6,9 +6,9 @@
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include "game.hpp"
 #include <iostream>
 #include <exception>
+#include "application.hpp"
 #include <Simpleton/SDL/library.hpp>
 
 int main() {

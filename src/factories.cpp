@@ -9,8 +9,8 @@
 #include "factories.hpp"
 
 #include "player component.hpp"
-#include "sprite component.hpp"
 #include "position component.hpp"
+#include "sprite id component.hpp"
 #include "desired dir component.hpp"
 
 /*
