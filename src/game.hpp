@@ -25,6 +25,7 @@ public:
 private:
   Registry reg;
   MazeState maze;
+  Sprite::ID dotSprite;
 };
 
 #endif
