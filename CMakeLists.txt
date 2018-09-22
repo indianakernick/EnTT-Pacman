@@ -36,6 +36,8 @@ add_executable(Game
         "src/dot render system.hpp"
         "src/eat dots system.cpp"
         "src/eat dots system.hpp"
+        "src/ghost render system.cpp"
+        "src/ghost render system.hpp"
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")

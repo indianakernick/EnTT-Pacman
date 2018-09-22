@@ -15,12 +15,14 @@
 #include "maze render system.hpp"
 #include "player input system.hpp"
 #include "wall collide system.hpp"
+#include "ghost render system.hpp"
 #include "player render system.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
   makeMaze(reg, sheet);
   makePlayer(reg, sheet);
+  makeBlinky(reg, sheet);
   dotSprite = sheet.getIDfromName("dot 0");
 }
 
@@ -39,4 +41,5 @@ void Game::render(SDL::QuadWriter &writer, const int frame) {
   mazeRender(reg, writer);
   dotRender(writer, maze, dotSprite);
   playerRender(reg, writer, frame);
+  ghostRender(reg, writer, frame);
 }
