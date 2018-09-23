@@ -47,7 +47,7 @@ vcpkg install sdl2
 
 ## Building
 
-The other dependencies are bundled with the project so you don't have to worry about them. The project can be built with CMake.
+The other dependencies are bundled with the project so you don't have to worry about them. On Windows, you'll need to specify the vcpkg toolchain file.
 
 ```
 git clone https://github.com/Kerndog73/EnTT-Example.git
