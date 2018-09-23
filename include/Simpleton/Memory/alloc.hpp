@@ -10,14 +10,20 @@
 #define engine_memory_alloc_hpp
 
 #include <new>
+#include <cstring>
 #include <cstddef>
 
 namespace Memory {
+  /// Allocate memory
+  inline void *alloc(const size_t bytes) {
+    return operator new(
+      bytes, std::align_val_t{alignof(std::max_align_t)}
+    );
+  }
+
   /// Allocate uninitialized bytes
   inline std::byte *allocBytes(const size_t bytes) {
-    return static_cast<std::byte *>(operator new(
-      bytes, std::align_val_t{alignof(std::max_align_t)}
-    ));
+    return static_cast<std::byte *>(alloc(bytes));
   }
   
   /// Allocate uninitialized object
@@ -39,6 +45,14 @@ namespace Memory {
   /// Deallocate memory
   inline void dealloc(void *const ptr) {
     operator delete(ptr);
+  }
+  
+  /// Reallocate memory
+  inline void *realloc(void *const ptr, const size_t oldSize, const size_t newSize) {
+    void *const newPtr = alloc(newSize);
+    std::memcpy(newPtr, ptr, oldSize);
+    dealloc(ptr);
+    return newPtr;
   }
 }
 

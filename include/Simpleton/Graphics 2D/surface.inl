@@ -6,6 +6,8 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
+#include "../Memory/alloc.hpp"
+
 inline G2D::Surface::Surface()
   : mData(nullptr),
     mPitch(0),
@@ -14,7 +16,7 @@ inline G2D::Surface::Surface()
     mBytesPerPixel(0) {}
 
 inline G2D::Surface::Surface(const Size width, const Size height, const BytesPerPixel bpp)
-  : mData(static_cast<Surface::Byte *>(operator new(width * height * bpp))),
+  : mData(static_cast<Surface::Byte *>(Memory::alloc(width * height * bpp))),
     mPitch(width * bpp),
     mWidth(width),
     mHeight(height),

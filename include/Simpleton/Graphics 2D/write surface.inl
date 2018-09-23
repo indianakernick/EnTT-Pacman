@@ -7,14 +7,14 @@
 //
 
 #include <string>
-#include "realloc.hpp"
+#include "../Memory/alloc.hpp"
 #include "../Memory/file io.hpp"
 
 #define STB_IMAGE_WRITE_STATIC
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#define STBIW_MALLOC(SIZE) operator new(SIZE)
-#define STBIW_REALLOC_SIZED(PTR, OLD_SIZE, NEW_SIZE) G2D::detail::reallocMem(PTR, OLD_SIZE, NEW_SIZE)
-#define STBIW_FREE(PTR) operator delete(PTR)
+#define STBIW_MALLOC(SIZE) Memory::alloc(SIZE)
+#define STBIW_REALLOC_SIZED(PTR, OLD_SIZE, NEW_SIZE) Memory::realloc(PTR, OLD_SIZE, NEW_SIZE)
+#define STBIW_FREE(PTR) Memory::dealloc(PTR)
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wcomma"
@@ -27,8 +27,8 @@
 inline G2D::SurfaceWriteError::SurfaceWriteError(const std::string_view file)
   : std::runtime_error(
       std::string("Failed to write surface to file \"")
-      + file.data()
-      + "\""
+      + std::string(file)
+      + '\"'
     ) {}
 
 namespace G2D::detail {
