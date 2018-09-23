@@ -20,6 +20,8 @@ add_executable(Game
         "src/desired dir component.hpp"
         "src/actual dir component.hpp"
         "src/maze sprite component.hpp"
+        "src/home position component.hpp"
+        "src/ghost mode component.hpp"
         "src/target component.hpp"
         "src/blinky target component.hpp"
         "src/pinky target component.hpp"
@@ -43,8 +45,8 @@ add_executable(Game
         "src/eat dots system.hpp"
         "src/ghost render system.cpp"
         "src/ghost render system.hpp"
-        "src/target system.cpp"
-        "src/target system.hpp"
+        "src/pursue target system.cpp"
+        "src/pursue target system.hpp"
         "src/blinky target system.cpp"
         "src/blinky target system.hpp"
         "src/pinky target system.cpp"
@@ -53,6 +55,10 @@ add_executable(Game
         "src/inky target system.hpp"
         "src/clyde target system.cpp"
         "src/clyde target system.hpp"
+        "src/scared target system.cpp"
+        "src/scared target system.hpp"
+        "src/scatter target system.cpp"
+        "src/scatter target system.hpp"
 )
 
 if(WIN32)

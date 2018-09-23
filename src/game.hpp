@@ -9,6 +9,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include <random>
 #include "maze.hpp"
 #include "registry.hpp"
 #include <SDL2/SDL_scancode.h>
@@ -27,6 +28,7 @@ private:
   MazeState maze;
   Sprite::ID dotSprite;
   int score = 0;
+  std::mt19937 rand;
 };
 
 #endif

@@ -9,7 +9,6 @@
 #include "game.hpp"
 
 #include "factories.hpp"
-#include "target system.hpp"
 #include "eat dots system.hpp"
 #include "movement system.hpp"
 #include "dot render system.hpp"
@@ -22,6 +21,9 @@
 #include "clyde target system.hpp"
 #include "player render system.hpp"
 #include "blinky target system.hpp"
+#include "pursue target system.hpp"
+#include "scared target system.hpp"
+#include "scatter target system.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
@@ -32,6 +34,7 @@ void Game::init(const Sprite::Sheet &sheet) {
   makeInky(reg, sheet, player, blinky);
   makeClyde(reg, sheet, player);
   dotSprite = sheet.getIDfromName("dot 0");
+  rand.seed(std::random_device{}());
 }
 
 void Game::input(const SDL_Scancode key) {
@@ -46,7 +49,9 @@ bool Game::logic() {
   pinkyTarget(reg);
   inkyTarget(reg);
   clydeTarget(reg);
-  target(reg, maze);
+  scaredTarget(reg, maze, rand);
+  scatterTarget(reg);
+  pursueTarget(reg, maze);
   return true;
 }
 

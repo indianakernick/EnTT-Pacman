@@ -11,6 +11,8 @@
 
 #include "registry.hpp"
 
+// Calculate the chase target position for pinky
+// Write the position to ChaseTarget
 void pinkyTarget(Registry &);
 
 #endif

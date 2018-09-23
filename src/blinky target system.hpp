@@ -11,6 +11,8 @@
 
 #include "registry.hpp"
 
+// Calculate the chase target position for blinky
+// Write the position to ChaseTarget
 void blinkyTarget(Registry &);
 
 #endif

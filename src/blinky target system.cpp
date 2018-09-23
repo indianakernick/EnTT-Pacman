@@ -10,11 +10,13 @@
 
 #include "target component.hpp"
 #include "position component.hpp"
+#include "ghost mode component.hpp"
 #include "blinky target component.hpp"
 
 void blinkyTarget(Registry &reg) {
-  auto view = reg.view<Target, BlinkyTarget>();
+  auto view = reg.view<Target, ChaseMode, BlinkyTarget>();
   for (const Entity e : view) {
-  	view.get<Target>(e).p = reg.get<Position>(view.get<BlinkyTarget>(e).player).p;
+    const Entity player = view.get<BlinkyTarget>(e).player;
+	view.get<Target>(e).p = reg.get<Position>(player).p;
   }
 }

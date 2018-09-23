@@ -12,10 +12,11 @@
 #include "target component.hpp"
 #include "position component.hpp"
 #include "actual dir component.hpp"
+#include "ghost mode component.hpp"
 #include "pinky target component.hpp"
 
 void pinkyTarget(Registry &reg) {
-  auto view = reg.view<Target, PinkyTarget>();
+  auto view = reg.view<Target, ChaseMode, PinkyTarget>();
   for (const Entity e : view) {
   	const Entity player = view.get<PinkyTarget>(e).player;
   	const Grid::Pos playerPos = reg.get<Position>(player).p;

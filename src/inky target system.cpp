@@ -12,10 +12,11 @@
 #include "target component.hpp"
 #include "position component.hpp"
 #include "actual dir component.hpp"
+#include "ghost mode component.hpp"
 #include "inky target component.hpp"
 
 void inkyTarget(Registry &reg) {
-  auto view = reg.view<Target, InkyTarget>();
+  auto view = reg.view<Target, ChaseMode, InkyTarget>();
   for (const Entity e : view) {
   	const InkyTarget target = view.get<InkyTarget>(e);
   	const Grid::Pos playerPos = reg.get<Position>(target.player).p;

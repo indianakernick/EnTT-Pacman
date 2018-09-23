@@ -11,6 +11,8 @@
 
 #include "registry.hpp"
 
+// Calculate the chase target position for clyde
+// Write the position to ChaseTarget
 void clydeTarget(Registry &);
 
 #endif

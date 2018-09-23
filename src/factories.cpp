@@ -11,6 +11,7 @@
 #include "player component.hpp"
 #include "target component.hpp"
 #include "position component.hpp"
+#include "ghost mode component.hpp"
 #include "actual dir component.hpp"
 #include "desired dir component.hpp"
 #include "maze sprite component.hpp"
@@ -20,6 +21,7 @@
 #include "pinky target component.hpp"
 #include "player sprite component.hpp"
 #include "blinky target component.hpp"
+#include "home position component.hpp"
 
 Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
@@ -39,26 +41,28 @@ Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
 
 namespace {
 
-Entity makeGhost(Registry &reg, const Grid::Pos pos) {
+Entity makeGhost(Registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
   const Entity e = reg.create();
-  reg.assign<Position>(e, pos);
+  reg.assign<ChaseMode>(e);
+  reg.assign<Position>(e, home);
   reg.assign<DesiredDir>(e);
   reg.assign<ActualDir>(e);
   reg.assign<Target>(e);
+  reg.assign<HomePosition>(e, home, scatter);
   return e;
 }
 
 }
 
 Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, {9, 8});
+  const Entity e = makeGhost(reg, {9, 8}, {18, 0});
   reg.assign<BlinkyTarget>(e, player);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("blinky 0"));
   return e;
 }
 
 Entity makePinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, {9, 10});
+  const Entity e = makeGhost(reg, {9, 10}, {0, 0});
   reg.assign<PinkyTarget>(e, player);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("pinky 0"));
   return e;
@@ -70,14 +74,14 @@ Entity makeInky(
   const Entity player,
   const Entity blinky
 ) {
-  const Entity e = makeGhost(reg, {8, 10});
+  const Entity e = makeGhost(reg, {8, 10}, {18, 21});
   reg.assign<InkyTarget>(e, player, blinky);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("inky 0"));
   return e;
 }
 
 Entity makeClyde(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, {10, 10});
+  const Entity e = makeGhost(reg, {10, 10}, {0, 21});
   reg.assign<ClydeTarget>(e, player);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("clyde 0"));
   return e;
