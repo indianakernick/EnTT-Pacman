@@ -39,7 +39,11 @@ make
 sudo make install
 ```
 
-If you're on Windows, you can grab the [latest build](https://buildbot.libsdl.org/sdl-builds/sdl-visualstudio/?C=M;O=D). That includes the headers and libraries. I'm not sure where these need to be installed though so you'll need to figure that out.
+If you're on Windows,
+
+```
+vcpkg install sdl2
+```
 
 ## Building
 
