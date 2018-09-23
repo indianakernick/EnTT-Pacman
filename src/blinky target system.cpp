@@ -12,10 +12,9 @@
 #include "position component.hpp"
 #include "blinky target component.hpp"
 
-void blinkyTarget(Registry &reg, const Entity player) {
-  const Grid::Pos playerPos = reg.get<Position>(player).p;
+void blinkyTarget(Registry &reg) {
   auto view = reg.view<Target, BlinkyTarget>();
   for (const Entity e : view) {
-  	view.get<Target>(e).p = playerPos;
+  	view.get<Target>(e).p = reg.get<Position>(view.get<BlinkyTarget>(e).player).p;
   }
 }

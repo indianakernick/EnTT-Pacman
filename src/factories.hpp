@@ -18,6 +18,7 @@
 
 Entity makeMaze(Registry &, const Sprite::Sheet &);
 Entity makePlayer(Registry &, const Sprite::Sheet &);
-Entity makeBlinky(Registry &, const Sprite::Sheet &);
+Entity makeBlinky(Registry &, const Sprite::Sheet &, Entity);
+Entity makePinky(Registry &, const Sprite::Sheet &, Entity);
 
 #endif

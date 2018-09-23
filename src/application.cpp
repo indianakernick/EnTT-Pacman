@@ -25,7 +25,7 @@ SDL::Window::Desc getWinDesc() {
 
 void runGame() {
   SDL::Window window = SDL::makeWindow(getWinDesc());
-  SDL::Renderer renderer = SDL::makeRenderer(window, false);
+  SDL::Renderer renderer = SDL::makeRenderer(window, true);
   SDL::Texture maze = renderer.texture("sprites.png");
   maze.blend(SDL_BLENDMODE_BLEND);
   Sprite::Sheet sheet = Sprite::makeSheet("sprites.atlas");
@@ -37,6 +37,8 @@ void runGame() {
 
   int frame = 0;
   bool quit = false;
+  // align the synchronizer with vsync
+  renderer.present();
   while (!quit) {
     Time::Synchronizer sync{std::chrono::nanoseconds{1000'000'000 / 20}};
 

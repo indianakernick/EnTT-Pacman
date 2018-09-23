@@ -17,14 +17,16 @@
 #include "player input system.hpp"
 #include "wall collide system.hpp"
 #include "ghost render system.hpp"
+#include "pinky target system.hpp"
 #include "player render system.hpp"
 #include "blinky target system.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
   makeMaze(reg, sheet);
-  player = makePlayer(reg, sheet);
-  makeBlinky(reg, sheet);
+  const Entity player = makePlayer(reg, sheet);
+  makeBlinky(reg, sheet, player);
+  makePinky(reg, sheet, player);
   dotSprite = sheet.getIDfromName("dot 0");
 }
 
@@ -36,7 +38,8 @@ bool Game::logic() {
   movement(reg);
   wallCollide(reg, maze);
   score += eatDots(reg, maze);
-  blinkyTarget(reg, player);
+  blinkyTarget(reg);
+  pinkyTarget(reg);
   target(reg, maze);
   return true;
 }

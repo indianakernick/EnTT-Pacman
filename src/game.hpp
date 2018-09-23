@@ -27,7 +27,6 @@ private:
   MazeState maze;
   Sprite::ID dotSprite;
   int score = 0;
-  Entity player;
 };
 
 #endif

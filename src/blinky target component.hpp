@@ -9,6 +9,10 @@
 #ifndef BLINKY_TARGET_COMPONENT_HPP
 #define BLINKY_TARGET_COMPONENT_HPP
 
-struct BlinkyTarget {};
+#include "registry.hpp"
+
+struct BlinkyTarget {
+  Entity player;
+};
 
 #endif

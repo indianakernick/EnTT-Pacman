@@ -16,6 +16,8 @@
 #include "desired dir component.hpp"
 #include <Simpleton/Grid/distance.hpp>
 
+// Pacman doesn't use A*
+
 void target(Registry &reg, const MazeState &maze) {
   constexpr float inf = 1e10f;
   auto view = reg.view<Target, Position, ActualDir, DesiredDir>();
