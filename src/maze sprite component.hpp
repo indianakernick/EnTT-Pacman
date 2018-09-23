@@ -9,6 +9,10 @@
 #ifndef MAZE_SPRITE_COMPONENT_HPP
 #define MAZE_SPRITE_COMPONENT_HPP
 
-struct MazeSprite {};
+#include <Simpleton/Sprite/id.hpp>
+
+struct MazeSprite {
+  Sprite::ID id;
+};
 
 #endif

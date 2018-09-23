@@ -9,14 +9,13 @@
 #include "maze render system.hpp"
 
 #include "dimensions.hpp"
-#include "sprite id component.hpp"
 #include "maze sprite component.hpp"
 
 void mazeRender(Registry &reg, SDL::QuadWriter &writer) {
-  const auto view = reg.view<SpriteID, MazeSprite>();
+  const auto view = reg.view<MazeSprite>();
   for (const Entity e : view) {
   	writer.tilePos({0, 0}, tiles * tileSize);
-  	writer.tileTex(view.get<SpriteID>(e).id);
+  	writer.tileTex(view.get(e).id);
   	writer.render();
   }
 }

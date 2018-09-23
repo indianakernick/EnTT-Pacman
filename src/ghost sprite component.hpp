@@ -9,6 +9,10 @@
 #ifndef GHOST_SPRITE_COMPONENT_HPP
 #define GHOST_SPRITE_COMPONENT_HPP
 
-struct GhostSprite {};
+#include <Simpleton/Sprite/id.hpp>
+
+struct GhostSprite {
+  Sprite::ID id;
+};
 
 #endif
