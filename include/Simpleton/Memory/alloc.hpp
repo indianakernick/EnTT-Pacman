@@ -50,7 +50,7 @@ namespace Memory {
   /// Reallocate memory
   inline void *realloc(void *const ptr, const size_t oldSize, const size_t newSize) {
     void *const newPtr = alloc(newSize);
-    std::memcpy(newPtr, ptr, oldSize);
+    std::memcpy(newPtr, ptr, oldSize < newSize ? oldSize : newSize);
     dealloc(ptr);
     return newPtr;
   }

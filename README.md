@@ -5,9 +5,47 @@
 
 An example of how to use the ECS part of the [EnTT Framework](https://github.com/skypjack/entt)
 
-If the target is MacOS or Linux, ncurses will be located on the system. If the target is Windows, pdcurses will be build from sources. All other dependencies are bundled in the repo.
+## Installing SDL2
 
-```bash
+This uses the [SDL2 Library](https://www.libsdl.org/) for input and rendering. CMake will find it if it's on your system. For details on how to install SDL2, see the [installation page](https://wiki.libsdl.org/Installation).
+
+If you're on MacOS,
+
+```
+brew install sdl2
+```
+
+If you're on a Debian based system,
+
+```
+sudo apt-get install libsdl2-dev
+```
+
+If you're on a Red Hat based system,
+
+```
+sudo yum install SDL2-devel
+```
+
+If you're on some other Linux system that doesn't have an SDL2 package, you'll have to build the source.
+
+```
+hg clone https://hg.libsdl.org/SDL SDL
+cd SDL
+mkdir build
+cd build
+../configure
+make
+sudo make install
+```
+
+If you're on Windows, you can grab the [latest build](https://buildbot.libsdl.org/sdl-builds/sdl-visualstudio/?C=M;O=D). That includes the headers and libraries. I'm not sure where these need to be installed though so you'll need to figure that out.
+
+## Building
+
+The other dependencies are bundled with the project so you don't have to worry about them. The project can be built with CMake.
+
+```
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make
