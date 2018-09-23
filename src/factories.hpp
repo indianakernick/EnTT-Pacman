@@ -21,5 +21,6 @@ Entity makePlayer(Registry &, const Sprite::Sheet &);
 Entity makeBlinky(Registry &, const Sprite::Sheet &, Entity);
 Entity makePinky(Registry &, const Sprite::Sheet &, Entity);
 Entity makeInky(Registry &, const Sprite::Sheet &, Entity, Entity);
+Entity makeClyde(Registry &, const Sprite::Sheet &, Entity);
 
 #endif

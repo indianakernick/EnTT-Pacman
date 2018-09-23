@@ -24,6 +24,7 @@ add_executable(Game
         "src/blinky target component.hpp"
         "src/pinky target component.hpp"
         "src/inky target component.hpp"
+        "src/clyde target component.hpp"
         "src/movement system.cpp"
         "src/movement system.hpp"
         "src/player input system.cpp"
@@ -50,6 +51,8 @@ add_executable(Game
         "src/pinky target system.hpp"
         "src/inky target system.cpp"
         "src/inky target system.hpp"
+        "src/clyde target system.cpp"
+        "src/clyde target system.hpp"
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")

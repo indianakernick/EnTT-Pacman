@@ -19,6 +19,7 @@
 #include "wall collide system.hpp"
 #include "ghost render system.hpp"
 #include "pinky target system.hpp"
+#include "clyde target system.hpp"
 #include "player render system.hpp"
 #include "blinky target system.hpp"
 
@@ -29,6 +30,7 @@ void Game::init(const Sprite::Sheet &sheet) {
   const Entity blinky = makeBlinky(reg, sheet, player);
   makePinky(reg, sheet, player);
   makeInky(reg, sheet, player, blinky);
+  makeClyde(reg, sheet, player);
   dotSprite = sheet.getIDfromName("dot 0");
 }
 
@@ -43,6 +45,7 @@ bool Game::logic() {
   blinkyTarget(reg);
   pinkyTarget(reg);
   inkyTarget(reg);
+  clydeTarget(reg);
   target(reg, maze);
   return true;
 }
