@@ -15,6 +15,7 @@
 #include "actual dir component.hpp"
 #include "desired dir component.hpp"
 #include "maze sprite component.hpp"
+#include "inky target component.hpp"
 #include "ghost sprite component.hpp"
 #include "pinky target component.hpp"
 #include "blinky target component.hpp"
@@ -62,5 +63,18 @@ Entity makePinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player)
   reg.assign<PinkyTarget>(e, player);
   reg.assign<Position>(e, Grid::Pos{9, 6});
   reg.assign<SpriteID>(e, sheet.getIDfromName("pinky 0"));
+  return e;
+}
+
+Entity makeInky(
+  Registry &reg,
+  const Sprite::Sheet &sheet,
+  const Entity player,
+  const Entity blinky
+) {
+  const Entity e = makeGhost(reg);
+  reg.assign<InkyTarget>(e, player, blinky);
+  reg.assign<Position>(e, Grid::Pos{8, 6});
+  reg.assign<SpriteID>(e, sheet.getIDfromName("inky 0"));
   return e;
 }
