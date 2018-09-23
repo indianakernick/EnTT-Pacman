@@ -56,11 +56,14 @@ add_executable(Game
 )
 
 if(WIN32)
-        message(STATUS "Windows")
+        set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}" "/Tools/vcpkg/ports/sdl2")
         find_package(SDL2 CONFIG REQUIRED)
-        target_link_libraries(main PRIVATE SDL2::SDL2 SDL2::SDL2main)
+        target_link_libraries(Game 
+                PRIVATE 
+                SDL2::SDL2 
+                SDL2::SDL2main
+        )
 else()
-        message(STATUS "Linux")
         set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
         find_package(SDL2 REQUIRED)
 
