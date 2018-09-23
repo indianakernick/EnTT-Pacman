@@ -16,7 +16,7 @@ install:
 
 before_build:
   - cd %BUILD_DIR%
-  - cmake .. -DCMAKE_TOOLCHAIN_FILE=/src/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 15 2017"
+  - cmake .. -DCMAKE_TOOLCHAIN_FILE=/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 15 2017"
 
 build:
   parallel: true
