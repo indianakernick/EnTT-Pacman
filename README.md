@@ -46,7 +46,8 @@ If you're on Windows, you can grab the [latest build](https://buildbot.libsdl.or
 The other dependencies are bundled with the project so you don't have to worry about them. The project can be built with CMake.
 
 ```
-cd build
+git clone https://github.com/Kerndog73/EnTT-Example.git
+cd EnTT-Example/build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 ./example
