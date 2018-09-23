@@ -55,18 +55,29 @@ add_executable(Game
         "src/clyde target system.hpp"
 )
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
-find_package(SDL2 REQUIRED)
+if(WIN32)
+        message(STATUS "Windows")
+        find_package(SDL2 CONFIG REQUIRED)
+        target_link_libraries(main PRIVATE SDL2::SDL2 SDL2::SDL2main)
+else()
+        message(STATUS "Linux")
+        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+        find_package(SDL2 REQUIRED)
+
+        target_include_directories(Game
+                PRIVATE
+                "${SDL2_INCLUDE_DIR}"
+        )
+       
+        target_link_libraries(Game
+                PRIVATE
+                "${SDL2_LIBRARY}"
+        )
+endif()
 
 target_include_directories(Game
         PRIVATE
-        "${SDL2_INCLUDE_DIR}"
         "${CMAKE_SOURCE_DIR}/include"
-)
-       
-target_link_libraries(Game
-        PRIVATE
-        "${SDL2_LIBRARY}"
 )
 
 target_compile_features(Game
