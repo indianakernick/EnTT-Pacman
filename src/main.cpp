@@ -9,9 +9,10 @@
 #include <iostream>
 #include <exception>
 #include "application.hpp"
+#include <SDL2/SDL_main.h>
 #include <Simpleton/SDL/library.hpp>
 
-int main() {
+extern "C" int main(int, char *[]) {
   SDL::Library lib = SDL::makeLibrary(SDL_INIT_VIDEO);
   try {
     runGame();
