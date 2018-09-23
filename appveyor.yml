@@ -12,6 +12,7 @@ configuration:
   - Release
 
 before_build:
+  - vcpkg install sdl2
   - cd %BUILD_DIR%
   - cmake .. -DCMAKE_BUILD_TYPE=Release -G"Visual Studio 15 2017"
 
