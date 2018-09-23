@@ -20,7 +20,7 @@ void scaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
   	const Grid::Pos pos = view.get<Position>(e).p;
   	const Grid::Dir dir = view.get<ActualDir>(e).d;
   	const Grid::Pos nextPos = pos + toVec(dir);
-  	std::uniform_int_distribution<Grid::DirType> dist(0, 3);
+  	std::uniform_int_distribution<int> dist(0, 3);
   	Grid::Dir candDir = Grid::toDir(dist(rand));
     Grid::Pos candPos;
 
