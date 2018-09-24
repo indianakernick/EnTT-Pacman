@@ -7,9 +7,9 @@ An example of how to use the ECS part of the [EnTT Framework](https://github.com
 
 ## What is this?
 
-When I first found EnTT, I wondered "How do I make a game with this?". An example would have been really helpful at that time. I couldn't find one. I learnt how to make games with EnTT by making games with EnTT. This took quite a long time. This project is for people how are just starting out with ECS and not too sure how use it.
+When I first found EnTT, I wondered "How do I make a game with this?". An example would have been really helpful at that time. I couldn't find one. I learnt how to make games with EnTT by making games with EnTT. This took quite a long time. This project is for people who are just starting out with EnTT and not too sure how use it.
 
-As of writing this, the project is incomplete. The game is sort of playable at the moment so you can still clone the source and build it. I like to think the code is clean and easy to follow. After the game is functionally complete, I plan to spend a lot of time refactoring, adding comments and simplifying the code. I will also write a tour and put it in this `README.md` to that outlines how the parts come together to make a game.
+As of writing this, the project is incomplete. The game is sort of playable at the moment so you can still clone the source and build it. I like to think the code is clean and easy to follow. After the game is functionally complete, I plan to spend a lot of time refactoring, adding comments and simplifying the code. I will also write a tour and put it in this `README.md` that outlines how the parts come together to make a game.
 
 This is a tutorial on how to use an ECS framework (EnTT in particular) to make a game.
 
