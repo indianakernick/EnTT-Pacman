@@ -12,7 +12,10 @@
 #include "maze.hpp"
 #include "registry.hpp"
 
-// Read target position from Target and pursue it by setting DesiredDir
+// This system reads the target position from the Target component and pursues
+// it by setting the DesiredDir component. Pacman doesn't use A*. Ghosts will
+// turn in the direction that brings them closer to the player
+
 void pursueTarget(Registry &, const MazeState &);
 
 #endif

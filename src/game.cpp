@@ -13,17 +13,14 @@
 #include "movement system.hpp"
 #include "dot render system.hpp"
 #include "maze render system.hpp"
-#include "inky target system.hpp"
 #include "player input system.hpp"
 #include "wall collide system.hpp"
 #include "ghost render system.hpp"
-#include "pinky target system.hpp"
-#include "clyde target system.hpp"
 #include "player render system.hpp"
-#include "blinky target system.hpp"
 #include "pursue target system.hpp"
-#include "scared target system.hpp"
-#include "scatter target system.hpp"
+#include "set chase target system.hpp"
+#include "set scared target system.hpp"
+#include "set scatter target system.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
@@ -45,12 +42,12 @@ bool Game::logic() {
   movement(reg);
   wallCollide(reg, maze);
   score += eatDots(reg, maze);
-  blinkyTarget(reg);
-  pinkyTarget(reg);
-  inkyTarget(reg);
-  clydeTarget(reg);
-  scaredTarget(reg, maze, rand);
-  scatterTarget(reg);
+  setBlinkyChaseTarget(reg);
+  setPinkyChaseTarget(reg);
+  setInkyChaseTarget(reg);
+  setClydeChaseTarget(reg);
+  setScaredTarget(reg, maze, rand);
+  setScatterTarget(reg);
   pursueTarget(reg, maze);
   return true;
 }

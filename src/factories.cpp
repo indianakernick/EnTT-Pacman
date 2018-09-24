@@ -15,12 +15,9 @@
 #include "actual dir component.hpp"
 #include "desired dir component.hpp"
 #include "maze sprite component.hpp"
-#include "inky target component.hpp"
 #include "ghost sprite component.hpp"
-#include "clyde target component.hpp"
-#include "pinky target component.hpp"
+#include "chase target component.hpp"
 #include "player sprite component.hpp"
-#include "blinky target component.hpp"
 #include "home position component.hpp"
 
 Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
@@ -56,14 +53,14 @@ Entity makeGhost(Registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
 
 Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
   const Entity e = makeGhost(reg, {9, 8}, {18, 0});
-  reg.assign<BlinkyTarget>(e, player);
+  reg.assign<BlinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("blinky 0"));
   return e;
 }
 
 Entity makePinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
   const Entity e = makeGhost(reg, {9, 10}, {0, 0});
-  reg.assign<PinkyTarget>(e, player);
+  reg.assign<PinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("pinky 0"));
   return e;
 }
@@ -75,14 +72,14 @@ Entity makeInky(
   const Entity blinky
 ) {
   const Entity e = makeGhost(reg, {8, 10}, {18, 21});
-  reg.assign<InkyTarget>(e, player, blinky);
+  reg.assign<InkyChaseTarget>(e, player, blinky);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("inky 0"));
   return e;
 }
 
 Entity makeClyde(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
   const Entity e = makeGhost(reg, {10, 10}, {0, 21});
-  reg.assign<ClydeTarget>(e, player);
+  reg.assign<ClydeChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, sheet.getIDfromName("clyde 0"));
   return e;
 }

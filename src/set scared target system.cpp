@@ -1,12 +1,12 @@
 //
-//  scared target system.cpp
+//  set scared target system.cpp
 //  EnTT Example
 //
 //  Created by Indi Kernick on 23/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include "scared target system.hpp"
+#include "set scared target system.hpp"
 
 #include "dir to vec.hpp"
 #include "target component.hpp"
@@ -14,7 +14,7 @@
 #include "ghost mode component.hpp"
 #include "actual dir component.hpp"
 
-void scaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
+void setScaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
   auto view = reg.view<Target, Position, ScaredMode, ActualDir>();
   for (const Entity e : view) {
   	const Grid::Pos pos = view.get<Position>(e).p;
