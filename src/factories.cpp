@@ -8,16 +8,14 @@
 
 #include "factories.hpp"
 
+#include "sprite component.hpp"
 #include "player component.hpp"
 #include "target component.hpp"
 #include "position component.hpp"
 #include "ghost mode component.hpp"
 #include "actual dir component.hpp"
 #include "desired dir component.hpp"
-#include "maze sprite component.hpp"
-#include "ghost sprite component.hpp"
 #include "chase target component.hpp"
-#include "player sprite component.hpp"
 #include "home position component.hpp"
 
 Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
