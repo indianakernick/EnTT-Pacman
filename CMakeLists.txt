@@ -43,7 +43,7 @@ add_executable(Game
         "src/set scatter target system.hpp"
 )
 
-if(WIN32)
+if(CMAKE_TOOLCHAIN_FILE)
         find_package(SDL2 CONFIG REQUIRED)
         target_link_libraries(Game 
                 PRIVATE 
