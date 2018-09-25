@@ -55,7 +55,7 @@ vcpkg install sdl2
 
 ## Building
 
-The other dependencies are bundled with the project so you don't have to worry about them. On Windows, you'll need to specify the vcpkg toolchain file.
+The other dependencies ([GLM](https://github.com/g-truc/glm), [EnTT](https://github.com/skypjack/entt), [Simpleton](https://github.com/Kerndog73/Simpleton-Engine)) are bundled with the project so you don't have to worry about them. On Windows, you'll need to specify the vcpkg toolchain file.
 
 ```
 git clone https://github.com/Kerndog73/EnTT-Example.git
