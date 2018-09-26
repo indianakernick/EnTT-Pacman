@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <exception>
-#include "application.hpp"
+#include "core/app.hpp"
 #include <SDL2/SDL_main.h>
 #include <Simpleton/SDL/library.hpp>
 
