@@ -45,10 +45,10 @@ void runGame() {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
       if (e.type == SDL_QUIT) {
-      	quit = true;
-      	break;
+        quit = true;
+        break;
       } else if (e.type == SDL_KEYDOWN) {
-      	game.input(e.key.keysym.scancode);
+        game.input(e.key.keysym.scancode);
       }
     }
 
