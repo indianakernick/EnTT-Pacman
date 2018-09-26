@@ -22,9 +22,9 @@ void setScaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
   	const Grid::Pos nextPos = pos + toVec(dir);
   	std::uniform_int_distribution<int> dist(0, 3);
   	Grid::Dir candDir = Grid::toDir(dist(rand));
-    Grid::Pos candPos;
+    Grid::Pos candPos = nextPos;
 
-  	while (true) {
+  	for (int i = 0; i != 4; ++i) {
       if (candDir == Grid::opposite(dir)) {
       	candDir = Grid::rotateCW(candDir);
       	continue;
