@@ -52,6 +52,8 @@ void runGame() {
       }
     }
 
+    // Game::logic is called once for each tile
+    // Game::render is called for each pixel between tiles
     if (frame % tileSize == 0) {
       if (!game.logic()) {
         quit = true;
