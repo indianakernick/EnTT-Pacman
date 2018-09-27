@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pack in=assets/sprite out=assets/sheet/sprites

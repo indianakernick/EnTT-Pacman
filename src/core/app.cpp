@@ -41,6 +41,7 @@ void runGame() {
   renderer.present();
   while (!quit) {
     Time::Synchronizer sync{Time::sync_fps, 20};
+
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
       if (e.type == SDL_QUIT) {
