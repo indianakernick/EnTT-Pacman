@@ -14,5 +14,7 @@
 void ghostScared(Registry &);
 void ghostScaredTimeout(Registry &);
 void ghostEaten(Registry &, Entity);
+void ghostScatter(Registry &);
+void ghostChase(Registry &);
 
 #endif

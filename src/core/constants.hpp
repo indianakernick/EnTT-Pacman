@@ -45,4 +45,7 @@ inline const Grid::Pos pinkyScatter  = { 0,  0};
 inline const Grid::Pos inkyScatter   = {18, 21};
 inline const Grid::Pos clydeScatter  = { 0, 21};
 
+constexpr int scatterTicks = 15;
+constexpr int chaseTicks = 40;
+
 #endif

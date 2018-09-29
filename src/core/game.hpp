@@ -38,6 +38,8 @@ private:
   int dots = 0;
   std::mt19937 rand;
   State state = State::playing;
+  int ticks = 0;
+  bool scattering = true;
 };
 
 #endif

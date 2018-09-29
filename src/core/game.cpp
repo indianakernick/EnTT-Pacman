@@ -62,6 +62,21 @@ bool Game::logic() {
   	return true;
   }
 
+  if (scattering) {
+  	if (ticks >= scatterTicks) {
+  	  ghostChase(reg);
+  	  ticks = 0;
+  	  scattering = false;
+  	}
+  } else {
+  	if (ticks >= chaseTicks) {
+  	  ghostScatter(reg);
+  	  ticks = 0;
+  	  scattering = true;
+  	}
+  }
+  ++ticks;
+
   movement(reg);
   wallCollide(reg, maze);
   dots += eatDots(reg, maze);

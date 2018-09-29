@@ -47,3 +47,19 @@ void ghostEaten(Registry &reg, const Entity ghost) {
   reg.assign<EatenMode>(ghost);
   reg.assign<EnterHouse>(ghost);
 }
+
+void ghostScatter(Registry &reg) {
+  const auto view = reg.view<Ghost, ChaseMode>();
+  for (const Entity e : view) {
+  	reg.remove<ChaseMode>(e);
+  	reg.assign<ScatterMode>(e);
+  }
+}
+
+void ghostChase(Registry &reg) {
+  const auto view = reg.view<Ghost, ScatterMode>();
+  for (const Entity e : view) {
+  	reg.remove<ScatterMode>(e);
+  	reg.assign<ChaseMode>(e);
+  }
+}

@@ -40,7 +40,7 @@ namespace {
 
 Entity makeGhost(Registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
   const Entity e = reg.create();
-  reg.assign<ChaseMode>(e);
+  reg.assign<ScatterMode>(e);
   reg.assign<Position>(e, home);
   reg.assign<DesiredDir>(e);
   reg.assign<ActualDir>(e);
@@ -69,7 +69,7 @@ Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player
 }
 
 Entity makePinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, blinkyHome, blinkyScatter);
+  const Entity e = makeGhost(reg, pinkyHome, pinkyScatter);
   reg.assign<PinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "pinky 0"));
   return e;
