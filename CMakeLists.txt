@@ -30,6 +30,8 @@ add_executable(Game
         "src/sys/render.hpp"
         "src/sys/eat_dots.cpp"
         "src/sys/eat_dots.hpp"
+        "src/sys/can_move.cpp"
+        "src/sys/can_move.hpp"
         "src/sys/pursue_target.cpp"
         "src/sys/pursue_target.hpp"
         "src/sys/set_chase_target.cpp"

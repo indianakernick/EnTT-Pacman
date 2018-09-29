@@ -12,6 +12,11 @@
 #include "util/registry.hpp"
 #include <SDL2/SDL_scancode.h>
 
+// Functions that read input should return whether they consumed the input.
+// If an input function hasn't consumed an input, try the next one.
+// Since there is only one input function in this game, we don't really
+// need this but I thought I'd show it anyway.
+
 enum class Consumed {
   no,
   yes

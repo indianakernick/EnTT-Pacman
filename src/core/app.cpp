@@ -1,5 +1,5 @@
 //
-//  application.cpp
+//  app.cpp
 //  EnTT Example
 //
 //  Created by Indi Kernick on 17/9/18.

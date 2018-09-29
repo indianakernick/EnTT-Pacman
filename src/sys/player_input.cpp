@@ -10,6 +10,7 @@
 
 #include "comp/dir.hpp"
 #include "comp/player.hpp"
+#include "sys/can_move.hpp"
 
 namespace {
 

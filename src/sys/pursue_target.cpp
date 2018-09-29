@@ -11,6 +11,7 @@
 #include <algorithm>
 #include "comp/dir.hpp"
 #include "comp/target.hpp"
+#include "sys/can_move.hpp"
 #include "util/dir2vec.hpp"
 #include "comp/position.hpp"
 #include <Simpleton/Grid/distance.hpp>
@@ -36,18 +37,12 @@ void pursueTarget(Registry &reg, const MazeState &maze) {
   	  	continue;
   	  }
 
-      // gotta stay in the maze
-  	  const Grid::Pos candPos = nextPos + toVec(candDir);
-  	  if (maze.outOfRange(candPos)) {
-  	  	continue;
-  	  }
-
       // can't go through walls
-  	  const Tile candTile = maze[candPos];
-  	  if (candTile == Tile::wall) {
+  	  if (!canMove(reg, maze, e, nextPos, candDir)) {
   	  	continue;
   	  }
 
+      const Grid::Pos candPos = nextPos + toVec(candDir);
   	  targetDist[Grid::toNum<size_t>(candDir)] = Grid::euclid(candPos, targetPos);
   	}
 

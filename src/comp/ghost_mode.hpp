@@ -12,5 +12,6 @@
 struct ChaseMode {};
 struct ScatterMode {};
 struct ScaredMode {};
+struct EatenMode {};
 
 #endif

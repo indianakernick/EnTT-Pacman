@@ -9,6 +9,7 @@
 #include "factories.hpp"
 
 #include "comp/dir.hpp"
+#include "comp/house.hpp"
 #include "comp/sprite.hpp"
 #include "comp/target.hpp"
 #include "comp/player.hpp"
@@ -42,6 +43,7 @@ Entity makeGhost(Registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
   reg.assign<DesiredDir>(e);
   reg.assign<ActualDir>(e);
   reg.assign<Target>(e);
+  reg.assign<LeaveHouse>(e);
   reg.assign<HomePosition>(e, home, scatter);
   return e;
 }

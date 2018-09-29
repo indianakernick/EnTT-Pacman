@@ -10,6 +10,7 @@
 
 #include "comp/dir.hpp"
 #include "util/dir2vec.hpp"
+#include "sys/can_move.hpp"
 #include "comp/position.hpp"
 
 void movement(Registry &reg) {
@@ -19,7 +20,10 @@ void movement(Registry &reg) {
     const Grid::Dir dir = view.get<ActualDir>(e).d;
   	pos += toVec(dir);
 
-    // the tunnel
+    // The tunnel.
+    // This assumes the exact position of the tunnel.
+    // It's good enough for this simple game but a more robust solution might
+    // involve making the tunnel into an entity
     if (pos.y == 10) {
       if (pos.x <= -1 && dir == Grid::Dir::left) {
   	    pos.x = 19;
@@ -33,36 +37,18 @@ void movement(Registry &reg) {
 void wallCollide(Registry &reg, const MazeState &maze) {
   auto view = reg.view<Position, ActualDir, DesiredDir>();
   for (const Entity e : view) {
-    const Grid::Dir desiredDir = view.get<DesiredDir>(e).d;
     const Grid::Pos pos = view.get<Position>(e).p;
-  	const Grid::Pos desiredPos = pos + toVec(desiredDir);
-  	Grid::Dir &actualDir = view.get<ActualDir>(e).d;
-  	if (maze.outOfRange(desiredPos)) {
-  	  // the tunnel is the only place where empty space meets the edge of the map
-  	  // the movement system will handle this
-  	  actualDir = desiredDir;
+    const Grid::Dir desiredDir = view.get<DesiredDir>(e).d;
+  	if (canMove(reg, maze, e, pos, desiredDir)) {
+  	  view.get<ActualDir>(e).d = desiredDir;
   	  continue;
   	}
 
-  	const Tile desiredTile = maze[desiredPos];
-  	if (desiredTile != Tile::wall) {
-  	  actualDir = desiredDir;
+  	const Grid::Dir prevDir = view.get<ActualDir>(e).d;
+  	if (canMove(reg, maze, e, pos, prevDir)) {
   	  continue;
   	}
-
-    // desired direction is no good
-    // maybe we can keep going that same way we did last tick
-    const Grid::Pos actualPos = pos + toVec(actualDir);
-    if (maze.outOfRange(actualPos)) {
-      // not sure how this could happen
-      assert(false);
-    }
-
-    const Tile actualTile = maze[actualPos];
-    if (actualTile != Tile::wall) {
-      continue;
-    }
-
-  	actualDir = Grid::Dir::none;
+  	
+  	view.get<ActualDir>(e).d = Grid::Dir::none;
   }
 }
