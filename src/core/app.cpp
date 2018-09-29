@@ -40,7 +40,7 @@ void runGame() {
   // align the synchronizer with vsync
   renderer.present();
   while (!quit) {
-    Time::Synchronizer sync{Time::sync_fps, 20};
+    Time::Synchronizer sync{Time::sync_fps, fps};
 
     SDL_Event e;
     while (SDL_PollEvent(&e)) {

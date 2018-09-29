@@ -36,7 +36,7 @@ constexpr int dotsInMaze = 152;
 inline const Grid::Pos playerSpawnPos = {9, 16};
 constexpr Grid::Dir playerSpawnDir = Grid::Dir::left;
 inline const Grid::Pos outsideHouse  = { 9,  8};
-inline const Grid::Pos blinkyHome    = { 9,  8};
+inline const Grid::Pos blinkyHome    = { 9, 10};
 inline const Grid::Pos pinkyHome     = { 9, 10};
 inline const Grid::Pos inkyHome      = { 8, 10};
 inline const Grid::Pos clydeHome     = {10, 10};
@@ -47,5 +47,7 @@ inline const Grid::Pos clydeScatter  = { 0, 21};
 
 constexpr int scatterTicks = 15;
 constexpr int chaseTicks = 40;
+// the game speed in set as 8 times slower than the frame rate
+constexpr int fps = 20;
 
 #endif

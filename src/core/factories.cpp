@@ -63,6 +63,7 @@ GhostSprite makeGhostSprite(const Sprite::Sheet &sheet, const std::string_view n
 
 Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
   const Entity e = makeGhost(reg, blinkyHome, blinkyScatter);
+  reg.get<Position>(e).p = outsideHouse;
   reg.assign<BlinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "blinky 0"));
   return e;
