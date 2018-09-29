@@ -17,6 +17,7 @@
 #include "sys/player_input.hpp"
 #include "sys/pursue_target.hpp"
 #include "sys/set_chase_target.hpp"
+#include "sys/set_eaten_target.hpp"
 #include "sys/change_ghost_mode.hpp"
 #include "sys/set_scared_target.hpp"
 #include "sys/set_scatter_target.hpp"
@@ -52,6 +53,7 @@ bool Game::logic() {
   setClydeChaseTarget(reg);
   setScaredTarget(reg, maze, rand);
   setScatterTarget(reg);
+  setEatenTarget(reg);
   pursueTarget(reg, maze);
 
   const GhostCollision collision = playerGhostCollide(reg);

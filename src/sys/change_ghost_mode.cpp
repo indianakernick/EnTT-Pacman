@@ -8,6 +8,7 @@
 
 #include "change_ghost_mode.hpp"
 
+#include "comp/house.hpp"
 #include "comp/ghost.hpp"
 #include "comp/ghost_mode.hpp"
 
@@ -18,6 +19,8 @@ void ghostScared(Registry &reg) {
   	  reg.remove<ChaseMode>(e);
   	} else if (reg.has<ScatterMode>(e)) {
   	  reg.remove<ScatterMode>(e);
+  	} else if (reg.has<ScaredMode>(e)) {
+  	  reg.remove<ScaredMode>(e);
   	} else {
   	  continue;
   	}
@@ -42,4 +45,5 @@ void ghostScaredTimeout(Registry &reg) {
 void ghostEaten(Registry &reg, const Entity ghost) {
   reg.remove<ScaredMode>(ghost);
   reg.assign<EatenMode>(ghost);
+  reg.assign<EnterHouse>(ghost);
 }
