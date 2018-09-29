@@ -17,6 +17,8 @@ struct PlayerSprite {
 
 struct GhostSprite {
   Sprite::ID id;
+  Sprite::ID scared;
+  Sprite::ID eyes;
 };
 
 struct MazeSprite {

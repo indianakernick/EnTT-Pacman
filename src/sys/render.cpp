@@ -12,6 +12,7 @@
 #include "comp/sprite.hpp"
 #include "util/dir2vec.hpp"
 #include "comp/position.hpp"
+#include "comp/ghost_mode.hpp"
 #include "core/dimensions.hpp"
 
 void playerRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
@@ -32,8 +33,17 @@ void ghostRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
   	const Grid::Pos pos = view.get<Position>(e).p * tileSize;
   	const Grid::Dir actualDir = view.get<ActualDir>(e).d;
   	writer.tilePos(pos + toVec(actualDir, frame), glm::ivec2(tileSize));
-  	const Sprite::ID tex = actualDir == Grid::Dir::none ? 0 : Grid::toNum<Sprite::ID>(actualDir);
-  	writer.tileTex(view.get<GhostSprite>(e).id + tex);
+  	const Sprite::ID dirOffset = (
+  	  actualDir == Grid::Dir::none ? 0 : Grid::toNum<Sprite::ID>(actualDir)
+  	);
+  	const GhostSprite sprite = view.get<GhostSprite>(e);
+  	if (reg.has<ChaseMode>(e) || reg.has<ScatterMode>(e)) {
+  	  writer.tileTex(sprite.id + dirOffset);
+  	} else if (reg.has<ScaredMode>(e)) {
+  	  writer.tileTex(sprite.scared);
+  	} else if (reg.has<EatenMode>(e)) {
+  	  writer.tileTex(sprite.eyes + dirOffset);
+  	}
   	writer.render();
   }
 }

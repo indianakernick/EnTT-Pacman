@@ -17,6 +17,7 @@
 #include "sys/player_input.hpp"
 #include "sys/pursue_target.hpp"
 #include "sys/set_chase_target.hpp"
+#include "sys/change_ghost_mode.hpp"
 #include "sys/set_scared_target.hpp"
 #include "sys/set_scatter_target.hpp"
 
@@ -40,6 +41,9 @@ bool Game::logic() {
   movement(reg);
   wallCollide(reg, maze);
   dots += eatDots(reg, maze);
+  if (eatEnergizer(reg, maze)) {
+  	ghostScared(reg);
+  }
   setBlinkyChaseTarget(reg);
   setPinkyChaseTarget(reg);
   setInkyChaseTarget(reg);

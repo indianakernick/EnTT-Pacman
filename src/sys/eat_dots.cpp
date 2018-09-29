@@ -11,7 +11,9 @@
 #include "comp/player.hpp"
 #include "comp/position.hpp"
 
-int eatDots(Registry &reg, MazeState &maze) {
+namespace {
+
+int countConsumptions(Registry &reg, MazeState &maze, const Tile food) {
   int count = 0;
   const auto view = reg.view<Player, Position>();
   for (const Entity e : view) {
@@ -19,11 +21,21 @@ int eatDots(Registry &reg, MazeState &maze) {
     if (maze.outOfRange(pos)) {
       continue;
     }
-  	Tile &tile = maze[pos];
-  	if (tile == Tile::dot) {
-  	  ++count;
-  	  tile = Tile::empty;
-  	}
+    Tile &tile = maze[pos];
+    if (tile == food) {
+      ++count;
+   	  tile = Tile::empty;
+    }
   }
   return count;
+}
+
+}
+
+int eatDots(Registry &reg, MazeState &maze) {
+  return countConsumptions(reg, maze, Tile::dot);
+}
+
+bool eatEnergizer(Registry &reg, MazeState &maze) {
+  return countConsumptions(reg, maze, Tile::energizer);
 }

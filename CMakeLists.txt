@@ -43,6 +43,8 @@ add_executable(Game
         "src/sys/set_scatter_target.hpp"
         "src/sys/player_lose.cpp"
         "src/sys/player_lose.hpp"
+        "src/sys/change_ghost_mode.cpp"
+        "src/sys/change_ghost_mode.hpp"
 )
 
 if(CMAKE_TOOLCHAIN_FILE)

@@ -13,5 +13,6 @@
 #include "util/registry.hpp"
 
 int eatDots(Registry &, MazeState &);
+bool eatEnergizer(Registry &, MazeState &);
 
 #endif
