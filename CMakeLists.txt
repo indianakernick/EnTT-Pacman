@@ -41,8 +41,8 @@ add_executable(Game
         "src/sys/set_scared_target.hpp"
         "src/sys/set_scatter_target.cpp"
         "src/sys/set_scatter_target.hpp"
-        "src/sys/player_lose.cpp"
-        "src/sys/player_lose.hpp"
+        "src/sys/player_ghost_collide.cpp"
+        "src/sys/player_ghost_collide.hpp"
         "src/sys/change_ghost_mode.cpp"
         "src/sys/change_ghost_mode.hpp"
 )

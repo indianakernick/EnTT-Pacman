@@ -14,13 +14,13 @@
 #include "sys/eat_dots.hpp"
 #include "sys/movement.hpp"
 #include "core/factories.hpp"
-#include "sys/player_lose.hpp"
 #include "sys/player_input.hpp"
 #include "sys/pursue_target.hpp"
 #include "sys/set_chase_target.hpp"
 #include "sys/change_ghost_mode.hpp"
 #include "sys/set_scared_target.hpp"
 #include "sys/set_scatter_target.hpp"
+#include "sys/player_ghost_collide.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
@@ -53,7 +53,12 @@ bool Game::logic() {
   setScaredTarget(reg, maze, rand);
   setScatterTarget(reg);
   pursueTarget(reg, maze);
-  if (playerLose(reg)) {
+
+  const GhostCollision collision = playerGhostCollide(reg);
+  if (collision.type == GhostCollision::Type::eat) {
+  	ghostEaten(reg, collision.ghost);
+  }
+  if (collision.type == GhostCollision::Type::lose) {
   	std::cout << "You Lose!\n";
   	return false;
   } else if (dots == dotsInMaze) {

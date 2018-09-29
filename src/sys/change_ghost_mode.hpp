@@ -13,5 +13,6 @@
 
 void ghostScared(Registry &);
 void ghostScaredTimeout(Registry &);
+void ghostEaten(Registry &, Entity);
 
 #endif

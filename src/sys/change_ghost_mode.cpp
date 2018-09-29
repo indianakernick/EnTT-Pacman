@@ -38,3 +38,8 @@ void ghostScaredTimeout(Registry &reg) {
   	}
   }
 }
+
+void ghostEaten(Registry &reg, const Entity ghost) {
+  reg.remove<ScaredMode>(ghost);
+  reg.assign<EatenMode>(ghost);
+}
