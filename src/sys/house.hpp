@@ -1,0 +1,19 @@
+//
+//  house.hpp
+//  EnTT Example
+//
+//  Created by Indi Kernick on 29/9/18.
+//  Copyright © 2018 Indi Kernick. All rights reserved.
+//
+
+#ifndef SYS_HOUSE_HPP
+#define SYS_HOUSE_HPP
+
+#include "util/registry.hpp"
+
+// These systems deal with ghosts entering and leaving the house
+
+void enterHouse(Registry &);
+void leaveHouse(Registry &);
+
+#endif

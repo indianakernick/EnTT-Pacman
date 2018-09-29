@@ -9,6 +9,7 @@
 #include "factories.hpp"
 
 #include "comp/dir.hpp"
+#include "constants.hpp"
 #include "comp/house.hpp"
 #include "comp/ghost.hpp"
 #include "comp/sprite.hpp"
@@ -28,9 +29,9 @@ Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
 Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
   reg.assign<Player>(e);
-  reg.assign<DesiredDir>(e, Grid::Dir::left);
-  reg.assign<ActualDir>(e, Grid::Dir::left);
-  reg.assign<Position>(e, Grid::Pos{9, 16});
+  reg.assign<DesiredDir>(e, playerSpawnDir);
+  reg.assign<ActualDir>(e, playerSpawnDir);
+  reg.assign<Position>(e, playerSpawnPos);
   reg.assign<PlayerSprite>(e, sheet.getIDfromName("pacman 0"));
   return e;
 }
@@ -61,14 +62,14 @@ GhostSprite makeGhostSprite(const Sprite::Sheet &sheet, const std::string_view n
 }
 
 Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, {9, 8}, {18, 0});
+  const Entity e = makeGhost(reg, blinkyHome, blinkyScatter);
   reg.assign<BlinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "blinky 0"));
   return e;
 }
 
 Entity makePinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, {9, 10}, {0, 0});
+  const Entity e = makeGhost(reg, blinkyHome, blinkyScatter);
   reg.assign<PinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "pinky 0"));
   return e;
@@ -80,14 +81,14 @@ Entity makeInky(
   const Entity player,
   const Entity blinky
 ) {
-  const Entity e = makeGhost(reg, {8, 10}, {18, 21});
+  const Entity e = makeGhost(reg, inkyHome, inkyScatter);
   reg.assign<InkyChaseTarget>(e, player, blinky);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "inky 0"));
   return e;
 }
 
 Entity makeClyde(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, {10, 10}, {0, 21});
+  const Entity e = makeGhost(reg, clydeHome, clydeScatter);
   reg.assign<ClydeChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "clyde 0"));
   return e;

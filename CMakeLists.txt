@@ -47,6 +47,8 @@ add_executable(Game
         "src/sys/player_ghost_collide.hpp"
         "src/sys/change_ghost_mode.cpp"
         "src/sys/change_ghost_mode.hpp"
+        "src/sys/house.cpp"
+        "src/sys/house.hpp"
 )
 
 if(CMAKE_TOOLCHAIN_FILE)

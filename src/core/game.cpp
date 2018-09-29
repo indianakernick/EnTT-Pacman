@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "constants.hpp"
+#include "sys/house.hpp"
 #include "sys/render.hpp"
 #include "sys/eat_dots.hpp"
 #include "sys/movement.hpp"
@@ -40,6 +41,20 @@ void Game::input(const SDL_Scancode key) {
 }
 
 bool Game::logic() {
+  // The order systems is very important in an ECS.
+  // Each system reads some state and modifies some state.
+  // If the state isn't read and modified in the right order,
+  // subtle bugs can occur. Make sure that the order of systems is easy to see.
+  // i.e. not hidden away by some abstraction that sets the order for you.
+  // Always think carefully about the order that systems should be in.
+
+  // It's OK to keep some game state outside of the ECS. e.g. maze, dots, dotSprite
+  // But try to keep as much state within the ECS as you can though.
+  // Keeping too much state outside of the ECS can lead to problems. For example:
+  // `dots` is the amount of dots eaten by the player. If there were more than
+  // one player, then each player might want to keep track of how many dots
+  // they've eaten. So `dots` would have to be moved into a component
+
   movement(reg);
   wallCollide(reg, maze);
   dots += eatDots(reg, maze);
@@ -47,6 +62,7 @@ bool Game::logic() {
   	ghostScared(reg);
   }
   ghostScaredTimeout(reg);
+  enterHouse(reg);
   setBlinkyChaseTarget(reg);
   setPinkyChaseTarget(reg);
   setInkyChaseTarget(reg);
@@ -54,6 +70,7 @@ bool Game::logic() {
   setScaredTarget(reg, maze, rand);
   setScatterTarget(reg);
   setEatenTarget(reg);
+  leaveHouse(reg);
   pursueTarget(reg, maze);
 
   const GhostCollision collision = playerGhostCollide(reg);
