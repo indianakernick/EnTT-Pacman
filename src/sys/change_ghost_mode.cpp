@@ -24,3 +24,17 @@ void ghostScared(Registry &reg) {
   	reg.assign<ScaredMode>(e);
   }
 }
+
+void ghostScaredTimeout(Registry &reg) {
+  auto view = reg.view<Ghost, ScaredMode>();
+  for (const Entity e : view) {
+  	ScaredMode &scared = view.get<ScaredMode>(e);
+  	--scared.timer;
+  	if (scared.timer <= 0) {
+  	  // Adding and removing components from the entity that is currently
+  	  // returned by the view is OK
+  	  reg.remove<ScaredMode>(e);
+  	  reg.assign<ChaseMode>(e);
+  	}
+  }
+}

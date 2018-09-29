@@ -12,5 +12,6 @@
 #include "util/registry.hpp"
 
 void ghostScared(Registry &);
+void ghostScaredTimeout(Registry &);
 
 #endif

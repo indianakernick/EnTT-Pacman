@@ -40,7 +40,8 @@ void ghostRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
   	if (reg.has<ChaseMode>(e) || reg.has<ScatterMode>(e)) {
   	  writer.tileTex(sprite.id + dirOffset);
   	} else if (reg.has<ScaredMode>(e)) {
-  	  writer.tileTex(sprite.scared);
+  	  const int scaredTimer = reg.get<ScaredMode>(e).timer;
+  	  writer.tileTex(sprite.scared + (scaredTimer <= 10 ? (frame / 4) % 2 : 0));
   	} else if (reg.has<EatenMode>(e)) {
   	  writer.tileTex(sprite.eyes + dirOffset);
   	}

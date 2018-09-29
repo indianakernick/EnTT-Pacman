@@ -44,6 +44,7 @@ bool Game::logic() {
   if (eatEnergizer(reg, maze)) {
   	ghostScared(reg);
   }
+  ghostScaredTimeout(reg);
   setBlinkyChaseTarget(reg);
   setPinkyChaseTarget(reg);
   setInkyChaseTarget(reg);

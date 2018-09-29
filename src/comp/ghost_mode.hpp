@@ -11,7 +11,9 @@
 
 struct ChaseMode {};
 struct ScatterMode {};
-struct ScaredMode {};
+struct ScaredMode {
+  int timer = 40;
+};
 struct EatenMode {};
 
 #endif
