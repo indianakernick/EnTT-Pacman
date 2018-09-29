@@ -22,6 +22,7 @@ add_executable(Game
         "src/comp/ghost_mode.hpp"
         "src/comp/target.hpp"
         "src/comp/chase_target.hpp"
+        "src/comp/ghost.hpp"
         "src/sys/movement.cpp"
         "src/sys/movement.hpp"
         "src/sys/player_input.cpp"
@@ -40,6 +41,8 @@ add_executable(Game
         "src/sys/set_scared_target.hpp"
         "src/sys/set_scatter_target.cpp"
         "src/sys/set_scatter_target.hpp"
+        "src/sys/player_lose.cpp"
+        "src/sys/player_lose.hpp"
 )
 
 if(CMAKE_TOOLCHAIN_FILE)

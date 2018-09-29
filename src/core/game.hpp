@@ -27,7 +27,7 @@ private:
   Registry reg;
   MazeState maze;
   Sprite::ID dotSprite;
-  int score = 0;
+  int dots = 0;
   std::mt19937 rand;
 };
 

@@ -8,10 +8,12 @@
 
 #include "game.hpp"
 
+#include <iostream>
 #include "sys/render.hpp"
 #include "sys/eat_dots.hpp"
 #include "sys/movement.hpp"
 #include "core/factories.hpp"
+#include "sys/player_lose.hpp"
 #include "sys/player_input.hpp"
 #include "sys/pursue_target.hpp"
 #include "sys/set_chase_target.hpp"
@@ -37,7 +39,7 @@ void Game::input(const SDL_Scancode key) {
 bool Game::logic() {
   movement(reg);
   wallCollide(reg, maze);
-  score += eatDots(reg, maze);
+  dots += eatDots(reg, maze);
   setBlinkyChaseTarget(reg);
   setPinkyChaseTarget(reg);
   setInkyChaseTarget(reg);
@@ -45,7 +47,15 @@ bool Game::logic() {
   setScaredTarget(reg, maze, rand);
   setScatterTarget(reg);
   pursueTarget(reg, maze);
-  return true;
+  if (playerLose(reg)) {
+  	std::cout << "You Lose!\n";
+  	return false;
+  } else if (dots == 152) {
+  	std::cout << "You Win!\n";
+  	return false;
+  } else {
+  	return true;
+  }
 }
 
 void Game::render(SDL::QuadWriter &writer, const int frame) {
