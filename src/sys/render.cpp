@@ -12,8 +12,9 @@
 #include "comp/sprite.hpp"
 #include "util/dir2vec.hpp"
 #include "comp/position.hpp"
+#include "core/constants.hpp"
+#include "core/constants.hpp"
 #include "comp/ghost_mode.hpp"
-#include "core/dimensions.hpp"
 
 void playerRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
   const auto view = reg.view<Position, ActualDir, DesiredDir, PlayerSprite>();
@@ -41,7 +42,10 @@ void ghostRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
   	  writer.tileTex(sprite.id + dirOffset);
   	} else if (reg.has<ScaredMode>(e)) {
   	  const int scaredTimer = reg.get<ScaredMode>(e).timer;
-  	  writer.tileTex(sprite.scared + (scaredTimer <= 10 ? (frame / 4) % 2 : 0));
+  	  const int flash = (
+  	    scaredTimer <= ghostScaredFlashTime ? (frame / ghostScaredFlashRate) % 2 : 0
+  	  );
+  	  writer.tileTex(sprite.scared + flash);
   	} else if (reg.has<EatenMode>(e)) {
   	  writer.tileTex(sprite.eyes + dirOffset);
   	}

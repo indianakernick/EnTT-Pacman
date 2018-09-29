@@ -9,7 +9,7 @@
 #include "app.hpp"
 
 #include "game.hpp"
-#include "dimensions.hpp"
+#include "constants.hpp"
 #include <Simpleton/SDL/texture.hpp>
 #include <Simpleton/SDL/library.hpp>
 #include <Simpleton/Time/synchronizer.hpp>

@@ -9,10 +9,12 @@
 #ifndef COMP_GHOST_MODE_HPP
 #define COMP_GHOST_MODE_HPP
 
+#include "core/constants.hpp"
+
 struct ChaseMode {};
 struct ScatterMode {};
 struct ScaredMode {
-  int timer = 40;
+  int timer = ghostScaredTime;
 };
 struct EatenMode {};
 

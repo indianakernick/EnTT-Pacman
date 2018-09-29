@@ -8,7 +8,7 @@
 
 #include "maze.hpp"
 
-#include "dimensions.hpp"
+#include "constants.hpp"
 
 namespace {
 

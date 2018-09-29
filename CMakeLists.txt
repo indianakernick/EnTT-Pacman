@@ -11,7 +11,7 @@ add_executable(Game
         "src/core/factories.hpp"
         "src/core/maze.cpp"
         "src/core/maze.hpp"
-        "src/core/dimensions.hpp"
+        "src/core/constants.hpp"
         "src/util/dir2vec.hpp"
         "src/util/registry.hpp"
         "src/comp/position.hpp"

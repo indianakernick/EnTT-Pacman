@@ -9,6 +9,7 @@
 #include "game.hpp"
 
 #include <iostream>
+#include "constants.hpp"
 #include "sys/render.hpp"
 #include "sys/eat_dots.hpp"
 #include "sys/movement.hpp"
@@ -55,7 +56,7 @@ bool Game::logic() {
   if (playerLose(reg)) {
   	std::cout << "You Lose!\n";
   	return false;
-  } else if (dots == 152) {
+  } else if (dots == dotsInMaze) {
   	std::cout << "You Win!\n";
   	return false;
   } else {
