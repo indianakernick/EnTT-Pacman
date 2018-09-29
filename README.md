@@ -1,6 +1,6 @@
 # EnTT Pacman
 
-[![Build Status](https://travis-ci.org/Kerndog73/EnTT-Example.svg?branch=master)](https://travis-ci.org/Kerndog73/EnTT-Example)
+[![Build Status](https://travis-ci.org/Kerndog73/EnTT-Pacman.svg?branch=master)](https://travis-ci.org/Kerndog73/EnTT-Pacman)
 [![Build Status](https://ci.appveyor.com/api/projects/status/5ndjklgbe42b0q9b?svg=true)](https://ci.appveyor.com/project/Kerndog73/entt-example)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
