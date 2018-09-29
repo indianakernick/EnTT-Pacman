@@ -6,6 +6,8 @@
 
 An example of how to use the ECS part of the [EnTT Framework](https://github.com/skypjack/entt)
 
+![Screenshot](https://i.imgur.com/J5RDcIz.png)
+
 ## What is this?
 
 This is a tutorial on how to use the EnTT framework to make a game. This project is for people who are just starting out with EnTT and not too sure how use it.
