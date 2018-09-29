@@ -8,7 +8,6 @@
 
 #include "game.hpp"
 
-#include <iostream>
 #include "constants.hpp"
 #include "sys/house.hpp"
 #include "sys/render.hpp"
@@ -33,11 +32,15 @@ void Game::init(const Sprite::Sheet &sheet) {
   makeInky(reg, sheet, player, blinky);
   makeClyde(reg, sheet, player);
   dotSprite = sheet.getIDfromName("dot 0");
+  winSprite = sheet.getIDfromName("win");
+  loseSprite = sheet.getIDfromName("lose");
   rand.seed(std::random_device{}());
 }
 
 void Game::input(const SDL_Scancode key) {
-  playerInput(reg, key);
+  if (state == State::playing) {
+    playerInput(reg, key);
+  }
 }
 
 bool Game::logic() {
@@ -54,6 +57,10 @@ bool Game::logic() {
   // `dots` is the amount of dots eaten by the player. If there were more than
   // one player, then each player might want to keep track of how many dots
   // they've eaten. So `dots` would have to be moved into a component
+
+  if (state != State::playing) {
+  	return true;
+  }
 
   movement(reg);
   wallCollide(reg, maze);
@@ -78,19 +85,22 @@ bool Game::logic() {
   	ghostEaten(reg, collision.ghost);
   }
   if (collision.type == GhostCollision::Type::lose) {
-  	std::cout << "You Lose!\n";
-  	return false;
+    state = State::lost;
   } else if (dots == dotsInMaze) {
-  	std::cout << "You Win!\n";
-  	return false;
-  } else {
-  	return true;
+    state = State::won;
   }
+  return true;
 }
 
 void Game::render(SDL::QuadWriter &writer, const int frame) {
-  mazeRender(reg, writer);
-  dotRender(writer, maze, dotSprite);
-  playerRender(reg, writer, frame);
-  ghostRender(reg, writer, frame);
+  if (state == State::playing) {
+    mazeRender(reg, writer);
+    dotRender(writer, maze, dotSprite);
+    playerRender(reg, writer, frame);
+    ghostRender(reg, writer, frame);
+  } else if (state == State::won) {
+  	winloseRender(writer, winSprite);
+  } else if (state == State::lost) {
+  	winloseRender(writer, loseSprite);
+  }
 }

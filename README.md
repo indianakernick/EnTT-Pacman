@@ -63,3 +63,7 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make
 ./example
 ```
+
+## It's not exactly the same as the real thing
+
+I read [The Pacman Dossier](http://tralvex.com/download/forum/The%20Pac-Man%20Dossier.pdf) many times during development. If you notice a difference between this game and the real thing, that wasn't an oversight. Perfectly recreating the real thing would have made this project quite a bit more complicated. I think it's complicated enough as it is!

@@ -17,5 +17,6 @@ void playerRender(Registry &, SDL::QuadWriter &, int);
 void ghostRender(Registry &, SDL::QuadWriter &, int);
 void dotRender(SDL::QuadWriter &, const MazeState &, Sprite::ID);
 void mazeRender(Registry &, SDL::QuadWriter &);
+void winloseRender(SDL::QuadWriter &, Sprite::ID);
 
 #endif

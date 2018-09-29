@@ -78,3 +78,9 @@ void mazeRender(Registry &reg, SDL::QuadWriter &writer) {
   	writer.render();
   }
 }
+
+void winloseRender(SDL::QuadWriter &writer, const Sprite::ID sprite) {
+  writer.tilePos({0, 0}, tiles * tileSize);
+  writer.tileTex(sprite);
+  writer.render();
+}

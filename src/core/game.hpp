@@ -24,11 +24,20 @@ public:
   void render(SDL::QuadWriter &, int);
 
 private:
+  enum class State {
+  	playing,
+  	won,
+  	lost
+  };
+
   Registry reg;
   MazeState maze;
   Sprite::ID dotSprite;
+  Sprite::ID winSprite;
+  Sprite::ID loseSprite;
   int dots = 0;
   std::mt19937 rand;
+  State state = State::playing;
 };
 
 #endif
