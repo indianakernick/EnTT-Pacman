@@ -17,6 +17,7 @@ extern "C" int main(int, char *[]) {
   try {
     runGame();
   } catch (std::exception &e) {
+    // The only exceptions we should get are from SDL
     std::cout << e.what() << '\n';
   	return 1;
   }

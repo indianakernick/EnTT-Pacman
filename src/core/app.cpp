@@ -14,22 +14,34 @@
 #include <Simpleton/SDL/library.hpp>
 #include <Simpleton/Time/synchronizer.hpp>
 
-SDL::Window::Desc getWinDesc() {
+namespace {
+
+SDL::Window::Desc getWinDesc(const int scaleFactor) {
   SDL::Window::Desc desc;
   desc.title = "Pacman";
-  desc.size = tiles * tileSize * scale;
+  desc.size = tilesPx * scaleFactor;
   desc.resizable = false;
   desc.openGL = false;
   return desc;
 }
 
+int getScaleFactor() {
+  // Make the largest window possible with an integer scale factor
+  SDL_Rect bounds;
+  CHECK_SDL_ERROR(SDL_GetDisplayUsableBounds(0, &bounds));
+  const glm::ivec2 scale = {bounds.w / tilesPx.x, bounds.h / tilesPx.y};
+  return std::max(1, std::min(scale.x, scale.y));
+}
+
+}
+
 void runGame() {
-  SDL::Window window = SDL::makeWindow(getWinDesc());
+  SDL::Window window = SDL::makeWindow(getWinDesc(getScaleFactor()));
   SDL::Renderer renderer = SDL::makeRenderer(window, true);
   SDL::Texture maze = renderer.texture("sprites.png");
   maze.blend(SDL_BLENDMODE_BLEND);
   Sprite::Sheet sheet = Sprite::makeSheet("sprites.atlas");
-  CHECK_SDL_ERROR(SDL_RenderSetScale(renderer.get(), scale, scale));
+  CHECK_SDL_ERROR(SDL_RenderSetLogicalSize(renderer.get(), tilesPx.x, tilesPx.y));
   SDL::QuadWriter writer{renderer, sheet, maze};
   Game game;
 
@@ -62,7 +74,7 @@ void runGame() {
 
     renderer.clear();
     game.render(writer, frame % tileSize);
-    renderer.present();
     ++frame;
+    renderer.present();
   }
 }
