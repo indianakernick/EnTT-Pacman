@@ -9,6 +9,7 @@
 #include "app.hpp"
 
 #include "game.hpp"
+#include <iostream>
 #include "constants.hpp"
 #include <Simpleton/SDL/texture.hpp>
 #include <Simpleton/SDL/library.hpp>
@@ -28,7 +29,12 @@ SDL::Window::Desc getWinDesc(const int scaleFactor) {
 int getScaleFactor() {
   // Make the largest window possible with an integer scale factor
   SDL_Rect bounds;
+  #if SDL_MINOR_VERSION > 0 || (SDL_MINOR_VERSION == 0 && SDL_PATCHLEVEL >= 5)
   CHECK_SDL_ERROR(SDL_GetDisplayUsableBounds(0, &bounds));
+  #else
+  CHECK_SDL_ERROR(SDL_GetDisplayBounds(0, &bounds));
+  std::cout << "SDL 2.0.5 or later is recommended\n";
+  #endif
   const glm::ivec2 scale = {bounds.w / tilesPx.x, bounds.h / tilesPx.y};
   return std::max(1, std::min(scale.x, scale.y));
 }
