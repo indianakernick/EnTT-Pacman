@@ -22,7 +22,7 @@ void ghostScared(Registry &reg) {
   	} else if (reg.has<ScaredMode>(e)) {
   	  reg.remove<ScaredMode>(e);
   	} else {
-  	  continue;
+  	  continue; // Ghosts in EatenMode don't get scared
   	}
   	reg.assign<ScaredMode>(e);
   }

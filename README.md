@@ -12,7 +12,7 @@ An example of how to use the ECS part of the [EnTT Framework](https://github.com
 
 This is a tutorial on how to use the EnTT framework to make a game. This project is for people who are just starting out with EnTT and not too sure how use it.
 
-I like to think the code is clean and easy to follow. I plan to spend a lot of time refactoring, adding comments and simplifying the code. I will also write a tour and put it in this `README.md` that outlines how the parts come together to make a game.
+The code isn't perfect. It could certainly be improved in some areas. Any kind of feedback is welcome. Be sure to ask me questions if something is unclear. [The EnTT Gitter channel](https://gitter.im/skypjack/entt) is a great place for discussion.
 
 ## Installing SDL2
 
