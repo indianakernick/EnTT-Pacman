@@ -1,13 +1,14 @@
 //
-//  set_chase_target.cpp
+//  set_target.cpp
 //  EnTT Example
 //
 //  Created by Indi Kernick on 24/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include "set_chase_target.hpp"
+#include "set_target.hpp"
 
+#include "can_move.hpp"
 #include "comp/dir.hpp"
 #include "comp/target.hpp"
 #include "util/dir2vec.hpp"
@@ -60,5 +61,48 @@ void setClydeChaseTarget(Registry &reg) {
   	} else {
   	  view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
   	}
+  }
+}
+
+void setScatterTarget(Registry &reg) {
+  auto view = reg.view<Target, ScatterMode, HomePosition>();
+  for (const Entity e : view) {
+  	view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
+  }
+}
+
+void setScaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
+  auto view = reg.view<Target, Position, ScaredMode, ActualDir>();
+  for (const Entity e : view) {
+  	const Grid::Pos pos = view.get<Position>(e).p;
+  	const Grid::Dir dir = view.get<ActualDir>(e).d;
+  	const Grid::Pos nextPos = pos + toVec(dir);
+  	std::uniform_int_distribution<int> dist(0, 3);
+  	Grid::Dir candDir = Grid::toDir(dist(rand));
+    Grid::Pos candPos = nextPos;
+
+  	for (int i = 0; i != 4; ++i) {
+      if (candDir == Grid::opposite(dir)) {
+      	candDir = Grid::rotateCW(candDir);
+      	continue;
+      }
+      
+      if (!canMove(reg, maze, e, nextPos, candDir)) {
+      	candDir = Grid::rotateCW(candDir);
+  	  	continue;
+  	  }
+  	  
+  	  candPos = nextPos + toVec(candDir);
+      break;
+  	}
+
+  	view.get<Target>(e).p = candPos;
+  }
+}
+
+void setEatenTarget(Registry &reg) {
+  auto view = reg.view<Target, EatenMode, HomePosition>();
+  for (const Entity e : view) {
+  	view.get<Target>(e).p = view.get<HomePosition>(e).home;
   }
 }

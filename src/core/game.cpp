@@ -14,13 +14,10 @@
 #include "sys/eat_dots.hpp"
 #include "sys/movement.hpp"
 #include "core/factories.hpp"
+#include "sys/set_target.hpp"
 #include "sys/player_input.hpp"
 #include "sys/pursue_target.hpp"
-#include "sys/set_chase_target.hpp"
-#include "sys/set_eaten_target.hpp"
 #include "sys/change_ghost_mode.hpp"
-#include "sys/set_scared_target.hpp"
-#include "sys/set_scatter_target.hpp"
 #include "sys/player_ghost_collide.hpp"
 
 void Game::init(const Sprite::Sheet &sheet) {
@@ -33,6 +30,7 @@ void Game::init(const Sprite::Sheet &sheet) {
   dotSprite = sheet.getIDfromName("dot 0");
   winloseSprite = sheet.getIDfromName("winlose 0");
   mazeSprite = sheet.getIDfromName("maze");
+  // seeding a pseudo random number generator with a random source
   rand.seed(std::random_device{}());
 }
 
