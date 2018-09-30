@@ -11,6 +11,9 @@
 
 #include <Simpleton/Grid/pos.hpp>
 
+// The position of the tile that the entity is currently in.
+// Between ticks, each entity animates from this tile to an adjacent tile
+
 struct Position {
   Grid::Pos p;
 };

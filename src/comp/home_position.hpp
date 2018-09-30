@@ -12,8 +12,8 @@
 #include <Simpleton/Grid/pos.hpp>
 
 struct HomePosition {
-  Grid::Pos home;
-  Grid::Pos scatter;
+  Grid::Pos home;    // position in the ghost house
+  Grid::Pos scatter; // unreachable point in a corner
 };
 
 #endif

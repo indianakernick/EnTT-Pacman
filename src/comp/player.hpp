@@ -9,6 +9,8 @@
 #ifndef COMP_PLAYER_HPP
 #define COMP_PLAYER_HPP
 
+// Tag component for the player
+
 struct Player {};
 
 #endif

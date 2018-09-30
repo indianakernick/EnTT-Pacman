@@ -11,6 +11,10 @@
 
 #include <Simpleton/Grid/pos.hpp>
 
+// This is the target that a ghost is aiming for. If Blinky is in chase mode
+// then his target is set to the player position.
+// The pursue_target system will read this target and move the ghost towards it
+
 struct Target {
   Grid::Pos p;
 };

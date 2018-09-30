@@ -11,6 +11,10 @@
 
 #include <Simpleton/Sprite/id.hpp>
 
+// Sprite components just store a sprite ID.
+// Rendering systems make assumptions about the animation and the
+// layout of frames
+
 struct PlayerSprite {
   Sprite::ID id;
 };

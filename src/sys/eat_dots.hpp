@@ -12,7 +12,9 @@
 #include "core/maze.hpp"
 #include "util/registry.hpp"
 
+// Returns the number of dots that the player ate (usually 0 or 1)
 int eatDots(Registry &, MazeState &);
+// Returns whether the player collided with an energizer
 bool eatEnergizer(Registry &, MazeState &);
 
 #endif

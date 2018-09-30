@@ -22,6 +22,9 @@ enum class Consumed {
   yes
 };
 
+// This takes the scancode of the key that was pressed and sets the DesiredDir
+// of the player.
+
 Consumed playerInput(Registry &, SDL_Scancode);
 
 #endif
