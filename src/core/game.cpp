@@ -32,8 +32,7 @@ void Game::init(const Sprite::Sheet &sheet) {
   makeInky(reg, sheet, player, blinky);
   makeClyde(reg, sheet, player);
   dotSprite = sheet.getIDfromName("dot 0");
-  winSprite = sheet.getIDfromName("win");
-  loseSprite = sheet.getIDfromName("lose");
+  winloseSprite = sheet.getIDfromName("winlose 0");
   rand.seed(std::random_device{}());
 }
 
@@ -114,8 +113,8 @@ void Game::render(SDL::QuadWriter &writer, const int frame) {
     playerRender(reg, writer, frame);
     ghostRender(reg, writer, frame);
   } else if (state == State::won) {
-  	winloseRender(writer, winSprite);
+  	winloseRender(writer, winloseSprite + 0);
   } else if (state == State::lost) {
-  	winloseRender(writer, loseSprite);
+  	winloseRender(writer, winloseSprite + 1);
   }
 }

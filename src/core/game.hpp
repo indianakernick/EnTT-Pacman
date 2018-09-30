@@ -33,8 +33,7 @@ private:
   Registry reg;
   MazeState maze;
   Sprite::ID dotSprite;
-  Sprite::ID winSprite;
-  Sprite::ID loseSprite;
+  Sprite::ID winloseSprite;
   int dots = 0;
   std::mt19937 rand;
   State state = State::playing;
