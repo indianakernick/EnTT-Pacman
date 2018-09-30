@@ -25,7 +25,6 @@
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
-  makeMaze(reg, sheet);
   const Entity player = makePlayer(reg, sheet);
   const Entity blinky = makeBlinky(reg, sheet, player);
   makePinky(reg, sheet, player);
@@ -33,6 +32,7 @@ void Game::init(const Sprite::Sheet &sheet) {
   makeClyde(reg, sheet, player);
   dotSprite = sheet.getIDfromName("dot 0");
   winloseSprite = sheet.getIDfromName("winlose 0");
+  mazeSprite = sheet.getIDfromName("maze");
   rand.seed(std::random_device{}());
 }
 
@@ -108,13 +108,13 @@ bool Game::logic() {
 
 void Game::render(SDL::QuadWriter &writer, const int frame) {
   if (state == State::playing) {
-    mazeRender(reg, writer);
+    fullRender(writer, mazeSprite);
     dotRender(writer, maze, dotSprite);
     playerRender(reg, writer, frame);
     ghostRender(reg, writer, frame);
   } else if (state == State::won) {
-  	winloseRender(writer, winloseSprite + 0);
+  	fullRender(writer, winloseSprite + 0);
   } else if (state == State::lost) {
-  	winloseRender(writer, winloseSprite + 1);
+  	fullRender(writer, winloseSprite + 1);
   }
 }

@@ -70,16 +70,7 @@ void dotRender(SDL::QuadWriter &writer, const MazeState &maze, const Sprite::ID 
   }
 }
 
-void mazeRender(Registry &reg, SDL::QuadWriter &writer) {
-  const auto view = reg.view<MazeSprite>();
-  for (const Entity e : view) {
-  	writer.tilePos({0, 0}, tilesPx);
-  	writer.tileTex(view.get(e).id);
-  	writer.render();
-  }
-}
-
-void winloseRender(SDL::QuadWriter &writer, const Sprite::ID sprite) {
+void fullRender(SDL::QuadWriter &writer, const Sprite::ID sprite) {
   writer.tilePos({0, 0}, tilesPx);
   writer.tileTex(sprite);
   writer.render();

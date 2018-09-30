@@ -20,12 +20,6 @@
 #include "comp/chase_target.hpp"
 #include "comp/home_position.hpp"
 
-Entity makeMaze(Registry &reg, const Sprite::Sheet &sheet) {
-  const Entity e = reg.create();
-  reg.assign<MazeSprite>(e, sheet.getIDfromName("maze"));
-  return e;
-}
-
 Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
   const Entity e = reg.create();
   reg.assign<Player>(e);

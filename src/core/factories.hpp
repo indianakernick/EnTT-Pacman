@@ -16,7 +16,6 @@
 // Sometimes you do so it's probably a good idea to return the entity ID
 // just in case you need it later.
 
-Entity makeMaze(Registry &, const Sprite::Sheet &);
 Entity makePlayer(Registry &, const Sprite::Sheet &);
 Entity makeBlinky(Registry &, const Sprite::Sheet &, Entity);
 Entity makePinky(Registry &, const Sprite::Sheet &, Entity);

@@ -34,6 +34,7 @@ private:
   MazeState maze;
   Sprite::ID dotSprite;
   Sprite::ID winloseSprite;
+  Sprite::ID mazeSprite;
   int dots = 0;
   std::mt19937 rand;
   State state = State::playing;

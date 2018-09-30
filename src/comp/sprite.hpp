@@ -21,8 +21,4 @@ struct GhostSprite {
   Sprite::ID eyes;
 };
 
-struct MazeSprite {
-  Sprite::ID id;
-};
-
 #endif
