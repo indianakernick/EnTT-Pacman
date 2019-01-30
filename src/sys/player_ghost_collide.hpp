@@ -1,6 +1,6 @@
 //
 //  player_ghost_collide.hpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 29/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -14,9 +14,9 @@
 struct GhostCollision {
   Entity ghost;
   enum class Type {
-  	none, // no collision
-  	eat,  // ghost was eaten
-  	lose  // player lost
+    none, // no collision
+    eat,  // ghost was eaten
+    lose  // player lost
   } type;
 };
 

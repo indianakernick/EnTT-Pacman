@@ -1,6 +1,6 @@
 //
 //  constants.hpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 22/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -45,7 +45,7 @@ inline const Grid::Pos blinkyHome    = { 9, 10};
 inline const Grid::Pos pinkyHome     = { 9, 10};
 inline const Grid::Pos inkyHome      = { 8, 10};
 inline const Grid::Pos clydeHome     = {10, 10};
-// Scatter positions are targets that ghosts move towards (byt never reach)
+// Scatter positions are targets that ghosts move towards (but never reach)
 // when in scatter mode
 inline const Grid::Pos blinkyScatter = {18,  0};
 inline const Grid::Pos pinkyScatter  = { 0,  0};

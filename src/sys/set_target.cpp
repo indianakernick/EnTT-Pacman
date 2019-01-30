@@ -1,6 +1,6 @@
 //
 //  set_target.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 24/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -29,22 +29,22 @@ void setBlinkyChaseTarget(Registry &reg) {
 void setPinkyChaseTarget(Registry &reg) {
   auto view = reg.view<Target, ChaseMode, PinkyChaseTarget>();
   for (const Entity e : view) {
-  	const Entity player = view.get<PinkyChaseTarget>(e).player;
-  	const Grid::Pos playerPos = reg.get<Position>(player).p;
-  	const Grid::Dir playerDir = reg.get<ActualDir>(player).d;
-  	view.get<Target>(e).p = playerPos + toVec(playerDir, 4);
+    const Entity player = view.get<PinkyChaseTarget>(e).player;
+    const Grid::Pos playerPos = reg.get<Position>(player).p;
+    const Grid::Dir playerDir = reg.get<ActualDir>(player).d;
+    view.get<Target>(e).p = playerPos + toVec(playerDir, 4);
   }
 }
 
 void setInkyChaseTarget(Registry &reg) {
   auto view = reg.view<Target, ChaseMode, InkyChaseTarget>();
   for (const Entity e : view) {
-  	const InkyChaseTarget target = view.get<InkyChaseTarget>(e);
-  	const Grid::Pos playerPos = reg.get<Position>(target.player).p;
-  	const Grid::Dir playerDir = reg.get<ActualDir>(target.player).d;
-  	const Grid::Pos offset = playerPos + toVec(playerDir, 2);
-  	const Grid::Pos blinkyPos = reg.get<Position>(target.blinky).p;
-  	view.get<Target>(e).p = blinkyPos + (offset - blinkyPos) * 2;
+    const InkyChaseTarget target = view.get<InkyChaseTarget>(e);
+    const Grid::Pos playerPos = reg.get<Position>(target.player).p;
+    const Grid::Dir playerDir = reg.get<ActualDir>(target.player).d;
+    const Grid::Pos offset = playerPos + toVec(playerDir, 2);
+    const Grid::Pos blinkyPos = reg.get<Position>(target.blinky).p;
+    view.get<Target>(e).p = blinkyPos + (offset - blinkyPos) * 2;
   }
 }
 
@@ -54,55 +54,55 @@ void setClydeChaseTarget(Registry &reg) {
   >();
   for (const Entity e : view) {
     const Entity player = view.get<ClydeChaseTarget>(e).player;
-  	const Grid::Pos playerPos = reg.get<Position>(player).p;
-  	const float dist = Grid::euclid(playerPos, view.get<Position>(e).p);
-  	if (dist >= 8.0f) {
-  	  view.get<Target>(e).p = playerPos;
-  	} else {
-  	  view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
-  	}
+    const Grid::Pos playerPos = reg.get<Position>(player).p;
+    const float dist = Grid::euclid(playerPos, view.get<Position>(e).p);
+    if (dist >= 8.0f) {
+      view.get<Target>(e).p = playerPos;
+    } else {
+      view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
+    }
   }
 }
 
 void setScatterTarget(Registry &reg) {
   auto view = reg.view<Target, ScatterMode, HomePosition>();
   for (const Entity e : view) {
-  	view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
+    view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
   }
 }
 
 void setScaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
   auto view = reg.view<Target, Position, ScaredMode, ActualDir>();
   for (const Entity e : view) {
-  	const Grid::Pos pos = view.get<Position>(e).p;
-  	const Grid::Dir dir = view.get<ActualDir>(e).d;
-  	const Grid::Pos nextPos = pos + toVec(dir);
-  	std::uniform_int_distribution<int> dist(0, 3);
-  	Grid::Dir candDir = Grid::toDir(dist(rand));
+    const Grid::Pos pos = view.get<Position>(e).p;
+    const Grid::Dir dir = view.get<ActualDir>(e).d;
+    const Grid::Pos nextPos = pos + toVec(dir);
+    std::uniform_int_distribution<int> dist(0, 3);
+    Grid::Dir candDir = Grid::toDir(dist(rand));
     Grid::Pos candPos = nextPos;
 
-  	for (int i = 0; i != 4; ++i) {
+    for (int i = 0; i != 4; ++i) {
       if (candDir == Grid::opposite(dir)) {
-      	candDir = Grid::rotateCW(candDir);
-      	continue;
+        candDir = Grid::rotateCW(candDir);
+        continue;
       }
       
       if (!canMove(reg, maze, e, nextPos, candDir)) {
-      	candDir = Grid::rotateCW(candDir);
-  	  	continue;
-  	  }
-  	  
-  	  candPos = nextPos + toVec(candDir);
+        candDir = Grid::rotateCW(candDir);
+        continue;
+      }
+      
+      candPos = nextPos + toVec(candDir);
       break;
-  	}
+    }
 
-  	view.get<Target>(e).p = candPos;
+    view.get<Target>(e).p = candPos;
   }
 }
 
 void setEatenTarget(Registry &reg) {
   auto view = reg.view<Target, EatenMode, HomePosition>();
   for (const Entity e : view) {
-  	view.get<Target>(e).p = view.get<HomePosition>(e).home;
+    view.get<Target>(e).p = view.get<HomePosition>(e).home;
   }
 }

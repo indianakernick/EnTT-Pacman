@@ -1,6 +1,6 @@
 //
 //  change_ghost_mode.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 29/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -15,30 +15,30 @@
 void ghostScared(Registry &reg) {
   const auto view = reg.view<Ghost>();
   for (const Entity e : view) {
-  	if (reg.has<ChaseMode>(e)) {
-  	  reg.remove<ChaseMode>(e);
-  	} else if (reg.has<ScatterMode>(e)) {
-  	  reg.remove<ScatterMode>(e);
-  	} else if (reg.has<ScaredMode>(e)) {
-  	  reg.remove<ScaredMode>(e);
-  	} else {
-  	  continue; // Ghosts in EatenMode don't get scared
-  	}
-  	reg.assign<ScaredMode>(e);
+    if (reg.has<ChaseMode>(e)) {
+      reg.remove<ChaseMode>(e);
+    } else if (reg.has<ScatterMode>(e)) {
+      reg.remove<ScatterMode>(e);
+    } else if (reg.has<ScaredMode>(e)) {
+      reg.remove<ScaredMode>(e);
+    } else {
+      continue; // Ghosts in EatenMode don't get scared
+    }
+    reg.assign<ScaredMode>(e);
   }
 }
 
 void ghostScaredTimeout(Registry &reg) {
   auto view = reg.view<Ghost, ScaredMode>();
   for (const Entity e : view) {
-  	ScaredMode &scared = view.get<ScaredMode>(e);
-  	--scared.timer;
-  	if (scared.timer <= 0) {
-  	  // Adding and removing components from the entity that is currently
-  	  // returned by the view is OK
-  	  reg.remove<ScaredMode>(e);
-  	  reg.assign<ChaseMode>(e);
-  	}
+    ScaredMode &scared = view.get<ScaredMode>(e);
+    --scared.timer;
+    if (scared.timer <= 0) {
+      // Adding and removing components from the entity that is currently
+      // returned by the view is OK
+      reg.remove<ScaredMode>(e);
+      reg.assign<ChaseMode>(e);
+    }
   }
 }
 
@@ -51,15 +51,15 @@ void ghostEaten(Registry &reg, const Entity ghost) {
 void ghostScatter(Registry &reg) {
   const auto view = reg.view<Ghost, ChaseMode>();
   for (const Entity e : view) {
-  	reg.remove<ChaseMode>(e);
-  	reg.assign<ScatterMode>(e);
+    reg.remove<ChaseMode>(e);
+    reg.assign<ScatterMode>(e);
   }
 }
 
 void ghostChase(Registry &reg) {
   const auto view = reg.view<Ghost, ScatterMode>();
   for (const Entity e : view) {
-  	reg.remove<ScatterMode>(e);
-  	reg.assign<ChaseMode>(e);
+    reg.remove<ScatterMode>(e);
+    reg.assign<ChaseMode>(e);
   }
 }

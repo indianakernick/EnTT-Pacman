@@ -1,6 +1,6 @@
 //
 //  house.hpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 29/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.

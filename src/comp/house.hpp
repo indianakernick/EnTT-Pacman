@@ -1,6 +1,6 @@
 //
 //  house.hpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 27/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -11,7 +11,7 @@
 
 // These tag components are sort of like tickets. Ghosts are only allowed
 // to go through the door if they have the EnterHouse or LeaveHouse tags.
-// There are dedicated systems that deal with entering a leaving the
+// There are dedicated systems that deal with entering and leaving the
 // ghost house.
 
 struct EnterHouse {};

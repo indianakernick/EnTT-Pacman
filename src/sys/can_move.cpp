@@ -1,6 +1,6 @@
 //
 //  can_move.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 27/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -25,7 +25,7 @@ bool canMove(
   if (maze.outOfRange(desiredPos)) {
     // The tunnel is the only place where playable space meets the edge of the map.
     // The movement system handles the tunnel
-  	return Grid::isHori(desiredDir);
+    return Grid::isHori(desiredDir);
   }
 
   // just like we assumed the position of the tunnel, we're assuming the
@@ -35,12 +35,12 @@ bool canMove(
   const Tile desiredTile = maze[desiredPos];
   if (desiredTile == Tile::door) {
     if (reg.has<EnterHouse>(e) && desiredDir == Grid::Dir::down) {
-  	  return true;
-  	} else if (reg.has<LeaveHouse>(e) && desiredDir == Grid::Dir::up) {
-   	  return true;
-  	}
+      return true;
+    } else if (reg.has<LeaveHouse>(e) && desiredDir == Grid::Dir::up) {
+       return true;
+    }
   } else if (desiredTile != Tile::wall) {
-  	return true;
+    return true;
   }
 
   return false;

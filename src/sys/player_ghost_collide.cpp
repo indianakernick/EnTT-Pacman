@@ -1,6 +1,6 @@
 //
 //  player_ghost_collide.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 29/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -24,13 +24,13 @@ bool collide(
   const Grid::Dir gDir
 ) {
   if (pPos == gPos) {
-  	return true;
+    return true;
   }
   if (pPos + toVec(pDir) != gPos) {
-  	return false;
+    return false;
   }
   if (pDir != Grid::opposite(gDir)) {
-  	return false;
+    return false;
   }
   return true;
 }
@@ -43,18 +43,18 @@ GhostCollision playerGhostCollide(Registry &reg) {
   for (const Entity p : players) {
     const Grid::Pos playerPos = players.get<Position>(p).p;
     const Grid::Dir playerDir = players.get<ActualDir>(p).d;
-  	for (const Entity g : ghosts) {
-  	  const Grid::Pos ghostPos = ghosts.get<Position>(g).p;
-  	  const Grid::Dir ghostDir = ghosts.get<ActualDir>(g).d;
-  	  if (collide(playerPos, ghostPos, playerDir, ghostDir)) {
-  	    if (reg.has<ScaredMode>(g)) {
-  	      return {g, GhostCollision::Type::eat};
-  	    } else if (reg.has<EatenMode>(g)) {
-  	      continue;
-  	    }
-  	    return {g, GhostCollision::Type::lose};
-  	  }
-  	}
+    for (const Entity g : ghosts) {
+      const Grid::Pos ghostPos = ghosts.get<Position>(g).p;
+      const Grid::Dir ghostDir = ghosts.get<ActualDir>(g).d;
+      if (collide(playerPos, ghostPos, playerDir, ghostDir)) {
+        if (reg.has<ScaredMode>(g)) {
+          return {g, GhostCollision::Type::eat};
+        } else if (reg.has<EatenMode>(g)) {
+          continue;
+        }
+        return {g, GhostCollision::Type::lose};
+      }
+    }
   }
   return {entt::null, GhostCollision::Type::none};
 }

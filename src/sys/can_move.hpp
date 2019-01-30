@@ -1,6 +1,6 @@
 //
 //  can_move.hpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 27/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.

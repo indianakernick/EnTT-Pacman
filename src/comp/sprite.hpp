@@ -1,6 +1,6 @@
 //
 //  sprite.hpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 24/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  movement.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 18/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -18,7 +18,7 @@ void movement(Registry &reg) {
   for (const Entity e : view) {
     Grid::Pos &pos = view.get<Position>(e).p;
     const Grid::Dir dir = view.get<ActualDir>(e).d;
-  	pos += toVec(dir);
+    pos += toVec(dir);
 
     // The tunnel.
     // This assumes the exact position of the tunnel.
@@ -26,11 +26,11 @@ void movement(Registry &reg) {
     // involve making the tunnel into an entity
     if (pos.y == 10) {
       if (pos.x <= -1 && dir == Grid::Dir::left) {
-  	    pos.x = 19;
-  	  } else if (pos.x >= 19 && dir == Grid::Dir::right) {
-  	    pos.x = -1;
-  	  }
-  	}
+        pos.x = 19;
+      } else if (pos.x >= 19 && dir == Grid::Dir::right) {
+        pos.x = -1;
+      }
+    }
   }
 }
 
@@ -39,16 +39,16 @@ void wallCollide(Registry &reg, const MazeState &maze) {
   for (const Entity e : view) {
     const Grid::Pos pos = view.get<Position>(e).p;
     const Grid::Dir desiredDir = view.get<DesiredDir>(e).d;
-  	if (canMove(reg, maze, e, pos, desiredDir)) {
-  	  view.get<ActualDir>(e).d = desiredDir;
-  	  continue;
-  	}
+    if (canMove(reg, maze, e, pos, desiredDir)) {
+      view.get<ActualDir>(e).d = desiredDir;
+      continue;
+    }
 
-  	const Grid::Dir prevDir = view.get<ActualDir>(e).d;
-  	if (canMove(reg, maze, e, pos, prevDir)) {
-  	  continue;
-  	}
-  	
-  	view.get<ActualDir>(e).d = Grid::Dir::none;
+    const Grid::Dir prevDir = view.get<ActualDir>(e).d;
+    if (canMove(reg, maze, e, pos, prevDir)) {
+      continue;
+    }
+    
+    view.get<ActualDir>(e).d = Grid::Dir::none;
   }
 }

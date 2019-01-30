@@ -1,6 +1,6 @@
 //
 //  maze.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 22/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
@@ -14,19 +14,19 @@ namespace {
 
 Tile stateChar(const char c) {
   switch (c) {
-  	case ' ':
-  	  return Tile::empty;
-  	case '.':
-  	  return Tile::dot;
-  	case 'o':
-  	  return Tile::energizer;
-  	case '#':
-  	  return Tile::wall;
-  	case '-':
-  	  return Tile::door;
-  	default:
-  	  assert(false);
-  	  return {};
+    case ' ':
+      return Tile::empty;
+    case '.':
+      return Tile::dot;
+    case 'o':
+      return Tile::energizer;
+    case '#':
+      return Tile::wall;
+    case '-':
+      return Tile::door;
+    default:
+      assert(false);
+      return {};
   }
 }
 
@@ -34,7 +34,7 @@ template <size_t Size>
 void stateStr(MazeState &state, const char (&str)[Size]) {
   assert(state.area() + 1 == Size);
   for (size_t i = 0; i != Size - 1; ++i) {
-  	state[i] = stateChar(str[i]);
+    state[i] = stateChar(str[i]);
   }
 }
 
@@ -43,28 +43,28 @@ void stateStr(MazeState &state, const char (&str)[Size]) {
 MazeState makeMazeState() {
   MazeState state{tiles};
   const char str[] = {
-  	"###################"
-  	"#........#........#"
-  	"#o##.###.#.###.##o#"
-  	"#.##.###.#.###.##.#"
-  	"#.................#"
-  	"#.##.#.#####.#.##.#"
-  	"#....#...#...#....#"
-  	"####.### # ###.####"
-  	"   #.#       #.#   "
-  	"####.# ##-## #.####"
-  	"    .  #   #  .    "
-  	"####.# ##### #.####"
-  	"   #.#       #.#   "
-  	"####.# ##### #.####"
-  	"#........#........#"
-  	"#.##.###.#.###.##.#"
-  	"#o.#..... .....#.o#"
-  	"##.#.#.#####.#.#.##"
-  	"#....#...#...#....#"
-  	"#.######.#.######.#"
-  	"#.................#"
-  	"###################"
+    "###################"
+    "#........#........#"
+    "#o##.###.#.###.##o#"
+    "#.##.###.#.###.##.#"
+    "#.................#"
+    "#.##.#.#####.#.##.#"
+    "#....#...#...#....#"
+    "####.### # ###.####"
+    "   #.#       #.#   "
+    "####.# ##-## #.####"
+    "    .  #   #  .    "
+    "####.# ##### #.####"
+    "   #.#       #.#   "
+    "####.# ##### #.####"
+    "#........#........#"
+    "#.##.###.#.###.##.#"
+    "#o.#..... .....#.o#"
+    "##.#.#.#####.#.#.##"
+    "#....#...#...#....#"
+    "#.######.#.######.#"
+    "#.................#"
+    "###################"
   };
   stateStr(state, str);
   return state;

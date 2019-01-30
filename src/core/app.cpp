@@ -1,6 +1,6 @@
 //
 //  app.cpp
-//  EnTT Example
+//  EnTT Pacman
 //
 //  Created by Indi Kernick on 17/9/18.
 //  Copyright © 2018 Indi Kernick. All rights reserved.
