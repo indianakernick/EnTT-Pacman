@@ -62,7 +62,7 @@ target_compile_features(entt-pacman PRIVATE cxx_std_17)
 # They should sort it out in 0.9.9.2
 target_compile_options(entt-pacman PRIVATE -Wall -Wextra -pedantic -Wno-gnu-anonymous-struct -Wno-nested-anon-types)
 
-target_link_libraries(entt-pacman PRIVATE CONAN_PKG::sdl2)
+target_link_libraries(entt-pacman PRIVATE CONAN_PKG::sdl2 CONAN_PKG::entt)
 
 
 add_custom_command(

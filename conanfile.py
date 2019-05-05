@@ -2,20 +2,20 @@ from conans import ConanFile, CMake, tools
 
 
 class EnttpackmanConan(ConanFile):
-    name = "entt-packman"
+    name = "entt_old-packman"
     version = "1.0.0"
     license = "MIT License"
     author = "Original author: Indi Kernick, CMake+Conan modificaitons: Pau Farre"
-    url = "github.com/Hopobcn/entt-packman"
-    description = "entt packman example"
-    topics = ("game dev", "ecs", "entt", "packman")
+    url = "github.com/Hopobcn/entt_old-packman"
+    description = "entt_old packman example"
+    topics = ("game dev", "ecs", "entt_old", "packman")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
 
     # requirements
-    requires = ( "sdl2/2.0.9@bincrafters/stable" )
+    requires = ( "entt/3.x.y-WIP@skypjack/stable", "sdl2/2.0.9@bincrafters/stable" )
     build_requires = ( "cmake_installer/3.12.4@conan/stable" )
 
     def config_options(self):
