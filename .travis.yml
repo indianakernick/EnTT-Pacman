@@ -1,38 +1,125 @@
-language: cpp
 sudo: false
-dist: trusty
-
-notifications:
-  email:
-    on_success: change
-    on_failure: always
 
 matrix:
+  allow_failures:
+    - os: windows
   include:
-  - os: osx
-    osx_image: xcode10
-    compiler: clang
-    env: COMPILER=clang++
-    before_install: brew install sdl2
+
   - os: linux
-    compiler: clang
+    dist: trusty
+    language: python
+    python: 3.6
+    compiler: clang++
     addons:
       apt:
-        sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-6.0"]
-        packages: ["clang-6.0", "g++-7", "libsdl2-dev"]
-    env: COMPILER=clang++-6.0
+        sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-6.0']
+        packages: ['clang-6.0', 'g++-7']
+    env:
+      - CC=clang-6.0
+      - CXX=clang++-6.0
+      - CONAN_PROFILE=linux-clang60-amd64
+      - CONAN_COMPILER_VERSION=6.0
+      - CONAN_LIBCXX_VERSION=libstdc++11
+      - PIP=pip
+
   - os: linux
+    dist: xenial
+    language: python
+    python: 3.7
+    compiler: clang++
+    addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-7']
+        packages: ['clang-7', 'g++-7']
+    env:
+      - CC=clang-7
+      - CXX=clang++-7
+      - CONAN_PROFILE=linux-clang70-amd64
+      - CONAN_COMPILER_VERSION=7.1
+      - CONAN_LIBCXX_VERSION=libstdc++11
+      - PIP=pip
+
+  - os: linux
+    dist: xenial
+    language: python
+    python: 3.7
     compiler: gcc
     addons:
       apt:
-        sources: ["ubuntu-toolchain-r-test"]
-        packages: ["g++-7", "libsdl2-dev"]
-    env: COMPILER=g++-7
-    
-before_install:
-- export CXX=${COMPILER}
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-7']
+    env:
+      - CC=gcc-7
+      - CXX=g++-7
+      - CONAN_PROFILE=linux-gcc7-amd64
+      - CONAN_COMPILER_VERSION=7
+      - CONAN_LIBCXX_VERSION=libstdc++11
+      - PIP=pip
+
+  - os: linux
+    dist: xenial
+    language: python
+    python: 3.7
+    compiler: gcc
+    addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-8']
+    env:
+      - CC=gcc-8
+      - CXX=g++-8
+      - CONAN_PROFILE=linux-gcc7-amd64
+      - CONAN_COMPILER_VERSION=8
+      - CONAN_LIBCXX_VERSION=libstdc++11
+      - PIP=pip
+
+
+  - os: osx
+    osx_image: xcode10
+    compiler: clang
+    env:
+      - CC=clang
+      - CXX=clang++
+      - CONAN_PROFILE=osx-xcode10-amd64
+      - PIP=pip3
+    before_install:
+      - export PATH=$PATH:~/Library/Python/2.7/bin:~/Library/Python/3.7/bin
+
+    # mingw 8.1.0
+    # llvm 7.0.0
+    # visualstudio2017
+  - os: windows
+    language: shell
+    env:
+      - PATH=/c/Python37:/c/Python37/Scripts:$PATH
+      - CONAN_PROFILE=windows-msvc15-amd64
+      - PIP=pip
+    before_install:
+      - choco install python
+      - python -m pip install --upgrade pip
+
+cache:
+  directories:
+    - $HOME/.conan
+
+before_script:
+  - ${PIP} install conan
+  - conan config install https://github.com/Hopobcn/conan-config.git
+  - if [ ! -f "$HOME/.conan/profiles/default" ]; then conan profile new default --detect ; fi
+  - |
+    [ -n "${CONAN_COMPILER_VERSION}" ] && conan profile update settings.compiler.version=${CONAN_COMPILER_VERSION} default || true
+  - |
+    [ -n "${CONAN_LIBCXX_VERSION}" ] && conan profile update settings.compiler.libcxx=${CONAN_LIBCXX_VERSION} default || true
+  - conan profile list
+  - conan remote list
 
 script:
-- cd build
-- cmake -DCMAKE_BUILD_TYPE=Release ..
-- make
+  - mkdir -p build && cd build
+  - conan install .. --build=missing #-pr ${CONAN_PROFILE} -s arch_build=x86_64 -s os_build=linux
+  - if [ "$TRAVIS_OS_NAME" = "osx"     ]; then cmake -DCMAKE_BUILD_TYPE=Release .. ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux"   ]; then cmake -DCMAKE_BUILD_TYPE=Release .. ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cmake -G "Visual Studio 15 Win64" .. ; fi
+  - cmake --build .
+
+notifications:
+  email: false

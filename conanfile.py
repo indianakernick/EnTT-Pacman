@@ -22,6 +22,15 @@ class EnttpackmanConan(ConanFile):
         if self.settings.os == 'Windows':
             del self.options.fPIC
 
+    #configure
+    #requirements
+    #package_id
+    #build_requirements
+    #build_id
+    #system_requirements
+    #source
+    #imports
+
     def build(self):
         cmake = CMake(self)
         cmake.configure()
@@ -37,3 +46,5 @@ class EnttpackmanConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
+
+    #deploy

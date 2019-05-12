@@ -58,9 +58,14 @@ target_include_directories(entt-pacman
 
 target_compile_features(entt-pacman PRIVATE cxx_std_17)
 
-# GLM 0.9.9.1 Suddenly produces a bunch of warnings
-# They should sort it out in 0.9.9.2
-target_compile_options(entt-pacman PRIVATE -Wall -Wextra -pedantic -Wno-gnu-anonymous-struct -Wno-nested-anon-types)
+string(APPEND compilation_options
+	"$<IF:$<CXX_COMPILER_ID:MSVC>,"
+		"/W4;$<$<CONFIG:RELEASE>:/O2>,"
+		"-Wall;-Wextra;-pedantic;-Wno-gnu-anonymous-struct;-Wno-nested-anon-types"
+			"$<$<CONFIG:RELEASE>:-O3>"
+	">"
+)
+target_compile_options(entt-pacman PRIVATE ${compilation_options})
 
 target_link_libraries(entt-pacman PRIVATE CONAN_PKG::entt CONAN_PKG::sdl2 CONAN_PKG::glm)
 
