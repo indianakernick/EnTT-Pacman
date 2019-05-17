@@ -100,7 +100,7 @@ matrix:
 
 cache:
   directories:
-    - $HOME/.conan
+    - $HOME/.cache/pip
 
 before_script:
   - ${PIP} install conan
