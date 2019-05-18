@@ -11,7 +11,7 @@
 
 #include <entt/entity/registry.hpp>
 
-using DefaultRegistry = entt::registry<std::uint32_t>;
+using DefaultRegistry = entt::basic_registry<std::uint32_t>;
 using Registry = DefaultRegistry;
 using Entity = Registry::entity_type;
 

@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 
 
 class EnttpackmanConan(ConanFile):
-    name = "entt_old-packman"
+    name = "entt-packman"
     version = "1.0.0"
     license = "MIT License"
     author = "Original author: Indi Kernick, CMake+Conan modificaitons: Pau Farre"
@@ -15,7 +15,7 @@ class EnttpackmanConan(ConanFile):
     generators = "cmake"
 
     # requirements
-    requires = ( "entt/3.x.y-WIP@skypjack/stable", "sdl2/2.0.9@bincrafters/stable", "glm/0.9.9.4@g-truc/stable" )
+    requires = ( "entt/3.0.0@skypjack/stable", "sdl2/2.0.9@bincrafters/stable", "glm/0.9.9.4@g-truc/stable" )
     build_requires = ( "cmake_installer/3.12.4@conan/stable" )
 
     def config_options(self):
