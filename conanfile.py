@@ -1,14 +1,14 @@
 from conans import ConanFile, CMake, tools
 
 
-class EnttpackmanConan(ConanFile):
-    name = "entt-packman"
+class EnttpacmanConan(ConanFile):
+    name = "entt-pacman"
     version = "1.0.0"
     license = "MIT License"
-    author = "Original author: Indi Kernick, CMake+Conan modificaitons: Pau Farre"
-    url = "github.com/Hopobcn/entt_old-packman"
+    author = "Indi Kernick"
+    url = "https://github.com/Kerndog73/EnTT-Pacman"
     description = "entt_old packman example"
-    topics = ("game dev", "ecs", "entt_old", "packman")
+    topics = ("game dev", "ecs", "entt", "pacman")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
