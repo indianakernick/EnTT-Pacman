@@ -7,7 +7,7 @@ class EnttpacmanConan(ConanFile):
     license = "MIT License"
     author = "Indi Kernick"
     url = "https://github.com/Kerndog73/EnTT-Pacman"
-    description = "entt_old packman example"
+    description = "entt pacman example"
     topics = ("game dev", "ecs", "entt", "pacman")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
@@ -15,7 +15,7 @@ class EnttpacmanConan(ConanFile):
     generators = "cmake"
 
     # requirements
-    requires = ( "entt/3.0.0@skypjack/stable", "sdl2/2.0.9@bincrafters/stable", "glm/0.9.9.4@g-truc/stable" )
+    requires = ( "entt/3.0.0@skypjack/stable", "sdl2/[>2.0.5 <2.1.0]@bincrafters/stable", "glm/0.9.9.4@g-truc/stable" )
     build_requires = ( "cmake_installer/3.12.4@conan/stable" )
 
     def config_options(self):
