@@ -14,55 +14,37 @@ This is a tutorial on how to use the EnTT framework to make a game. This project
 
 The code isn't perfect. It could certainly be improved in some areas. Any kind of feedback is welcome. Be sure to ask me questions if something is unclear. [The EnTT Gitter channel](https://gitter.im/skypjack/entt) is a great place for discussion.
 
-## Installing SDL2
+## Dependencies
 
-This uses the [SDL2 Library](https://www.libsdl.org/) for input and rendering. CMake will find it if it's on your system. For details on how to install SDL2, see the [installation page](https://wiki.libsdl.org/Installation).
+* [Simpleton](https://github.com/Kerndog73/Simpleton-Engine)
+* [SDL2 Library](https://www.libsdl.org/) for input and rendering
+* [GLM](https://github.com/g-truc/glm)
+* [EnTT](https://github.com/skypjack/entt)
 
-If you're on MacOS,
+EnTT Pacman uses [conan](https://conan.io/) to import all project dependencies.
+You only require python `pip` to be installed in your system.
 
-```
-brew install sdl2
-```
+First, install conan:
 
-If you're on a Debian based system,
-
-```
-sudo apt-get install libsdl2-dev
-```
-
-If you're on a Red Hat based system,
-
-```
-sudo yum install SDL2-devel
+```bash
+pip install conan
 ```
 
-If you're on some other Linux system that doesn't have an SDL2 package, you'll have to build the source.
-
-```
-hg clone https://hg.libsdl.org/SDL SDL
-cd SDL
-mkdir build
-cd build
-../configure
-make
-sudo make install
-```
-
-If you're on Windows,
-
-```
-vcpkg install sdl2
+Then add bincrafters remote:
+```bash
+conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
 ```
 
 ## Building
 
-The other dependencies ([GLM](https://github.com/g-truc/glm), [EnTT](https://github.com/skypjack/entt), [Simpleton](https://github.com/Kerndog73/Simpleton-Engine)) are bundled with the project so you don't have to worry about them. On Windows, you'll need to specify the vcpkg toolchain file.
+Conan will take care of downloading all dependent packages.
 
-```
-git clone https://github.com/Kerndog73/EnTT-Example.git
-cd EnTT-Example/build
+```bash
+git clone https://github.com/Kerndog73/EnTT-Pacman.git
+mkdir -p EnTT-Pacman/build && cd EnTT-Pacman/build
+conan install --build=missing ..
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+cmake --build .
 ./example
 ```
 
