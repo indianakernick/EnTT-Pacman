@@ -45,13 +45,16 @@ add_executable(Game
 )
 
 if(CMAKE_TOOLCHAIN_FILE)
+    message("Using SDL2 toolchain file")
+    message(${CMAKE_TOOLCHAIN_FILE})
     find_package(SDL2 CONFIG REQUIRED)
     target_link_libraries(Game 
-        PRIVATE 
-        SDL2::SDL2 
+        PRIVATE
+        SDL2::SDL2
         SDL2::SDL2main
     )
 else()
+    message("Finding SDL2")
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
     find_package(SDL2 REQUIRED)
 
