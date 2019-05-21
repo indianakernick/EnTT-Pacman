@@ -16,16 +16,21 @@
 namespace {
 
 Grid::Dir readDir(const SDL_Scancode key) {
-         if (key == SDL_SCANCODE_UP    || key == SDL_SCANCODE_W) {
-    return Grid::Dir::up;
-  } else if (key == SDL_SCANCODE_RIGHT || key == SDL_SCANCODE_D) {
-    return Grid::Dir::right;
-  } else if (key == SDL_SCANCODE_DOWN  || key == SDL_SCANCODE_S) {
-    return Grid::Dir::down;
-  } else if (key == SDL_SCANCODE_LEFT  || key == SDL_SCANCODE_A) {
-    return Grid::Dir::left;
-  } else {
-    return Grid::Dir::none;
+  switch (key) {
+    case SDL_SCANCODE_W:
+    case SDL_SCANCODE_UP:
+      return Grid::Dir::up;
+    case SDL_SCANCODE_D:
+    case SDL_SCANCODE_RIGHT:
+      return Grid::Dir::right;
+    case SDL_SCANCODE_S:
+    case SDL_SCANCODE_DOWN:
+      return Grid::Dir::down;
+    case SDL_SCANCODE_A:
+    case SDL_SCANCODE_LEFT:
+      return Grid::Dir::left;
+    default:
+      return Grid::Dir::none;
   }
 }
 

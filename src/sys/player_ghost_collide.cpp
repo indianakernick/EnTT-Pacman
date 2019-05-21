@@ -24,15 +24,9 @@ bool collide(
   const Grid::Dir pDir,
   const Grid::Dir gDir
 ) {
-  if (pPos == gPos) {
-    return true;
-  }
-  if (pPos + toVec(pDir) != gPos) {
-    return false;
-  }
-  if (pDir != Grid::opposite(gDir)) {
-    return false;
-  }
+  if (pPos == gPos)                 return true;
+  if (pPos + toVec(pDir) != gPos)   return false;
+  if (pDir != Grid::opposite(gDir)) return false;
   return true;
 }
 
