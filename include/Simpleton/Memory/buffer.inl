@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include <utility>
+#include <algorithm>
 
 inline Memory::Buffer::Buffer(const size_t size) noexcept
   : mData{allocBytes(size)}, mSize{size} {}
