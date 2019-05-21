@@ -62,7 +62,7 @@ The other dependencies ([GLM](https://github.com/g-truc/glm), [EnTT](https://git
 git clone https://github.com/Kerndog73/EnTT-Example.git
 cd EnTT-Example/build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+cmake --build .
 ./example
 ```
 

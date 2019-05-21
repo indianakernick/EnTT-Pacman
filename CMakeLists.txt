@@ -2,94 +2,94 @@ cmake_minimum_required(VERSION 3.8)
 project(EnTT_Pacman)
 
 add_executable(Game
-        src/main.cpp
-        src/core/game.cpp
-        src/core/game.hpp
-        src/core/app.cpp
-        src/core/app.hpp
-        src/core/factories.cpp
-        src/core/factories.hpp
-        src/core/maze.cpp
-        src/core/maze.hpp
-        src/core/constants.hpp
-        src/util/dir2vec.hpp
-        src/comp/position.hpp
-        src/comp/player.hpp
-        src/comp/sprite.hpp
-        src/comp/dir.hpp
-        src/comp/home_position.hpp
-        src/comp/ghost_mode.hpp
-        src/comp/target.hpp
-        src/comp/chase_target.hpp
-        src/comp/ghost.hpp
-        src/sys/movement.cpp
-        src/sys/movement.hpp
-        src/sys/player_input.cpp
-        src/sys/player_input.hpp
-        src/sys/render.cpp
-        src/sys/render.hpp
-        src/sys/eat_dots.cpp
-        src/sys/eat_dots.hpp
-        src/sys/can_move.cpp
-        src/sys/can_move.hpp
-        src/sys/pursue_target.cpp
-        src/sys/pursue_target.hpp
-        src/sys/set_target.cpp
-        src/sys/set_target.hpp
-        src/sys/player_ghost_collide.cpp
-        src/sys/player_ghost_collide.hpp
-        src/sys/change_ghost_mode.cpp
-        src/sys/change_ghost_mode.hpp
-        src/sys/house.cpp
-        src/sys/house.hpp
+    src/main.cpp
+    src/core/game.cpp
+    src/core/game.hpp
+    src/core/app.cpp
+    src/core/app.hpp
+    src/core/factories.cpp
+    src/core/factories.hpp
+    src/core/maze.cpp
+    src/core/maze.hpp
+    src/core/constants.hpp
+    src/util/dir2vec.hpp
+    src/comp/position.hpp
+    src/comp/player.hpp
+    src/comp/sprite.hpp
+    src/comp/dir.hpp
+    src/comp/home_position.hpp
+    src/comp/ghost_mode.hpp
+    src/comp/target.hpp
+    src/comp/chase_target.hpp
+    src/comp/ghost.hpp
+    src/sys/movement.cpp
+    src/sys/movement.hpp
+    src/sys/player_input.cpp
+    src/sys/player_input.hpp
+    src/sys/render.cpp
+    src/sys/render.hpp
+    src/sys/eat_dots.cpp
+    src/sys/eat_dots.hpp
+    src/sys/can_move.cpp
+    src/sys/can_move.hpp
+    src/sys/pursue_target.cpp
+    src/sys/pursue_target.hpp
+    src/sys/set_target.cpp
+    src/sys/set_target.hpp
+    src/sys/player_ghost_collide.cpp
+    src/sys/player_ghost_collide.hpp
+    src/sys/change_ghost_mode.cpp
+    src/sys/change_ghost_mode.hpp
+    src/sys/house.cpp
+    src/sys/house.hpp
 )
 
 if(CMAKE_TOOLCHAIN_FILE)
-        find_package(SDL2 CONFIG REQUIRED)
-        target_link_libraries(Game 
-                PRIVATE 
-                SDL2::SDL2 
-                SDL2::SDL2main
-        )
+    find_package(SDL2 CONFIG REQUIRED)
+    target_link_libraries(Game 
+        PRIVATE 
+        SDL2::SDL2 
+        SDL2::SDL2main
+    )
 else()
-        set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
-        find_package(SDL2 REQUIRED)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+    find_package(SDL2 REQUIRED)
 
-        target_include_directories(Game
-                PRIVATE
-                "${SDL2_INCLUDE_DIR}"
-        )
-        target_link_libraries(Game
-                PRIVATE
-                "${SDL2_LIBRARY}"
-        )
+    target_include_directories(Game
+        PRIVATE
+        "${SDL2_INCLUDE_DIR}"
+    )
+    target_link_libraries(Game
+        PRIVATE
+        "${SDL2_LIBRARY}"
+    )
 endif()
 
 target_include_directories(Game
-        PRIVATE
-        "${CMAKE_SOURCE_DIR}/include"
-        "${CMAKE_SOURCE_DIR}/src"
+    PRIVATE
+    "${CMAKE_SOURCE_DIR}/include"
+    "${CMAKE_SOURCE_DIR}/src"
 )
 
 target_compile_features(Game
-        PRIVATE
-        cxx_std_17
+    PRIVATE
+    cxx_std_17
 )
 
 if (CMAKE_BUILD_TYPE MATCHES DEBUG)
-        target_compile_options(Game
-                PRIVATE
-                -Wall -Wextra -Wpedantic
-        )
+    target_compile_options(Game
+        PRIVATE
+        -Wall -Wextra -Wpedantic
+    )
 endif()
 
 set_target_properties(Game
-        PROPERTIES OUTPUT_NAME "example"
+    PROPERTIES OUTPUT_NAME "example"
 )
 
 add_custom_command(
-	    TARGET Game POST_BUILD
-	    COMMAND ${CMAKE_COMMAND} -E copy_directory
-	            ${CMAKE_CURRENT_SOURCE_DIR}/assets/sheet
-	            ${CMAKE_CURRENT_BINARY_DIR}
+	  TARGET Game POST_BUILD
+	  COMMAND ${CMAKE_COMMAND} -E copy_directory
+	          ${CMAKE_CURRENT_SOURCE_DIR}/assets/sheet
+	          ${CMAKE_CURRENT_BINARY_DIR}
 )
