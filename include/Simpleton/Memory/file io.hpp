@@ -11,6 +11,7 @@
 
 #include <cstdio>
 #include <string>
+#include <memory>
 #include <fstream>
 #include "buffer.hpp"
 #include <string_view>
