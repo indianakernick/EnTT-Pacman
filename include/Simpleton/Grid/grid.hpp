@@ -125,7 +125,7 @@ namespace Grid {
     
     Grid() = default;
     // So that dynamic and static grids have compatible interfaces
-    Grid( [[maybe_unused]] const Coord width, [[maybe_unused]] const Coord height) {
+    Grid([[maybe_unused]] const Coord width, [[maybe_unused]] const Coord height) {
       assert(width == Width);
       assert(height == Height);
     }
