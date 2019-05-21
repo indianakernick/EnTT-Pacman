@@ -6,9 +6,9 @@
 #define GLM_VERSION_MAJOR			0
 #define GLM_VERSION_MINOR			9
 #define GLM_VERSION_PATCH			9
-#define GLM_VERSION_REVISION		1
-#define GLM_VERSION					991
-#define GLM_VERSION_MESSAGE			"GLM: version 0.9.9.1"
+#define GLM_VERSION_REVISION		4
+#define GLM_VERSION					995
+#define GLM_VERSION_MESSAGE			"GLM: version 0.9.9.5"
 
 #define GLM_SETUP_INCLUDED			GLM_VERSION
 
@@ -143,7 +143,8 @@
 #if GLM_PLATFORM == GLM_PLATFORM_ANDROID && !defined(GLM_LANG_STL11_FORCED)
 #	define GLM_HAS_CXX11_STL 0
 #elif GLM_COMPILER & GLM_COMPILER_CLANG
-#	if (defined(_LIBCPP_VERSION) && GLM_LANG & GLM_LANG_CXX11_FLAG) || defined(GLM_LANG_STL11_FORCED)
+#	if ((defined(_LIBCPP_VERSION) || defined(_MSC_VER)) && GLM_LANG & GLM_LANG_CXX11_FLAG) || \
+		defined(GLM_LANG_STL11_FORCED)
 #		define GLM_HAS_CXX11_STL 1
 #	else
 #		define GLM_HAS_CXX11_STL 0
@@ -293,6 +294,27 @@
 #endif
 
 //
+#if GLM_HAS_CONSTEXPR
+# if (GLM_COMPILER & GLM_COMPILER_CLANG)
+#	define GLM_HAS_IF_CONSTEXPR __has_feature(cxx_if_constexpr)
+# elif (GLM_COMPILER & GLM_COMPILER_GCC) 
+#	define GLM_HAS_IF_CONSTEXPR GLM_COMPILER >= GLM_COMPILER_GCC7
+# elif (GLM_LANG & GLM_LANG_CXX17_FLAG)
+# 	define GLM_HAS_IF_CONSTEXPR 1
+# else
+# 	define GLM_HAS_IF_CONSTEXPR 0
+# endif
+#else
+#	define GLM_HAS_IF_CONSTEXPR 0
+#endif
+
+#if GLM_HAS_IF_CONSTEXPR
+# 	define GLM_IF_CONSTEXPR if constexpr
+#else
+#	define GLM_IF_CONSTEXPR if
+#endif
+
+//
 #if GLM_LANG & GLM_LANG_CXX11_FLAG
 #	define GLM_HAS_ASSIGNABLE 1
 #else
@@ -314,12 +336,12 @@
 #endif
 
 //
-#if defined(GLM_FORCE_PURE)
-#	define GLM_HAS_BITSCAN_WINDOWS 0
-#else
+#if defined(GLM_FORCE_INTRINSICS)
 #	define GLM_HAS_BITSCAN_WINDOWS ((GLM_PLATFORM & GLM_PLATFORM_WINDOWS) && (\
 		((GLM_COMPILER & GLM_COMPILER_INTEL)) || \
 		((GLM_COMPILER & GLM_COMPILER_VC) && (GLM_COMPILER >= GLM_COMPILER_VC14) && (GLM_ARCH & GLM_ARCH_X86_BIT))))
+#else
+#	define GLM_HAS_BITSCAN_WINDOWS 0
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -426,6 +448,11 @@
 
 #if defined(GLM_FORCE_XYZW_ONLY)
 #	undef GLM_FORCE_SWIZZLE
+#endif
+
+#if defined(GLM_SWIZZLE)
+#	pragma message("GLM: GLM_SWIZZLE is deprecated, use GLM_FORCE_SWIZZLE instead.")
+#	define GLM_FORCE_SWIZZLE
 #endif
 
 #if defined(GLM_FORCE_SWIZZLE) && (GLM_LANG & GLM_LANG_CXXMS_FLAG)
@@ -710,21 +737,31 @@ namespace detail
 ///////////////////////////////////////////////////////////////////////////////////
 // Configure the use of defaulted initialized types
 
-#define GLM_CTOR_INITIALIZER_LIST	(1 << 1)
-#define GLM_CTOR_INITIALISATION		(1 << 2)
+#define GLM_CTOR_INIT_DISABLE		0
+#define GLM_CTOR_INITIALIZER_LIST	1
+#define GLM_CTOR_INITIALISATION		2
 
 #if defined(GLM_FORCE_CTOR_INIT) && GLM_HAS_INITIALIZER_LISTS
 #	define GLM_CONFIG_CTOR_INIT GLM_CTOR_INITIALIZER_LIST
 #elif defined(GLM_FORCE_CTOR_INIT) && !GLM_HAS_INITIALIZER_LISTS
 #	define GLM_CONFIG_CTOR_INIT GLM_CTOR_INITIALISATION
 #else
-#	define GLM_CONFIG_CTOR_INIT GLM_DISABLE
+#	define GLM_CONFIG_CTOR_INIT GLM_CTOR_INIT_DISABLE
+#endif
+
+///////////////////////////////////////////////////////////////////////////////////
+// Use SIMD instruction sets
+
+#if GLM_HAS_ALIGNOF && (GLM_LANG & GLM_LANG_CXXMS_FLAG) && (GLM_ARCH & GLM_ARCH_SIMD_BIT)
+#	define GLM_CONFIG_SIMD GLM_ENABLE
+#else
+#	define GLM_CONFIG_SIMD GLM_DISABLE
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Configure the use of defaulted function
 
-#if GLM_HAS_DEFAULTED_FUNCTIONS && GLM_CONFIG_CTOR_INIT == GLM_DISABLE
+#if GLM_HAS_DEFAULTED_FUNCTIONS && GLM_CONFIG_CTOR_INIT == GLM_CTOR_INIT_DISABLE
 #	define GLM_CONFIG_DEFAULTED_FUNCTIONS GLM_ENABLE
 #	define GLM_DEFAULT = default
 #else
@@ -739,19 +776,14 @@ namespace detail
 #	define GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
 #endif
 
-#if GLM_HAS_ALIGNOF && (GLM_LANG & GLM_LANG_CXXMS_FLAG)
+#ifdef GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
+#	define GLM_FORCE_ALIGNED_GENTYPES
+#endif
+
+#if GLM_HAS_ALIGNOF && (GLM_LANG & GLM_LANG_CXXMS_FLAG) && (defined(GLM_FORCE_ALIGNED_GENTYPES) || (GLM_CONFIG_SIMD == GLM_ENABLE))
 #	define GLM_CONFIG_ALIGNED_GENTYPES GLM_ENABLE
 #else
 #	define GLM_CONFIG_ALIGNED_GENTYPES GLM_DISABLE
-#endif
-
-///////////////////////////////////////////////////////////////////////////////////
-// Use SIMD instruction sets
-
-#if GLM_HAS_ALIGNOF && (GLM_LANG & GLM_LANG_CXXMS_FLAG) && (GLM_ARCH & GLM_ARCH_SIMD_BIT)
-#	define GLM_CONFIG_SIMD GLM_ENABLE
-#else
-#	define GLM_CONFIG_SIMD GLM_DISABLE
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -761,6 +793,15 @@ namespace detail
 #	define GLM_CONFIG_ANONYMOUS_STRUCT GLM_ENABLE
 #else
 #	define GLM_CONFIG_ANONYMOUS_STRUCT GLM_DISABLE
+#endif
+
+///////////////////////////////////////////////////////////////////////////////////
+// Silent warnings
+
+#ifdef GLM_FORCE_SILENT_WARNINGS
+#	define GLM_SILENT_WARNINGS GLM_ENABLE
+#else
+#	define GLM_SILENT_WARNINGS GLM_DISABLE
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -977,12 +1018,12 @@ namespace detail
 
 	// Report whether only xyzw component are used
 #	if defined GLM_FORCE_XYZW_ONLY
-#		pragma message("GLM: GLM_FORCE_XYZW_ONLY is defined. Only x, y, z and w component are available in vector type. This define disables swizzle operators and SIMD instruction sets")
+#		pragma message("GLM: GLM_FORCE_XYZW_ONLY is defined. Only x, y, z and w component are available in vector type. This define disables swizzle operators and SIMD instruction sets.")
 #	endif
 
 	// Report swizzle operator support
 #	if GLM_CONFIG_SWIZZLE == GLM_SWIZZLE_OPERATOR
-#		pragma message("GLM: GLM_FORCE_SWIZZLE is defined, swizzling operators enabled")
+#		pragma message("GLM: GLM_FORCE_SWIZZLE is defined, swizzling operators enabled.")
 #	elif GLM_CONFIG_SWIZZLE == GLM_SWIZZLE_FUNCTION
 #		pragma message("GLM: GLM_FORCE_SWIZZLE is defined, swizzling functions enabled. Enable compiler C++ language extensions to enable swizzle operators.")
 #	else
@@ -1002,13 +1043,31 @@ namespace detail
 #		pragma message("GLM: GLM_FORCE_UNRESTRICTED_GENTYPE is undefined. Follows strictly GLSL on valid function genTypes.")
 #	endif
 
-#	ifdef GLM_FORCE_SINGLE_ONLY
-#		pragma message("GLM: GLM_FORCE_SINGLE_ONLY is defined. Using only single precision floating-point types")
+#	if GLM_SILENT_WARNINGS == GLM_ENABLE
+#		pragma message("GLM: GLM_FORCE_SILENT_WARNINGS is defined. Ignores C++ warnings from using C++ language extensions.")
+#	else
+#		pragma message("GLM: GLM_FORCE_SILENT_WARNINGS is undefined. Shows C++ warnings from using C++ language extensions.")
 #	endif
 
-#	if defined(GLM_FORCE_DEFAULT_ALIGNED_GENTYPES) && (GLM_CONFIG_ALIGNED_GENTYPES == GLM_DISABLE)
-#		undef GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
-#		pragma message("GLM: GLM_FORCE_DEFAULT_ALIGNED_GENTYPES is defined but is disabled. It requires C++11 and language extensions")
+#	ifdef GLM_FORCE_SINGLE_ONLY
+#		pragma message("GLM: GLM_FORCE_SINGLE_ONLY is defined. Using only single precision floating-point types.")
+#	endif
+
+#	if defined(GLM_FORCE_ALIGNED_GENTYPES) && (GLM_CONFIG_ALIGNED_GENTYPES == GLM_ENABLE)
+#		undef GLM_FORCE_ALIGNED_GENTYPES
+#		pragma message("GLM: GLM_FORCE_ALIGNED_GENTYPES is defined, allowing aligned types. This prevents the use of C++ constexpr.")
+#	elif defined(GLM_FORCE_ALIGNED_GENTYPES) && (GLM_CONFIG_ALIGNED_GENTYPES == GLM_DISABLE)
+#		undef GLM_FORCE_ALIGNED_GENTYPES
+#		pragma message("GLM: GLM_FORCE_ALIGNED_GENTYPES is defined but is disabled. It requires C++11 and language extensions.")
+#	endif
+
+#	if defined(GLM_FORCE_DEFAULT_ALIGNED_GENTYPES)
+#		if GLM_CONFIG_ALIGNED_GENTYPES == GLM_DISABLE
+#			undef GLM_FORCE_DEFAULT_ALIGNED_GENTYPES
+#			pragma message("GLM: GLM_FORCE_DEFAULT_ALIGNED_GENTYPES is defined but is disabled. It requires C++11 and language extensions.")
+#		elif GLM_CONFIG_ALIGNED_GENTYPES == GLM_ENABLE
+#			pragma message("GLM: GLM_FORCE_DEFAULT_ALIGNED_GENTYPES is defined. All gentypes (e.g. vec3) will be aligned and padded by default.")
+#		endif
 #	endif
 
 #	if GLM_CONFIG_CLIP_CONTROL & GLM_CLIP_CONTROL_ZO_BIT

@@ -35,14 +35,14 @@ namespace {
 
 entt::entity makeGhost(entt::registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
   const entt::entity e = reg.create();
-  reg.assign<ScatterMode>(e);
   reg.assign<Position>(e, home);
+  reg.assign<HomePosition>(e, home, scatter);
+  reg.assign<LeaveHouse>(e);
+  reg.assign<ScatterMode>(e);
   reg.assign<DesiredDir>(e);
   reg.assign<ActualDir>(e);
   reg.assign<Target>(e);
   reg.assign<Ghost>(e);
-  reg.assign<LeaveHouse>(e);
-  reg.assign<HomePosition>(e, home, scatter);
   return e;
 }
 

@@ -12,15 +12,12 @@
 #include <Simpleton/Grid/pos.hpp>
 #include <Simpleton/Grid/dir.hpp>
 
-// In a recent version of GLM, constexpr is disabled by default.
-// Something to do with SSE intrinsics not being available at compile-time
-
 // The width and height of the maze in tiles
-inline const glm::ivec2 tiles = {19, 22};
+constexpr glm::ivec2 tiles = {19, 22};
 // The pixel size of tiles
 constexpr int tileSize = 8;
 // The width and height of the maze in pixels
-inline const glm::ivec2 tilesPx = tiles * tileSize;
+constexpr glm::ivec2 tilesPx = tiles * tileSize;
 // The amount of ticks that ghosts are scared for
 constexpr int ghostScaredTime = 40;
 
@@ -34,23 +31,23 @@ constexpr int ghostScaredFlashRate = 4;
 constexpr int dotsInMaze = 152;
 
 // Position where the player spawns
-inline const Grid::Pos playerSpawnPos = {9, 16};
+constexpr Grid::Pos playerSpawnPos = {9, 16};
 // Direction that the player is facing and moving when they spawn
 constexpr Grid::Dir playerSpawnDir = Grid::Dir::left;
 // A position just outside the ghost house above the door
-inline const Grid::Pos outsideHouse  = { 9,  8};
+constexpr Grid::Pos outsideHouse  = { 9,  8};
 
 // Home positions are the places in the house where ghosts go
-inline const Grid::Pos blinkyHome    = { 9, 10};
-inline const Grid::Pos pinkyHome     = { 9, 10};
-inline const Grid::Pos inkyHome      = { 8, 10};
-inline const Grid::Pos clydeHome     = {10, 10};
+constexpr Grid::Pos blinkyHome    = { 9, 10};
+constexpr Grid::Pos pinkyHome     = { 9, 10};
+constexpr Grid::Pos inkyHome      = { 8, 10};
+constexpr Grid::Pos clydeHome     = {10, 10};
 // Scatter positions are targets that ghosts move towards (but never reach)
 // when in scatter mode
-inline const Grid::Pos blinkyScatter = {18,  0};
-inline const Grid::Pos pinkyScatter  = { 0,  0};
-inline const Grid::Pos inkyScatter   = {18, 21};
-inline const Grid::Pos clydeScatter  = { 0, 21};
+constexpr Grid::Pos blinkyScatter = {18,  0};
+constexpr Grid::Pos pinkyScatter  = { 0,  0};
+constexpr Grid::Pos inkyScatter   = {18, 21};
+constexpr Grid::Pos clydeScatter  = { 0, 21};
 
 // The amount of time ghosts will be in scatter mode before switching
 // to chase mode
