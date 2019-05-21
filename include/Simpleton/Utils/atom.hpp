@@ -95,9 +95,10 @@ namespace Utils {
   constexpr Atom::char_array fromAtom(const Atom atom) noexcept {
     Atom::char_array array;
     AtomInt set = atom;
-    for (AtomInt index = 0; index != Atom::digits; ++index) {
-      const AtomInt code = (set >> (index * Atom::bits)) & Atom::digit_mask;
+    for (size_t index = 0; index != Atom::digits; ++index) {
+      const AtomInt code = set & Atom::digit_mask;
       array[index] = detail::from_atom[code];
+      set >>= Atom::bits;
     }
     return array;
   }

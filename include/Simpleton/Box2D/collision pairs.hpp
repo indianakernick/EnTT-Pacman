@@ -16,7 +16,7 @@
 
 namespace B2 {
   using ObjectTypePair = std::pair<ObjectTypeID, ObjectTypeID>;
-  using EntityPair = std::pair<ECS::EntityID, ECS::EntityID>;
+  using EntityPair = std::pair<entt::entity, entt::entity>;
 
   struct CollisionPair {
     ObjectTypePair type;
@@ -41,7 +41,7 @@ namespace B2 {
     bool hasAny() const;
     
     EntityPair getPair(ObjectTypePair) const;
-    ECS::EntityID getHalfPair(ObjectTypeID) const;
+    entt::entity getHalfPair(ObjectTypeID) const;
     
     template <typename Type0, typename Type1>
     bool hasPair() const {
@@ -59,7 +59,7 @@ namespace B2 {
     }
     
     template <typename Type>
-    ECS::EntityID getHalfPair() const {
+    entt::entity getHalfPair() const {
       return getHalfPair(getObjectTypeID<Type>());
     }
     

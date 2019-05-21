@@ -11,10 +11,11 @@
 #include "comp/house.hpp"
 #include "comp/ghost.hpp"
 #include "comp/ghost_mode.hpp"
+#include <entt/entity/registry.hpp>
 
-void ghostScared(Registry &reg) {
+void ghostScared(entt::registry &reg) {
   const auto view = reg.view<Ghost>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     if (reg.has<ChaseMode>(e)) {
       reg.remove<ChaseMode>(e);
     } else if (reg.has<ScatterMode>(e)) {
@@ -28,9 +29,9 @@ void ghostScared(Registry &reg) {
   }
 }
 
-void ghostScaredTimeout(Registry &reg) {
+void ghostScaredTimeout(entt::registry &reg) {
   auto view = reg.view<Ghost, ScaredMode>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     ScaredMode &scared = view.get<ScaredMode>(e);
     --scared.timer;
     if (scared.timer <= 0) {
@@ -42,23 +43,23 @@ void ghostScaredTimeout(Registry &reg) {
   }
 }
 
-void ghostEaten(Registry &reg, const Entity ghost) {
+void ghostEaten(entt::registry &reg, const entt::entity ghost) {
   reg.remove<ScaredMode>(ghost);
   reg.assign<EatenMode>(ghost);
   reg.assign<EnterHouse>(ghost);
 }
 
-void ghostScatter(Registry &reg) {
+void ghostScatter(entt::registry &reg) {
   const auto view = reg.view<Ghost, ChaseMode>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     reg.remove<ChaseMode>(e);
     reg.assign<ScatterMode>(e);
   }
 }
 
-void ghostChase(Registry &reg) {
+void ghostChase(entt::registry &reg) {
   const auto view = reg.view<Ghost, ScatterMode>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     reg.remove<ScatterMode>(e);
     reg.assign<ChaseMode>(e);
   }

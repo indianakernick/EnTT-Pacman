@@ -9,8 +9,8 @@
 #ifndef engine_ecs_comp_init_hpp
 #define engine_ecs_comp_init_hpp
 
-#include "registry.hpp"
 #include "../Data/json.hpp"
+#include <entt/entity/registry.hpp>
 
 namespace ECS {
   class EntityIDmap;
@@ -23,12 +23,12 @@ namespace ECS {
     CompInit() = default;
     virtual ~CompInit() = default;
     
-    void initialize(Comp &comp, const json &node, const EntityIDmap &idMap, const EntityID entity) {
+    void initialize(Comp &comp, const json &node, const EntityIDmap &idMap, const entt::entity entity) {
       init(comp, node, idMap, entity);
     }
 
   private:
-    virtual void init(Comp &comp, const json &node, const EntityIDmap &idMap, EntityID) {
+    virtual void init(Comp &comp, const json &node, const EntityIDmap &idMap, entt::entity) {
       init(comp, node, idMap);
     }
     virtual void init(Comp &comp, const json &node, const EntityIDmap &) {

@@ -15,10 +15,11 @@
 #include "core/constants.hpp"
 #include "core/constants.hpp"
 #include "comp/ghost_mode.hpp"
+#include <entt/entity/registry.hpp>
 
-void playerRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
+void playerRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) {
   const auto view = reg.view<Position, ActualDir, DesiredDir, PlayerSprite>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const Grid::Pos pos = view.get<Position>(e).p * tileSize;
     const Grid::Dir actualDir = view.get<ActualDir>(e).d;
     const double angle = Grid::toNum(view.get<DesiredDir>(e).d, 90.0);
@@ -28,9 +29,9 @@ void playerRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
   }
 }
 
-void ghostRender(Registry &reg, SDL::QuadWriter &writer, const int frame) {
+void ghostRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) {
   const auto view = reg.view<Position, ActualDir, GhostSprite>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const Grid::Pos pos = view.get<Position>(e).p * tileSize;
     const Grid::Dir actualDir = view.get<ActualDir>(e).d;
     writer.tilePos(pos + toVec(actualDir, frame), glm::ivec2(tileSize));

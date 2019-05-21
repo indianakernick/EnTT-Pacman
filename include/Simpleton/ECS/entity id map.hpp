@@ -10,8 +10,10 @@
 #define engine_ecs_entity_id_map_hpp
 
 #include <vector>
-#include "registry.hpp"
+#include <entt/entity/registry.hpp>
 
+// @TODO Move this back to the one project that uses it
+// I don't even know what this is for!
 namespace ECS {
   using ClientEntityID = int;
   constexpr ClientEntityID NULL_CLIENT_ENTITY_ID = std::numeric_limits<ClientEntityID>::min();
@@ -20,13 +22,13 @@ namespace ECS {
   public:
     EntityIDmap() = default;
     
-    void insertPair(ClientEntityID, EntityID);
-    void insertNullPair(EntityID);
-    ECS::EntityID getEntityFromID(ClientEntityID) const;
-    ECS::EntityID getEntityFromIndex(size_t) const;
+    void insertPair(ClientEntityID, entt::entity);
+    void insertNullPair(entt::entity);
+    entt::entity getEntityFromID(ClientEntityID) const;
+    entt::entity getEntityFromIndex(size_t) const;
 
   private:
-    std::vector<std::pair<ClientEntityID, EntityID>> map;
+    std::vector<std::pair<ClientEntityID, entt::entity>> map;
   };
 }
 

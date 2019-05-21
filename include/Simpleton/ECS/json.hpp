@@ -13,7 +13,7 @@
 #include "entity id map.hpp"
 
 namespace ECS {
-  void insertPairs(EntityIDmap &, const json &, Registry &);
+  void insertPairs(EntityIDmap &, const json &, entt::registry &);
 }
 
 #include "json.inl"

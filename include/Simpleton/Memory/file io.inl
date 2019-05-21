@@ -47,6 +47,14 @@ inline Memory::FileHandle Memory::openFileWrite(const std::string_view path) {
   return openFileWrite(temp.c_str());
 }
 
+inline Memory::FileHandle Memory::openFileRead(const std::string &path) {
+  return openFileRead(path.c_str());
+}
+
+inline Memory::FileHandle Memory::openFileWrite(const std::string &path) {
+  return openFileWrite(path.c_str());
+}
+
 inline size_t Memory::sizeOfFile(std::FILE *const file) {
   if (std::fseek(file, 0, SEEK_END) != 0) {
     throw FileError("Failed to seek to end of file");

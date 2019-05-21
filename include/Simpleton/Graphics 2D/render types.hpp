@@ -31,11 +31,10 @@ namespace G2D {
       0.0f, 0.0f, 1.0f
     };
     TextureID tex {0};
-    glm::vec4 color {1.0f};
   };
   
   constexpr bool operator==(const RenderParams &a, const RenderParams &b) {
-    return a.tex == b.tex && a.color == b.color && a.viewProj == b.viewProj;
+    return a.tex == b.tex && a.viewProj == b.viewProj;
   }
   constexpr bool operator!=(const RenderParams &a, const RenderParams &b) {
     return !(a == b);

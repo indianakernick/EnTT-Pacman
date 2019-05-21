@@ -45,12 +45,6 @@ namespace Memory {
     void copyFrom(View<T> &other) {
       buf.copyFrom(other.buf);
     }
-    void resize(const size_t size) {
-      buf.resize(size * sizeof(T));
-    }
-    void resizeCopy(const size_t size) {
-      buf.resizeCopy(size * sizeof(T));
-    }
     
     T &operator[](const size_t i) {
       return *(begin() + i);

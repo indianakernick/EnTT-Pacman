@@ -108,6 +108,20 @@ void G2D::QuadWriterLite::tileTex(const Math::RectPP<float> coords) {
   tileTex<PLUS_XY>(coords.min, coords.max);
 }
 
+inline void G2D::QuadWriterLite::color(const glm::vec4 color) {
+  assert(quads.size() && sections.size());
+  
+  Quad &quad = quads.back();
+  quad[0].color =
+  quad[1].color =
+  quad[2].color =
+  quad[3].color = color;
+}
+
+inline void G2D::QuadWriterLite::colorWhite() {
+  color({1.0f, 1.0f, 1.0f, 1.0f});
+}
+
 inline void G2D::QuadWriterLite::append(const QuadWriterLite &writer) {
   const size_t numQuads = quads.size();
   quads.insert(quads.end(), writer.quads.cbegin(), writer.quads.cend());

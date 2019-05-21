@@ -10,11 +10,11 @@
 #define SYS_EAT_DOTS_HPP
 
 #include "core/maze.hpp"
-#include "util/registry.hpp"
+#include <entt/entity/fwd.hpp>
 
 // Returns the number of dots that the player ate (usually 0 or 1)
-int eatDots(Registry &, MazeState &);
+int eatDots(entt::registry &, MazeState &);
 // Returns whether the player collided with an energizer
-bool eatEnergizer(Registry &, MazeState &);
+bool eatEnergizer(entt::registry &, MazeState &);
 
 #endif

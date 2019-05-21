@@ -9,11 +9,11 @@
 #ifndef SYS_HOUSE_HPP
 #define SYS_HOUSE_HPP
 
-#include "util/registry.hpp"
+#include <entt/entity/fwd.hpp>
 
 // These systems deal with ghosts entering and leaving the house
 
-void enterHouse(Registry &);
-void leaveHouse(Registry &);
+void enterHouse(entt::registry &);
+void leaveHouse(entt::registry &);
 
 #endif

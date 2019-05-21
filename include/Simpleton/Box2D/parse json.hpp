@@ -24,11 +24,11 @@ namespace B2 {
   */
   b2Body *loadBody(const json &, b2World &, glm::vec2 pos, glm::vec2 scale, float angle);
   /// Set the user data pointer to the entity ID
-  void setEntity(b2Body *, ECS::EntityID);
+  void setEntity(b2Body *, entt::entity);
   
   b2JointDef *loadJoint(const json &);
   /// Set the user data pointer to the entity ID
-  void setEntity(b2JointDef *, ECS::EntityID);
+  void setEntity(b2JointDef *, entt::entity);
 }
 
 #include "parse json.inl"

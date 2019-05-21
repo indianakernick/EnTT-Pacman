@@ -22,7 +22,7 @@ namespace ECS::detail {
 
   template <typename CompList>
   bool loadComponent(
-    ECS::Prototype &proto,
+    entt::prototype &proto,
     const std::string_view name,
     const json &component
   ) {
@@ -43,7 +43,7 @@ namespace ECS::detail {
 }
 
 template <typename CompList>
-int ECS::loadProto(ECS::Prototype &proto, const json &node) {
+int ECS::loadProto(entt::prototype &proto, const json &node) {
   const json::object_t &object = node.get_ref<const json::object_t &>();
   int unreadCount = 0;
   for (const auto &pair : object) {

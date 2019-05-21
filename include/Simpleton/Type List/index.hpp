@@ -73,10 +73,16 @@ namespace List {
   template <typename List, typename Type>
   constexpr size_t IndexOf = detail::IndexOfI<List, Type>::value;
   
+  static_assert(IndexOf<EmptyType, int> == npos);
+  static_assert(IndexOf<Type<int>, int> == 0);
   static_assert(IndexOf<Type<int, char, long>, int> == 0);
   static_assert(IndexOf<Type<int, char, long>, char> == 1);
   static_assert(IndexOf<Type<int, char, long>, long> == 2);
   static_assert(IndexOf<Type<int, char, long>, float> == npos);
+  
+  /// True if the list has the given type
+  template <typename List, typename Type>
+  constexpr bool Has = IndexOf<List, Type> != npos;
 }
 
 #endif

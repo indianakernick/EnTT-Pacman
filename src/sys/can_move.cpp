@@ -12,11 +12,12 @@
 #include "comp/house.hpp"
 #include "util/dir2vec.hpp"
 #include "comp/position.hpp"
+#include <entt/entity/registry.hpp>
 
 bool canMove(
-  Registry &reg,
+  entt::registry &reg,
   const MazeState &maze,
-  const Entity e,
+  const entt::entity e,
   const Grid::Pos pos,
   const Grid::Dir desiredDir
 ) {

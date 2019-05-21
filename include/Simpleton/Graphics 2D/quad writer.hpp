@@ -12,7 +12,6 @@
 #include "depth.hpp"
 #include "renderer.hpp"
 #include "sheet tex.hpp"
-#include "../Math/rect.hpp"
 
 namespace G2D {
   enum class Origin {
@@ -97,6 +96,20 @@ namespace G2D {
     /// the texture is sampled as an axis-aligned rectangle
     template <PlusXY PLUS_XY = PlusXY::RIGHT_UP>
     void tileTex(std::string_view);
+    /// Set texture coordinates of vertices on the current quad to the
+    /// whitepixel. Asserts if the sprite sheet doesn't have a whitepixel
+    void whitepixel();
+    
+    /// Set the color of the current quad
+    void color(glm::vec4);
+    /// Set the color of the current quad to white
+    void colorWhite();
+    /// Set the colors of the verticies to create an x-gradient from low x
+    /// to high x
+    void xGradient(glm::vec4, glm::vec4);
+    /// Set the colors of the verticies to create an y-gradient from low y
+    /// to high y
+    void yGradient(glm::vec4, glm::vec4);
     
     /// Copy the quads into GPU memory and issue a draw call
     void render(Renderer &) const;
@@ -118,7 +131,7 @@ namespace G2D {
     
     /// Create a new section with the given rendering params or get an existing
     /// section with the same params.
-    Section &section(const glm::mat3 &, const SheetTex &, glm::vec4 = glm::vec4{1.0f});
+    Section &section(const glm::mat3 &, const SheetTex &);
     
     /// Render all of the sections
     void render(Renderer &) const;

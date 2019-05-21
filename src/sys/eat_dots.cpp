@@ -10,13 +10,14 @@
 
 #include "comp/player.hpp"
 #include "comp/position.hpp"
+#include <entt/entity/registry.hpp>
 
 namespace {
 
-int countConsumptions(Registry &reg, MazeState &maze, const Tile food) {
+int countConsumptions(entt::registry &reg, MazeState &maze, const Tile food) {
   int count = 0;
   const auto view = reg.view<Player, Position>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const Grid::Pos pos = view.get<Position>(e).p;
     if (maze.outOfRange(pos)) {
       continue;
@@ -32,10 +33,10 @@ int countConsumptions(Registry &reg, MazeState &maze, const Tile food) {
 
 }
 
-int eatDots(Registry &reg, MazeState &maze) {
+int eatDots(entt::registry &reg, MazeState &maze) {
   return countConsumptions(reg, maze, Tile::dot);
 }
 
-bool eatEnergizer(Registry &reg, MazeState &maze) {
+bool eatEnergizer(entt::registry &reg, MazeState &maze) {
   return countConsumptions(reg, maze, Tile::energizer);
 }

@@ -8,15 +8,9 @@
 
 #include <cerrno>
 #include <cstring>
+#include <cassert>
 #include <functional>
-
-namespace Utils {
-  inline auto charEqualTo(const char ch) {
-    return [ch] (const char c) -> bool {
-      return c == ch;
-    };
-  }
-}
+#include "partial apply.hpp"
 
 inline Utils::ParsingError::ParsingError(
   const LineCol<> lineCol
@@ -147,7 +141,8 @@ inline const char *Utils::ParseString::data() const {
 }
 
 inline size_t Utils::ParseString::size() const {
-  return end - beg;
+  assert(beg <= end);
+  return static_cast<size_t>(end - beg);
 }
 
 inline Utils::LineCol<> Utils::ParseString::lineCol() const {
@@ -207,7 +202,7 @@ inline Utils::ParseString &Utils::ParseString::advance() {
 }
 
 inline Utils::ParseString &Utils::ParseString::skip(const char c) {
-  skip(charEqualTo(c));
+  skip(equal_to(c));
   return *this;
 }
 
@@ -224,7 +219,7 @@ inline Utils::ParseString &Utils::ParseString::skipWhitespace() {
 }
 
 inline Utils::ParseString &Utils::ParseString::skipUntil(const char c) {
-  return skipUntil(charEqualTo(c));
+  return skipUntil(equal_to(c));
 }
 
 template <typename Pred>
@@ -254,6 +249,26 @@ inline Utils::ParseString &Utils::ParseString::expect(const char *data, const si
 
 inline Utils::ParseString &Utils::ParseString::expect(const std::string_view view) {
   return expect(view.data(), view.size());
+}
+
+inline char Utils::ParseString::expectEither(const char a, const char b) {
+  const char curr = *beg;
+  if (empty() || (curr != a && curr != b)) {
+    // @TODO dedicated exception?
+    throw ExpectChar(a, pos);
+  }
+  advanceNoCheck();
+  return curr;
+}
+
+inline std::string_view Utils::ParseString::expectEither(
+  const std::string_view a,
+  const std::string_view b
+) {
+  if (check(a)) return a;
+  if (check(b)) return b;
+  // @TODO dedicated exception?
+  throw ExpectString(a, pos);
 }
 
 template <typename Pred>
@@ -330,41 +345,44 @@ std::errc Utils::ParseString::tryParseNumber(Number &number) {
   errno = 0;
   if constexpr (std::is_integral<Number>::value) {
     if constexpr (std::is_unsigned<Number>::value) {
-      char *end;
-      const unsigned long long num = std::strtoull(beg, &end, 0);
+      char *numEnd;
+      const unsigned long long num = std::strtoull(beg, &numEnd, 0);
       if (errno == ERANGE || num > std::numeric_limits<Number>::max()) {
         errno = 0;
         return std::errc::result_out_of_range;
       }
-      if (num == 0 && end == beg) {
+      if (num == 0 && numEnd == beg) {
         return std::errc::invalid_argument;
       }
-      advanceNoCheck(end - beg);
+      assert(beg < numEnd);
+      advanceNoCheck(static_cast<size_t>(numEnd - beg));
       number = static_cast<Number>(num);
     } else if constexpr (std::is_signed<Number>::value) {
-      char *end;
-      const long long num = std::strtoll(beg, &end, 0);
+      char *numEnd;
+      const long long num = std::strtoll(beg, &numEnd, 0);
       if (errno == ERANGE || num < std::numeric_limits<Number>::lowest() || num > std::numeric_limits<Number>::max()) {
         errno = 0;
         return std::errc::result_out_of_range;
       }
-      if (num == 0 && end == beg) {
+      if (num == 0 && numEnd == beg) {
         return std::errc::invalid_argument;
       }
-      advanceNoCheck(end - beg);
+      assert(beg < numEnd);
+      advanceNoCheck(static_cast<size_t>(numEnd - beg));
       number = static_cast<Number>(num);
     }
   } else if constexpr (std::is_floating_point<Number>::value) {
-    char *end;
-    const long double num = std::strtold(beg, &end);
+    char *numEnd;
+    const long double num = std::strtold(beg, &numEnd);
     if (errno == ERANGE || num < std::numeric_limits<Number>::lowest() || num > std::numeric_limits<Number>::max()) {
       errno = 0;
       return std::errc::result_out_of_range;
     }
-    if (num == 0 && end == beg) {
+    if (num == 0 && numEnd == beg) {
       return std::errc::invalid_argument;
     }
-    advanceNoCheck(end - beg);
+    assert(beg < numEnd);
+    advanceNoCheck(static_cast<size_t>(numEnd - beg));
     number = static_cast<Number>(num);
   }
   
@@ -402,10 +420,10 @@ inline size_t Utils::ParseString::tryParseEnum(
   const size_t numNames
 ) {
   throwIfNull(names);
-  const std::string_view *const end = names + numNames;
-  for (const std::string_view *n = names; n != end; ++n) {
+  const std::string_view *const namesEnd = names + numNames;
+  for (const std::string_view *n = names; n != namesEnd; ++n) {
     if (check(*n)) {
-      return n - names;
+      return static_cast<size_t>(n - names);
     }
   }
   return numNames;
@@ -436,12 +454,12 @@ size_t Utils::ParseString::tryParseEnum(
       continue;
     }
     if (n->size() == 0 && (beg == end || pred(*beg))) {
-      return n - names;
+      return static_cast<size_t>(n - names);
     }
     if (beg + n->size() == end || pred(beg[n->size()])) {
       if (std::memcmp(beg, n->data(), n->size()) == 0) {
         advanceNoCheck(n->size());
-        return n - names;
+        return static_cast<size_t>(n - names);
       }
     }
   }
@@ -500,11 +518,11 @@ Utils::ParseString &Utils::ParseString::copyWhile(std::string &dst, Pred &&pred)
 }
 
 inline size_t Utils::ParseString::copyUntil(char *const dst, const size_t dstSize, const char c) {
-  return copyUntil(dst, dstSize, charEqualTo(c));
+  return copyUntil(dst, dstSize, equal_to(c));
 }
 
 inline Utils::ParseString &Utils::ParseString::copyUntil(std::string &dst, const char c) {
-  return copyUntil(dst, charEqualTo(c));
+  return copyUntil(dst, equal_to(c));
 }
 
 template <typename Pred>

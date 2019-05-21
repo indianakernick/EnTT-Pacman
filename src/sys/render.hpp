@@ -10,13 +10,13 @@
 #define SYS_RENDER_HPP
 
 #include "core/maze.hpp"
-#include "util/registry.hpp"
+#include <entt/entity/fwd.hpp>
 #include <Simpleton/SDL/quad writer.hpp>
 
 // Render the player (the yellow guy)
-void playerRender(Registry &, SDL::QuadWriter &, int);
+void playerRender(entt::registry &, SDL::QuadWriter &, int);
 // Render the ghosts
-void ghostRender(Registry &, SDL::QuadWriter &, int);
+void ghostRender(entt::registry &, SDL::QuadWriter &, int);
 // Render the dots and energizers
 void dotRender(SDL::QuadWriter &, const MazeState &, Sprite::ID);
 // Render a sprite that covers the whole screen (maze, win-lose)

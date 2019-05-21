@@ -18,7 +18,7 @@ inline void G2D::SheetTex::load(
 ) {
   const std::string path = SDL::res(name);
   tex_ = renderer.addTexture(path + ".png", params);
-  sheet_ = Sprite::makeSheet(path + ".atlas");
+  sheet_ = Sprite::makeSheetFromFile(path + ".atlas");
 }
 
 inline void G2D::SheetTex::load(

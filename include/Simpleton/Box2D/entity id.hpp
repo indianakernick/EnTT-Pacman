@@ -12,14 +12,14 @@
 #include "../ECS/registry.hpp"
 
 namespace B2 {
-  inline void *getUserData(const ECS::EntityID entity) {
+  inline void *getUserData(const entt::entity entity) {
     return reinterpret_cast<void *>(
       static_cast<uintptr_t>(entity)
     );
   }
 
-  inline ECS::EntityID getEntity(const void *const userData) {
-    return static_cast<ECS::EntityID>(
+  inline entt::entity getEntity(const void *const userData) {
+    return static_cast<entt::entity>(
       reinterpret_cast<uintptr_t>(userData)
     );
   }

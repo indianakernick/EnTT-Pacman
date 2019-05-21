@@ -14,14 +14,15 @@
 #include "sys/can_move.hpp"
 #include "util/dir2vec.hpp"
 #include "comp/position.hpp"
+#include <entt/entity/registry.hpp>
 #include <Simpleton/Grid/distance.hpp>
 
 // Pacman doesn't use A*
 
-void pursueTarget(Registry &reg, const MazeState &maze) {
+void pursueTarget(entt::registry &reg, const MazeState &maze) {
   constexpr float inf = 1e10f;
   auto view = reg.view<Target, Position, ActualDir, DesiredDir>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const Grid::Pos targetPos = view.get<Target>(e).p;
     // the position we are currently moving from
     const Grid::Pos pos = view.get<Position>(e).p;

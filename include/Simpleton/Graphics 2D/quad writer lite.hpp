@@ -54,6 +54,11 @@ namespace G2D {
     template <PlusXY PLUS_XY = PlusXY::RIGHT_UP>
     void tileTex(Math::RectPP<float>);
     
+    /// Set the color of the current quad
+    void color(glm::vec4);
+    /// Set the color of the current quad to white
+    void colorWhite();
+    
     /// Append all sections from the given writer into this writer. Quads before
     /// the first section in the given writer become part of the current
     /// section in this writer.

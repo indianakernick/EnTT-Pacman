@@ -12,10 +12,11 @@
 #include "util/dir2vec.hpp"
 #include "sys/can_move.hpp"
 #include "comp/position.hpp"
+#include <entt/entity/registry.hpp>
 
-void movement(Registry &reg) {
+void movement(entt::registry &reg) {
   auto view = reg.view<Position, ActualDir>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     Grid::Pos &pos = view.get<Position>(e).p;
     const Grid::Dir dir = view.get<ActualDir>(e).d;
     pos += toVec(dir);
@@ -34,9 +35,9 @@ void movement(Registry &reg) {
   }
 }
 
-void wallCollide(Registry &reg, const MazeState &maze) {
+void wallCollide(entt::registry &reg, const MazeState &maze) {
   auto view = reg.view<Position, ActualDir, DesiredDir>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const Grid::Pos pos = view.get<Position>(e).p;
     const Grid::Dir desiredDir = view.get<DesiredDir>(e).d;
     if (canMove(reg, maze, e, pos, desiredDir)) {

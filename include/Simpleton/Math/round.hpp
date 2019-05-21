@@ -144,6 +144,8 @@ namespace Math {
   ///Floor num to the nearest multiple of 2
   SIGNED_CEIL_FLOOR(floor, ceil, ToEven)
   
+  #undef SIGNED_CEIL_FLOOR
+  
   ///Ceil num to the nearest multiple of factor
   template <typename UnsignedInt>
   constexpr std::enable_if_t<
@@ -151,7 +153,8 @@ namespace Math {
     UnsignedInt
   >
   ceilToMultiple(const UnsignedInt factor, const UnsignedInt num) {
-    return (num + factor - UnsignedInt(1)) / factor * factor;
+    assert(factor != UnsignedInt{0});
+    return (num + factor - UnsignedInt{1}) / factor * factor;
   }
   
   ///Floor num to the nearest multiple of factor
@@ -161,15 +164,41 @@ namespace Math {
     UnsignedInt
   >
   floorToMultiple(const UnsignedInt factor, const UnsignedInt num) {
+    assert(factor != UnsignedInt{0});
     return num / factor * factor;
   }
   
   ///Ceil num to the nearest multiple of factor
-  SIGNED_CEIL_FLOOR(ceil, floor, ToMultiple)
-  ///Floor num to the nearest multple of factor
-  SIGNED_CEIL_FLOOR(floor, ceil, ToMultiple)
+  template <typename SignedInt>
+  constexpr std::enable_if_t<
+    std::is_signed<SignedInt>::value,
+    SignedInt
+  >
+  ceilToMultiple(const SignedInt factor, const SignedInt num) {
+    using UnsignedInt = std::make_unsigned_t<SignedInt>;
+    assert(factor > SignedInt{0});
+    if (num < SignedInt(0)) {
+      return -floorToMultiple(static_cast<UnsignedInt>(factor), static_cast<UnsignedInt>(-num));
+    } else {
+      return ceilToMultiple(static_cast<UnsignedInt>(factor), static_cast<UnsignedInt>(num));
+    }
+  }
   
-  #undef SIGNED_CEIL_FLOOR
+  ///Floor num to the nearest multiple of factor
+  template <typename SignedInt>
+  constexpr std::enable_if_t<
+    std::is_signed<SignedInt>::value,
+    SignedInt
+  >
+  floorToMultiple(const SignedInt factor, const SignedInt num) {
+    using UnsignedInt = std::make_unsigned_t<SignedInt>;
+    assert(factor > SignedInt{0});
+    if (num < SignedInt(0)) {
+      return -ceilToMultiple(static_cast<UnsignedInt>(factor), static_cast<UnsignedInt>(-num));
+    } else {
+      return floorToMultiple(static_cast<UnsignedInt>(factor), static_cast<UnsignedInt>(num));
+    }
+  }
   
   ///Compute the ceil of the division of num and den
   template <typename Num, typename Den>

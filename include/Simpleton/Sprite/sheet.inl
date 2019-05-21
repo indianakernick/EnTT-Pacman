@@ -27,7 +27,7 @@ inline Sprite::Rect Sprite::Sheet::getSprite(const std::string_view name) const 
 }
 
 inline bool Sprite::Sheet::hasWhitepixel() const {
-  return whitepixel != NO_WHITEPIXEL;
+  return whitepixel != no_whitepixel;
 }
 
 inline glm::vec2 Sprite::Sheet::getWhitepixel() const {
@@ -38,9 +38,8 @@ inline uint32_t Sprite::Sheet::getLength() const {
   return length;
 }
 
-inline Sprite::Sheet Sprite::makeSheet(const std::string_view atlasPath) try {
-  const Memory::Buffer file = Memory::readFile(atlasPath);
-  Utils::ParseString string(file.cdata<char>(), file.size());
+inline Sprite::Sheet Sprite::makeSheetFromData(const char *data, const size_t size) try {
+  Utils::ParseString string(data, size);
   Sheet sheet;
   
   string.expect("{\"length\":");
@@ -96,10 +95,15 @@ inline Sprite::Sheet Sprite::makeSheet(const std::string_view atlasPath) try {
       (whiteRect.min.y + whiteRect.max.y) / 2.0f
     };
   } else {
-    sheet.whitepixel = NO_WHITEPIXEL;
+    sheet.whitepixel = no_whitepixel;
   }
   
   return sheet;
 } catch (std::exception &e) {
   throw AtlasReadError(e);
+}
+
+inline Sprite::Sheet Sprite::makeSheetFromFile(const std::string_view path) {
+  const Memory::Buffer file = Memory::readFile(path);
+  return makeSheetFromData(file.cdata<char>(), file.size());
 }

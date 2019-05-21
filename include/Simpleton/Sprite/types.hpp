@@ -20,7 +20,7 @@ namespace Sprite {
     explicit AtlasReadError(const std::exception &);
   };
   
-  const glm::vec2 NO_WHITEPIXEL = {-1.0f, -1.0f};
+  const glm::vec2 no_whitepixel = {-1.0f, -1.0f};
 }
 
 #include "types.inl"

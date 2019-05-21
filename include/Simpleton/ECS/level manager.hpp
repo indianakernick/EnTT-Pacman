@@ -11,8 +11,8 @@
 
 #include "level.hpp"
 #include <functional>
-#include "registry.hpp"
 #include "comp inits.hpp"
+#include <entt/entity/registry.hpp>
 
 namespace ECS {
   template <typename CompList>
@@ -22,7 +22,7 @@ namespace ECS {
   
     LevelManager() = default;
     
-    void init(ECS::Registry &, const ECS::CompInits<CompList> &);
+    void init(entt::registry &, const ECS::CompInits<CompList> &);
     void quit();
     
     bool loadLevel(ECS::Level);
@@ -35,7 +35,7 @@ namespace ECS {
     void levelPath(const LevelPathGetter &);
 
   private:
-    ECS::Registry *registry = nullptr;
+    entt::registry *registry = nullptr;
     const ECS::CompInits<CompList> *compInits = nullptr;
     std::function<std::string(ECS::Level)> getLevelPath;
     ECS::Level current = NULL_LEVEL;

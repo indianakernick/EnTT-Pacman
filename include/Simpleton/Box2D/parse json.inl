@@ -211,11 +211,12 @@ inline b2Body *B2::loadBody(
   return body;
 }
 
-inline void B2::setEntity(b2Body *const body, const ECS::EntityID entity) {
+inline void B2::setEntity(b2Body *const body, const entt::entity entity) {
   body->SetUserData(getUserData(entity));
 }
 
 namespace B2::detail {
+  // @TODO why are these macros?
   #define READ_ANCHOR                                                           \
     Data::getOptional(def->localAnchorA, node, "local anchor A");               \
     Data::getOptional(def->localAnchorB, node, "local anchor B");
@@ -344,6 +345,6 @@ inline b2JointDef *B2::loadJoint(const json &node) {
 
 #undef JOINTS
 
-inline void B2::setEntity(b2JointDef *const def, const ECS::EntityID entity) {
+inline void B2::setEntity(b2JointDef *const def, const entt::entity entity) {
   def->userData = getUserData(entity);
 }

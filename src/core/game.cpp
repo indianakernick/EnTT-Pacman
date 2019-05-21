@@ -22,8 +22,8 @@
 
 void Game::init(const Sprite::Sheet &sheet) {
   maze = makeMazeState();
-  const Entity player = makePlayer(reg, sheet);
-  const Entity blinky = makeBlinky(reg, sheet, player);
+  const entt::entity player = makePlayer(reg, sheet);
+  const entt::entity blinky = makeBlinky(reg, sheet, player);
   makePinky(reg, sheet, player);
   makeInky(reg, sheet, player, blinky);
   makeClyde(reg, sheet, player);

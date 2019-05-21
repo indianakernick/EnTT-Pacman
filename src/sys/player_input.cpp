@@ -11,6 +11,7 @@
 #include "comp/dir.hpp"
 #include "comp/player.hpp"
 #include "sys/can_move.hpp"
+#include <entt/entity/registry.hpp>
 
 namespace {
 
@@ -30,13 +31,13 @@ Grid::Dir readDir(const SDL_Scancode key) {
 
 }
 
-Consumed playerInput(Registry &reg, const SDL_Scancode key) {
+Consumed playerInput(entt::registry &reg, const SDL_Scancode key) {
   const Grid::Dir dir = readDir(key);
   if (dir == Grid::Dir::none) {
     return Consumed::no;
   }
   auto view = reg.view<Player, DesiredDir>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     view.get<DesiredDir>(e).d = dir;
   }
   return Consumed::yes;

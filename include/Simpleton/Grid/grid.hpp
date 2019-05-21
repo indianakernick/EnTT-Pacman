@@ -12,6 +12,7 @@
 #include <array>
 #include <vector>
 #include "pos.hpp"
+#include <utility>
 #include "../Utils/numeric iterators.hpp"
 
 namespace Grid {
@@ -71,20 +72,19 @@ namespace Grid {
       }
 
       Tile &operator()(const Coord x, const Coord y) {
-        return that().mTiles[that().toIndex({x, y})];
+        return const_cast<Tile &>(std::as_const(*this).operator()(x, y));
       }
       const Tile &operator()(const Coord x, const Coord y) const {
         return that().mTiles[that().toIndex({x, y})];
       }
       Tile &operator[](const Pos pos) {
-        return that().mTiles[that().toIndex(pos)];
+        return const_cast<Tile &>(std::as_const(*this).operator[](pos));
       }
       const Tile &operator[](const Pos pos) const {
         return that().mTiles[that().toIndex(pos)];
       }
       Tile &at(const Pos pos) {
-        checkRange(pos);
-        return that().mTiles[that().toIndex(pos)];
+        return const_cast<Tile &>(std::as_const(*this).at(pos));
       }
       const Tile &at(const Pos pos) const {
         checkRange(pos);
@@ -92,16 +92,14 @@ namespace Grid {
       }
       
       Tile &operator[](const size_t index) {
-        assert(index < that().mTiles.size());
-        return that().mTiles[index];
+        return const_cast<Tile &>(std::as_const(*this).operator[](index));
       }
       const Tile &operator[](const size_t index) const {
         assert(index < that().mTiles.size());
         return that().mTiles[index];
       }
       Tile &at(const size_t index) {
-        checkRange(index);
-        return that().mTiles[index];
+        return const_cast<Tile &>(std::as_const(*this).at(index));
       }
       const Tile &at(const size_t index) const {
         checkRange(index);
@@ -127,7 +125,7 @@ namespace Grid {
     
     Grid() = default;
     // So that dynamic and static grids have compatible interfaces
-    Grid(const Coord width, const Coord height) {
+    Grid([[maybe_unused]] const Coord width, [[maybe_unused]] const Coord height) {
       assert(width == Width);
       assert(height == Height);
     }

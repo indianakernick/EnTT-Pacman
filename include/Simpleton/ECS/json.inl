@@ -6,7 +6,7 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-inline void ECS::insertPairs(EntityIDmap &map, const json &node, Registry &registry) {
+inline void ECS::insertPairs(EntityIDmap &map, const json &node, entt::registry &registry) {
   for (auto entity : node) {
     if (JSON_OPTIONAL(idNode, entity, "id")) {
       map.insertPair(idNode->get<ClientEntityID>(), registry.create());

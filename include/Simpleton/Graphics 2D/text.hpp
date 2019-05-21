@@ -53,6 +53,8 @@ namespace G2D {
     /// Set the depth of the text using a depth enum
     template <typename Enum>
     void depth(Enum);
+    /// Set the color of the text
+    void color(glm::vec4);
     
     /// Write a string of characters at a position and return the position of
     /// the next character
@@ -78,11 +80,12 @@ namespace G2D {
     #undef WRAPPER
     
   private:
-    Section *section_ = nullptr;
+    Section *section_ {};
+    glm::vec4 color_ {1.0f};
     glm::vec2 glyphSize_ {1.0f};
     glm::vec2 advance_ {1.0f};
-    float scale_ = 1.0f;
-    float depth_ = 0.0f;
+    float scale_ {1.0f};
+    float depth_ {0.0f};
 
     template <PlusXY PLUS_XY>
     glm::vec2 writeLeftImpl(glm::vec2, std::string_view);

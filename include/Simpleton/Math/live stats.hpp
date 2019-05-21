@@ -28,7 +28,7 @@ namespace Math {
         max = dataPoint;
       }
       sum += dataPoint;
-      numDataPoints++;
+      ++count;
     }
     void update(const DataPoint *const dataPoints, const size_t numDataPoints) {
       const DataPoint *const end = dataPoints + numDataPoints;
@@ -38,10 +38,10 @@ namespace Math {
     }
     
     DataPoint getAvg(const DataPoint defaultAvg = 0) const {
-      if (numDataPoints == 0) {
+      if (count == 0) {
         return defaultAvg;
       } else {
-        return sum / numDataPoints;
+        return sum / count;
       }
     }
     DataPoint getMin() const {
@@ -52,7 +52,7 @@ namespace Math {
     }
     
     void resetAvg() {
-      numDataPoints = 0;
+      count = 0;
       sum = 0;
     }
     void resetMin() {
@@ -69,7 +69,7 @@ namespace Math {
     }
   
   private:
-    size_t numDataPoints = 0;
+    size_t count = 0;
     DataPoint sum = 0;
     DataPoint min = DEFAULT_MIN;
     DataPoint max = DEFAULT_MAX;

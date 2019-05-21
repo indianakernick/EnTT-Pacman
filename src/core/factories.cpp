@@ -19,9 +19,10 @@
 #include "comp/ghost_mode.hpp"
 #include "comp/chase_target.hpp"
 #include "comp/home_position.hpp"
+#include <entt/entity/registry.hpp>
 
-Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
-  const Entity e = reg.create();
+entt::entity makePlayer(entt::registry &reg, const Sprite::Sheet &sheet) {
+  const entt::entity e = reg.create();
   reg.assign<Player>(e);
   reg.assign<DesiredDir>(e, playerSpawnDir);
   reg.assign<ActualDir>(e, playerSpawnDir);
@@ -32,8 +33,8 @@ Entity makePlayer(Registry &reg, const Sprite::Sheet &sheet) {
 
 namespace {
 
-Entity makeGhost(Registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
-  const Entity e = reg.create();
+entt::entity makeGhost(entt::registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
+  const entt::entity e = reg.create();
   reg.assign<ScatterMode>(e);
   reg.assign<Position>(e, home);
   reg.assign<DesiredDir>(e);
@@ -55,35 +56,35 @@ GhostSprite makeGhostSprite(const Sprite::Sheet &sheet, const std::string_view n
 
 }
 
-Entity makeBlinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, blinkyHome, blinkyScatter);
+entt::entity makeBlinky(entt::registry &reg, const Sprite::Sheet &sheet, const entt::entity player) {
+  const entt::entity e = makeGhost(reg, blinkyHome, blinkyScatter);
   reg.get<Position>(e).p = outsideHouse;
   reg.assign<BlinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "blinky 0"));
   return e;
 }
 
-Entity makePinky(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, pinkyHome, pinkyScatter);
+entt::entity makePinky(entt::registry &reg, const Sprite::Sheet &sheet, const entt::entity player) {
+  const entt::entity e = makeGhost(reg, pinkyHome, pinkyScatter);
   reg.assign<PinkyChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "pinky 0"));
   return e;
 }
 
-Entity makeInky(
-  Registry &reg,
+entt::entity makeInky(
+  entt::registry &reg,
   const Sprite::Sheet &sheet,
-  const Entity player,
-  const Entity blinky
+  const entt::entity player,
+  const entt::entity blinky
 ) {
-  const Entity e = makeGhost(reg, inkyHome, inkyScatter);
+  const entt::entity e = makeGhost(reg, inkyHome, inkyScatter);
   reg.assign<InkyChaseTarget>(e, player, blinky);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "inky 0"));
   return e;
 }
 
-Entity makeClyde(Registry &reg, const Sprite::Sheet &sheet, const Entity player) {
-  const Entity e = makeGhost(reg, clydeHome, clydeScatter);
+entt::entity makeClyde(entt::registry &reg, const Sprite::Sheet &sheet, const entt::entity player) {
+  const entt::entity e = makeGhost(reg, clydeHome, clydeScatter);
   reg.assign<ClydeChaseTarget>(e, player);
   reg.assign<GhostSprite>(e, makeGhostSprite(sheet, "clyde 0"));
   return e;

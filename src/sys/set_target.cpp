@@ -16,29 +16,30 @@
 #include "comp/ghost_mode.hpp"
 #include "comp/chase_target.hpp"
 #include "comp/home_position.hpp"
+#include <entt/entity/registry.hpp>
 #include <Simpleton/Grid/distance.hpp>
 
-void setBlinkyChaseTarget(Registry &reg) {
+void setBlinkyChaseTarget(entt::registry &reg) {
   auto view = reg.view<Target, ChaseMode, BlinkyChaseTarget>();
-  for (const Entity e : view) {
-    const Entity player = view.get<BlinkyChaseTarget>(e).player;
+  for (const entt::entity e : view) {
+    const entt::entity player = view.get<BlinkyChaseTarget>(e).player;
     view.get<Target>(e).p = reg.get<Position>(player).p;
   }
 }
 
-void setPinkyChaseTarget(Registry &reg) {
+void setPinkyChaseTarget(entt::registry &reg) {
   auto view = reg.view<Target, ChaseMode, PinkyChaseTarget>();
-  for (const Entity e : view) {
-    const Entity player = view.get<PinkyChaseTarget>(e).player;
+  for (const entt::entity e : view) {
+    const entt::entity player = view.get<PinkyChaseTarget>(e).player;
     const Grid::Pos playerPos = reg.get<Position>(player).p;
     const Grid::Dir playerDir = reg.get<ActualDir>(player).d;
     view.get<Target>(e).p = playerPos + toVec(playerDir, 4);
   }
 }
 
-void setInkyChaseTarget(Registry &reg) {
+void setInkyChaseTarget(entt::registry &reg) {
   auto view = reg.view<Target, ChaseMode, InkyChaseTarget>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const InkyChaseTarget target = view.get<InkyChaseTarget>(e);
     const Grid::Pos playerPos = reg.get<Position>(target.player).p;
     const Grid::Dir playerDir = reg.get<ActualDir>(target.player).d;
@@ -48,12 +49,12 @@ void setInkyChaseTarget(Registry &reg) {
   }
 }
 
-void setClydeChaseTarget(Registry &reg) {
+void setClydeChaseTarget(entt::registry &reg) {
   auto view = reg.view<
     Target, Position, ChaseMode, ClydeChaseTarget, HomePosition
   >();
-  for (const Entity e : view) {
-    const Entity player = view.get<ClydeChaseTarget>(e).player;
+  for (const entt::entity e : view) {
+    const entt::entity player = view.get<ClydeChaseTarget>(e).player;
     const Grid::Pos playerPos = reg.get<Position>(player).p;
     const float dist = Grid::euclid(playerPos, view.get<Position>(e).p);
     if (dist >= 8.0f) {
@@ -64,16 +65,16 @@ void setClydeChaseTarget(Registry &reg) {
   }
 }
 
-void setScatterTarget(Registry &reg) {
+void setScatterTarget(entt::registry &reg) {
   auto view = reg.view<Target, ScatterMode, HomePosition>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     view.get<Target>(e).p = view.get<HomePosition>(e).scatter;
   }
 }
 
-void setScaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
+void setScaredTarget(entt::registry &reg, const MazeState &maze, std::mt19937 &rand) {
   auto view = reg.view<Target, Position, ScaredMode, ActualDir>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     const Grid::Pos pos = view.get<Position>(e).p;
     const Grid::Dir dir = view.get<ActualDir>(e).d;
     const Grid::Pos nextPos = pos + toVec(dir);
@@ -100,9 +101,9 @@ void setScaredTarget(Registry &reg, const MazeState &maze, std::mt19937 &rand) {
   }
 }
 
-void setEatenTarget(Registry &reg) {
+void setEatenTarget(entt::registry &reg) {
   auto view = reg.view<Target, EatenMode, HomePosition>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     view.get<Target>(e).p = view.get<HomePosition>(e).home;
   }
 }

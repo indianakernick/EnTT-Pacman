@@ -4,7 +4,6 @@
 
 #include <memory>
 #include <utility>
-#include <cassert>
 #include "../config/config.h"
 
 
@@ -23,14 +22,14 @@ namespace entt {
  * @tparam Service Type of service managed by the locator.
  */
 template<typename Service>
-struct ServiceLocator final {
+struct service_locator {
     /*! @brief Type of service offered. */
     using service_type = Service;
 
     /*! @brief Default constructor, deleted on purpose. */
-    ServiceLocator() = delete;
+    service_locator() = delete;
     /*! @brief Default destructor, deleted on purpose. */
-    ~ServiceLocator() = delete;
+    ~service_locator() = delete;
 
     /**
      * @brief Tests if a valid service implementation is set.
@@ -88,7 +87,7 @@ struct ServiceLocator final {
      * @param ptr Service to use to replace the current one.
      */
     inline static void set(std::shared_ptr<Service> ptr) {
-        assert(static_cast<bool>(ptr));
+        ENTT_ASSERT(static_cast<bool>(ptr));
         service = std::move(ptr);
     }
 
@@ -102,12 +101,8 @@ struct ServiceLocator final {
     }
 
 private:
-    static std::shared_ptr<Service> service;
+    inline static std::shared_ptr<Service> service = nullptr;
 };
-
-
-template<typename Service>
-std::shared_ptr<Service> ServiceLocator<Service>::service{};
 
 
 }

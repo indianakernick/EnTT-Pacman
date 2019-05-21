@@ -14,10 +14,11 @@
 #include "core/constants.hpp"
 #include "comp/ghost_mode.hpp"
 #include "comp/home_position.hpp"
+#include <entt/entity/registry.hpp>
 
-void enterHouse(Registry &reg) {
+void enterHouse(entt::registry &reg) {
   const auto view = reg.view<EnterHouse, Position, HomePosition>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     if (view.get<Position>(e).p == view.get<HomePosition>(e).home) {
       reg.remove<EnterHouse>(e);
       reg.assign<LeaveHouse>(e);
@@ -27,9 +28,9 @@ void enterHouse(Registry &reg) {
   }
 }
 
-void leaveHouse(Registry &reg) {
+void leaveHouse(entt::registry &reg) {
   auto view = reg.view<LeaveHouse, Position, Target>();
-  for (const Entity e : view) {
+  for (const entt::entity e : view) {
     if (view.get<Position>(e).p == outsideHouse) {
       reg.remove<LeaveHouse>(e);
     } else {

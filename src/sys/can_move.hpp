@@ -10,12 +10,12 @@
 #define SYS_CAN_MOVE_HPP
 
 #include "core/maze.hpp"
-#include "util/registry.hpp"
+#include <entt/entity/fwd.hpp>
 #include <Simpleton/Grid/dir.hpp>
 
 // Checks whether an entity can move in some direction.
 // Deals with ghosts entering and leaving the house
 
-bool canMove(Registry &, const MazeState &, Entity, Grid::Pos, Grid::Dir);
+bool canMove(entt::registry &, const MazeState &, entt::entity, Grid::Pos, Grid::Dir);
 
 #endif

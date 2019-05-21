@@ -17,7 +17,8 @@
 namespace Memory {
   enum class AllocFail {
     throw_bad_alloc,
-    return_nullptr
+    return_nullptr,
+    terminate
   };
 
   class BadFreePtr final : public std::exception {
@@ -89,6 +90,8 @@ namespace Memory {
           throw std::bad_alloc();
         } else if constexpr (FAIL == AllocFail::return_nullptr) {
           return nullptr;
+        } else if constexpr (FAIL == AllocFail::terminate) {
+          std::terminate();
         }
       }
       ++allocations;

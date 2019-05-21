@@ -28,7 +28,7 @@ namespace ECS {
       Comp &comp,
       const json &node,
       const EntityIDmap &idMap,
-      const EntityID entity
+      const entt::entity entity
     ) const {
       assert(getInit<Comp>());
       getInit<Comp>()->initialize(comp, node, idMap, entity);

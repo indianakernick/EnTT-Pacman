@@ -41,6 +41,10 @@ void G2D::Text::depth(const Enum depth) {
   depth_ = G2D::depth(depth);
 }
 
+inline void G2D::Text::color(const glm::vec4 color) {
+  color_ = color;
+}
+
 namespace G2D::detail {
   inline bool advanceChar(glm::vec2 &pos, const glm::vec2 advance, const char c) {
     switch (c) {
@@ -172,5 +176,6 @@ void G2D::Text::writeChar(const glm::vec2 pos, const glm::vec2 size, const char 
     section_->depth(depth_);
     section_->tilePos(pos, size);
     section_->tileTex<PLUS_XY>(Sprite::ID(c - '!'));
+    section_->color(color_);
   }
 }

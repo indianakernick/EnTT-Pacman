@@ -50,7 +50,6 @@ namespace G2D {
     GL::ShaderProgram program;
     GLint viewProjLoc;
     GLint texLoc;
-    GLint colorLoc;
     
     void initState();
     void initUniforms();

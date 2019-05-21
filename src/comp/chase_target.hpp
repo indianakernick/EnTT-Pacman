@@ -9,7 +9,7 @@
 #ifndef COMP_CHASE_TARGET_HPP
 #define COMP_CHASE_TARGET_HPP
 
-#include "util/registry.hpp"
+#include <entt/entity/fwd.hpp>
 
 // These components define the chase targeting behavior for each ghost
 
@@ -20,20 +20,20 @@
 // that has a Position. We could quite easily make blinky chase inky
 
 struct BlinkyChaseTarget {
-  Entity player;
+  entt::entity player;
 };
 
 struct PinkyChaseTarget {
-  Entity player;
+  entt::entity player;
 };
 
 struct InkyChaseTarget {
-  Entity player;
-  Entity blinky;
+  entt::entity player;
+  entt::entity blinky;
 };
 
 struct ClydeChaseTarget {
-  Entity player;
+  entt::entity player;
 };
 
 #endif

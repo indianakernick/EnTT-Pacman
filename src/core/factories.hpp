@@ -9,17 +9,17 @@
 #ifndef CORE_FACTORIES_HPP
 #define CORE_FACTORIES_HPP
 
-#include "util/registry.hpp"
+#include <entt/entity/fwd.hpp>
 #include <Simpleton/Sprite/sheet.hpp>
 
 // You typically don't need to store the entity ID after making an entity.
 // Sometimes you do so it's probably a good idea to return the entity ID
 // just in case you need it later.
 
-Entity makePlayer(Registry &, const Sprite::Sheet &);
-Entity makeBlinky(Registry &, const Sprite::Sheet &, Entity);
-Entity makePinky(Registry &, const Sprite::Sheet &, Entity);
-Entity makeInky(Registry &, const Sprite::Sheet &, Entity, Entity);
-Entity makeClyde(Registry &, const Sprite::Sheet &, Entity);
+entt::entity makePlayer(entt::registry &, const Sprite::Sheet &);
+entt::entity makeBlinky(entt::registry &, const Sprite::Sheet &, entt::entity);
+entt::entity makePinky(entt::registry &, const Sprite::Sheet &, entt::entity);
+entt::entity makeInky(entt::registry &, const Sprite::Sheet &, entt::entity, entt::entity);
+entt::entity makeClyde(entt::registry &, const Sprite::Sheet &, entt::entity);
 
 #endif

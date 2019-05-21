@@ -15,11 +15,11 @@
 namespace ECS::detail {
   template <typename CompList>
   void loadComps(
-    const ECS::EntityID id,
+    const entt::entity id,
     const json &comps,
     const ECS::EntityIDmap &idMap,
     const ECS::CompInits<CompList> &compInits,
-    ECS::Registry &registry
+    entt::registry &registry
   ) {
     const json::object_t &obj = comps.get_ref<const json::object_t &>();
     for (auto &pair : obj) {
@@ -43,7 +43,7 @@ namespace ECS::detail {
   bool loadLevel(
     const std::string &fileName,
     const ECS::CompInits<CompList> &compInits,
-    ECS::Registry &registry
+    entt::registry &registry
   ) {
     std::ifstream file(fileName);
     if (!file.is_open()) {
@@ -56,7 +56,7 @@ namespace ECS::detail {
     ECS::insertPairs(idMap, root, registry);
     
     for (size_t i = 0; i != root.size(); ++i) {
-      const ECS::EntityID id = idMap.getEntityFromIndex(i);
+      const entt::entity id = idMap.getEntityFromIndex(i);
       const json &node = root[i];
       
       if (JSON_OPTIONAL(compsNode, node, "components")) {
@@ -70,7 +70,7 @@ namespace ECS::detail {
 
 template <typename CompList>
 void ECS::LevelManager<CompList>::init(
-  ECS::Registry &newRegistry,
+  entt::registry &newRegistry,
   const ECS::CompInits<CompList> &newCompInits
 ) {
   assert(!registry);

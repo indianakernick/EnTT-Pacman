@@ -30,23 +30,23 @@ namespace entt {
  * @code{.cpp}
  * scheduler.attach([](auto delta, void *, auto succeed, auto fail) {
  *     // code
- * }).then<MyProcess>(arguments...);
+ * }).then<my_process>(arguments...);
  * @endcode
  *
  * In order to invoke all scheduled processes, call the `update` member function
  * passing it the elapsed time to forward to the tasks.
  *
- * @sa Process
+ * @sa process
  *
  * @tparam Delta Type to use to provide elapsed time.
  */
 template<typename Delta>
-class Scheduler final {
-    struct ProcessHandler final {
+class scheduler {
+    struct process_handler {
         using instance_type = std::unique_ptr<void, void(*)(void *)>;
-        using update_fn_type = bool(ProcessHandler &, Delta, void *);
-        using abort_fn_type = void(ProcessHandler &, bool);
-        using next_type = std::unique_ptr<ProcessHandler>;
+        using update_fn_type = bool(process_handler &, Delta, void *);
+        using abort_fn_type = void(process_handler &, bool);
+        using next_type = std::unique_ptr<process_handler>;
 
         instance_type instance;
         update_fn_type *update;
@@ -54,30 +54,33 @@ class Scheduler final {
         next_type next;
     };
 
-    struct Then final {
-        Then(ProcessHandler *handler)
-            : handler{handler}
-        {}
+    struct continuation {
+        continuation(process_handler *ref)
+            : handler{ref}
+        {
+            ENTT_ASSERT(handler);
+        }
 
         template<typename Proc, typename... Args>
-        decltype(auto) then(Args &&... args) && {
-            static_assert(std::is_base_of<Process<Proc, Delta>, Proc>::value, "!");
-            handler = Scheduler::then<Proc>(handler, std::forward<Args>(args)...);
-            return std::move(*this);
+        continuation then(Args &&... args) {
+            static_assert(std::is_base_of_v<process<Proc, Delta>, Proc>);
+            auto proc = typename process_handler::instance_type{new Proc{std::forward<Args>(args)...}, &scheduler::deleter<Proc>};
+            handler->next.reset(new process_handler{std::move(proc), &scheduler::update<Proc>, &scheduler::abort<Proc>, nullptr});
+            handler = handler->next.get();
+            return *this;
         }
 
         template<typename Func>
-        decltype(auto) then(Func &&func) && {
-            using Proc = ProcessAdaptor<std::decay_t<Func>, Delta>;
-            return std::move(*this).template then<Proc>(std::forward<Func>(func));
+        continuation then(Func &&func) {
+            return then<process_adaptor<std::decay_t<Func>, Delta>>(std::forward<Func>(func));
         }
 
     private:
-        ProcessHandler *handler;
+        process_handler *handler;
     };
 
     template<typename Proc>
-    static bool update(ProcessHandler &handler, const Delta delta, void *data) {
+    static bool update(process_handler &handler, const Delta delta, void *data) {
         auto *process = static_cast<Proc *>(handler.instance.get());
         process->tick(delta, data);
 
@@ -86,7 +89,8 @@ class Scheduler final {
         if(dead) {
             if(handler.next && !process->rejected()) {
                 handler = std::move(*handler.next);
-                dead = handler.update(handler, delta, data);
+                // forces the process to exit the uninitialized state
+                dead = handler.update(handler, {}, nullptr);
             } else {
                 handler.instance.reset();
             }
@@ -96,7 +100,7 @@ class Scheduler final {
     }
 
     template<typename Proc>
-    static void abort(ProcessHandler &handler, const bool immediately) {
+    static void abort(process_handler &handler, const bool immediately) {
         static_cast<Proc *>(handler.instance.get())->abort(immediately);
     }
 
@@ -105,33 +109,18 @@ class Scheduler final {
         delete static_cast<Proc *>(proc);
     }
 
-    template<typename Proc, typename... Args>
-    static auto then(ProcessHandler *handler, Args &&... args) {
-        if(handler) {
-            auto proc = typename ProcessHandler::instance_type{new Proc{std::forward<Args>(args)...}, &Scheduler::deleter<Proc>};
-            handler->next.reset(new ProcessHandler{std::move(proc), &Scheduler::update<Proc>, &Scheduler::abort<Proc>, nullptr});
-            handler = handler->next.get();
-        }
-
-        return handler;
-    }
-
 public:
     /*! @brief Unsigned integer type. */
-    using size_type = typename std::vector<ProcessHandler>::size_type;
+    using size_type = typename std::vector<process_handler>::size_type;
 
     /*! @brief Default constructor. */
-    Scheduler() ENTT_NOEXCEPT = default;
+    scheduler() ENTT_NOEXCEPT = default;
 
-    /*! @brief Copying a scheduler isn't allowed. */
-    Scheduler(const Scheduler &) = delete;
     /*! @brief Default move constructor. */
-    Scheduler(Scheduler &&) = default;
+    scheduler(scheduler &&) = default;
 
-    /*! @brief Copying a scheduler isn't allowed. @return This scheduler. */
-    Scheduler & operator=(const Scheduler &) = delete;
     /*! @brief Default move assignment operator. @return This scheduler. */
-    Scheduler & operator=(Scheduler &&) = default;
+    scheduler & operator=(scheduler &&) = default;
 
     /**
      * @brief Number of processes currently scheduled.
@@ -170,13 +159,13 @@ public:
      *
      * @code{.cpp}
      * // schedules a task in the form of a process class
-     * scheduler.attach<MyProcess>(arguments...)
+     * scheduler.attach<my_process>(arguments...)
      * // appends a child in the form of a lambda function
      * .then([](auto delta, void *, auto succeed, auto fail) {
      *     // code
      * })
      * // appends a child in the form of another process class
-     * .then<MyOtherProcess>();
+     * .then<my_other_process>();
      * @endcode
      *
      * @tparam Proc Type of process to schedule.
@@ -186,13 +175,12 @@ public:
      */
     template<typename Proc, typename... Args>
     auto attach(Args &&... args) {
-        static_assert(std::is_base_of<Process<Proc, Delta>, Proc>::value, "!");
-
-        auto proc = typename ProcessHandler::instance_type{new Proc{std::forward<Args>(args)...}, &Scheduler::deleter<Proc>};
-        ProcessHandler handler{std::move(proc), &Scheduler::update<Proc>, &Scheduler::abort<Proc>, nullptr};
-        handlers.push_back(std::move(handler));
-
-        return Then{&handlers.back()};
+        static_assert(std::is_base_of_v<process<Proc, Delta>, Proc>);
+        auto proc = typename process_handler::instance_type{new Proc{std::forward<Args>(args)...}, &scheduler::deleter<Proc>};
+        process_handler handler{std::move(proc), &scheduler::update<Proc>, &scheduler::abort<Proc>, nullptr};
+        // forces the process to exit the uninitialized state
+        handler.update(handler, {}, nullptr);
+        return continuation{&handlers.emplace_back(std::move(handler))};
     }
 
     /**
@@ -204,12 +192,13 @@ public:
      * following:
      *
      * @code{.cpp}
-     * void(Delta delta, auto succeed, auto fail);
+     * void(Delta delta, void *data, auto succeed, auto fail);
      * @endcode
      *
      * Where:
      *
      * * `delta` is the elapsed time.
+     * * `data` is an opaque pointer to user data if any, `nullptr` otherwise.
      * * `succeed` is a function to call when a process terminates with success.
      * * `fail` is a function to call when a process terminates with errors.
      *
@@ -236,10 +225,10 @@ public:
      *     // code
      * })
      * // appends a child in the form of a process class
-     * .then<MyProcess>(arguments...);
+     * .then<my_process>(arguments...);
      * @endcode
      *
-     * @sa ProcessAdaptor
+     * @sa process_adaptor
      *
      * @tparam Func Type of process to schedule.
      * @param func Either a lambda or a functor to use as a process.
@@ -247,7 +236,7 @@ public:
      */
     template<typename Func>
     auto attach(Func &&func) {
-        using Proc = ProcessAdaptor<std::decay_t<Func>, Delta>;
+        using Proc = process_adaptor<std::decay_t<Func>, Delta>;
         return attach<Proc>(std::forward<Func>(func));
     }
 
@@ -301,7 +290,7 @@ public:
     }
 
 private:
-    std::vector<ProcessHandler> handlers{};
+    std::vector<process_handler> handlers{};
 };
 
 

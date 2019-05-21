@@ -99,7 +99,6 @@ inline void G2D::Renderer::render(const QuadRange range, const RenderParams &par
   
   GL::setUniform(viewProjLoc, params.viewProj);
   textures.at(params.tex).bind(0);
-  GL::setUniform(colorLoc, params.color);
   
   program.validateAndLog();
   
@@ -120,12 +119,12 @@ inline void G2D::Renderer::initState() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
+  CHECK_OPENGL_ERROR();
 }
 
 inline void G2D::Renderer::initUniforms() {
   viewProjLoc = program.getUniformLoc("viewProj");
   texLoc = program.getUniformLoc("tex");
-  colorLoc = program.getUniformLoc("color");
   
   program.use();
   GL::setUniform(texLoc, 0);

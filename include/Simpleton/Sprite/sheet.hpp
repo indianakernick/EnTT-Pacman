@@ -19,7 +19,7 @@ namespace Sprite {
   class Sheet {
   public:
     //only the factory function can make spritesheets
-    friend Sheet makeSheet(std::string_view);
+    friend Sheet makeSheetFromData(const char *, size_t);
     
     Sheet() = default;
     ~Sheet() = default;
@@ -46,7 +46,8 @@ namespace Sprite {
     uint32_t length;
   };
   
-  Sheet makeSheet(std::string_view);
+  Sheet makeSheetFromData(const char *, size_t);
+  Sheet makeSheetFromFile(std::string_view);
 }
 
 #include "sheet.inl"

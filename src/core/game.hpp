@@ -11,8 +11,8 @@
 
 #include <random>
 #include "maze.hpp"
-#include "util/registry.hpp"
 #include <SDL2/SDL_scancode.h>
+#include <entt/entity/registry.hpp>
 #include <Simpleton/Sprite/sheet.hpp>
 #include <Simpleton/SDL/quad writer.hpp>
 
@@ -30,7 +30,7 @@ private:
     lost
   };
 
-  Registry reg;
+  entt::registry reg;
   MazeState maze;
   Sprite::ID dotSprite;
   Sprite::ID winloseSprite;

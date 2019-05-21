@@ -136,7 +136,7 @@ void G2D::Section::rotTilePos(
     {-0.5f, 0.5f}, {0.0f, 0.5f}, {0.5f, 0.5f}, {0.5f, 0.0f},
     {0.0f, 0.0f}
   };
-  constexpr glm::vec2 originPos = ORIGIN_POS[static_cast<size_t>(ORIGIN)];
+  const glm::vec2 originPos = ORIGIN_POS[static_cast<size_t>(ORIGIN)];
   
   const glm::vec2 origin = originPos * size;
   const float c = std::cos(angle);
@@ -222,6 +222,52 @@ void G2D::Section::tileTex(const std::string_view name) {
   tileTex<PLUS_XY>(spriteSheet.getIDfromName(name));
 }
 
+inline void G2D::Section::whitepixel() {
+  assert(!quads.empty());
+  const glm::vec2 whitepixel = spriteSheet.getWhitepixel();
+  assert(whitepixel != Sprite::no_whitepixel);
+  
+  Quad &quad = quads.back();
+  quad[0].texCoord =
+  quad[1].texCoord =
+  quad[2].texCoord = 
+  quad[3].texCoord = whitepixel;
+}
+
+inline void G2D::Section::color(const glm::vec4 color) {
+  assert(!quads.empty());
+  
+  Quad &quad = quads.back();
+  quad[0].color =
+  quad[1].color =
+  quad[2].color =
+  quad[3].color = color;
+}
+
+inline void G2D::Section::colorWhite() {
+  color({1.0f, 1.0f, 1.0f, 1.0f});
+}
+
+inline void G2D::Section::xGradient(const glm::vec4 low, const glm::vec4 high) {
+  assert(!quads.empty());
+  
+  Quad &quad = quads.back();
+  quad[0].color = low;
+  quad[1].color = high;
+  quad[2].color = high;
+  quad[3].color = low;
+}
+
+inline void G2D::Section::yGradient(const glm::vec4 low, const glm::vec4 high) {
+  assert(!quads.empty());
+  
+  Quad &quad = quads.back();
+  quad[0].color = low;
+  quad[1].color = low;
+  quad[2].color = high;
+  quad[3].color = high;
+}
+
 inline void G2D::Section::render(Renderer &renderer) const {
   const QuadRange range {0, quads.size()};
   renderer.writeQuads(range, quads.data());
@@ -244,10 +290,9 @@ inline void G2D::QuadWriter::clearQuads() {
 
 inline G2D::Section &G2D::QuadWriter::section(
   const glm::mat3 &cam,
-  const SheetTex &sheetTex,
-  const glm::vec4 color
+  const SheetTex &sheetTex
 ) {
-  const RenderParams params {cam, sheetTex.tex(), color};
+  const RenderParams params {cam, sheetTex.tex()};
   for (auto s = sections.begin(); s != sections.end(); ++s) {
     if (s->params() == params) {
       return *s;
