@@ -91,5 +91,5 @@ add_custom_command(
 	  TARGET Game POST_BUILD
 	  COMMAND ${CMAKE_COMMAND} -E copy_directory
 	          ${CMAKE_CURRENT_SOURCE_DIR}/assets/sheet
-	          ${CMAKE_CURRENT_BINARY_DIR}
+	          $<TARGET_FILE_DIR:Game>
 )
