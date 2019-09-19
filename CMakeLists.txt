@@ -60,7 +60,7 @@ else()
 
     target_include_directories(Game
         PRIVATE
-        "${SDL2_INCLUDE_DIR}"
+        "${SDL2_INCLUDE_DIR}/.."
     )
     target_link_libraries(Game
         PRIVATE
