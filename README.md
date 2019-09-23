@@ -59,8 +59,8 @@ vcpkg install sdl2
 The other dependencies ([GLM](https://github.com/g-truc/glm), [EnTT](https://github.com/skypjack/entt), [Simpleton](https://github.com/Kerndog73/Simpleton-Engine)) are bundled with the project to make building this as easy as possible. On Windows, you'll need to specify the vcpkg toolchain file.
 
 ```
-git clone https://github.com/Kerndog73/EnTT-Example.git
-cd EnTT-Example/build
+git clone https://github.com/Kerndog73/EnTT-Pacman.git
+cd EnTT-Pacman/build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 ./example
