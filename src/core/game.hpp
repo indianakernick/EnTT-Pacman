@@ -11,7 +11,7 @@
 
 #include <random>
 #include "maze.hpp"
-#include <SDL2/SDL_scancode.h>
+#include <SDL_scancode.h>
 #include <entt/entity/registry.hpp>
 #include <Simpleton/Sprite/sheet.hpp>
 #include <Simpleton/SDL/quad writer.hpp>

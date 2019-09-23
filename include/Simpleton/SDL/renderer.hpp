@@ -12,7 +12,7 @@
 #include "surface.hpp"
 #include "texture.hpp"
 #include <glm/vec4.hpp>
-#include <SDL2/SDL_render.h>
+#include <SDL_render.h>
 #include "../Graphics 2D/load surface.hpp"
 
 namespace SDL {

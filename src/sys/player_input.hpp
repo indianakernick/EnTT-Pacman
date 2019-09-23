@@ -10,7 +10,7 @@
 #define SYS_PLAYER_INPUT_HPP
 
 #include <entt/entity/fwd.hpp>
-#include <SDL2/SDL_scancode.h>
+#include <SDL_scancode.h>
 
 // Functions that read input should return whether they consumed the input.
 // If an input function hasn't consumed an input, try the next one.

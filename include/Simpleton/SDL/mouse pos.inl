@@ -6,7 +6,7 @@
 //  Copyright © 2018 Indi Kernick. All rights reserved.
 //
 
-#include <SDL2/SDL_mouse.h>
+#include <SDL_mouse.h>
 
 namespace SDL::detail {
   inline glm::vec2 mousePos(
