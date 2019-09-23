@@ -154,6 +154,6 @@ namespace Math {
            ? Float(16) * pow<5>(t)
            : Float(1) + Float(16) * pow<5>(t - Float(1));
   }
-};
+}
 
 #endif

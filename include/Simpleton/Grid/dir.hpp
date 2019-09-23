@@ -99,8 +99,8 @@ namespace Grid {
     return static_cast<DirType>(axis);
   }
   
-  ///Ensure that a Dir is not Dir::NONE by returning Dir::UP instead of
-  ///Dir::NONE
+  ///Ensure that a Dir is not Dir::none by returning Dir::UP instead of
+  ///Dir::none
   constexpr Dir filterNone(const Dir dir) {
     return static_cast<Dir>(static_cast<DirType>(dir) & DirType{0b11});
   }
@@ -111,8 +111,8 @@ namespace Grid {
     return dir == Dir::none ? noneDir : dir;
   }
   
-  ///Ensure that an Axis is not Axis::NONE by returning Axis::VERT instead of
-  ///Axis::NONE
+  ///Ensure that an Axis is not Axis::none by returning Axis::VERT instead of
+  ///Axis::none
   constexpr Axis filterNone(const Axis axis) {
     return static_cast<Axis>(static_cast<DirType>(axis) & DirType{0b1});
   }
@@ -131,7 +131,7 @@ namespace Grid {
            dir == Dir::left;
   }
   
-  ///Check if a direction is either valid or equal to Dir::NONE
+  ///Check if a direction is either valid or equal to Dir::none
   constexpr bool validOrNone(const Dir dir) {
     return valid(dir) || dir == Dir::none;
   }
@@ -252,7 +252,7 @@ namespace Grid {
   };
   
   // Grid::ToVec<int>{}(Grid::Dir::up, 2)
-  // Grid::toVec(Grid::Dir::up, 2)
+  // Grid::toVec<int>(Grid::Dir::up, 2)
   
   ///Helper for converting directions to 2D unit vectors
   template <typename Number>
@@ -289,6 +289,7 @@ namespace Grid {
         
       } else {
         
+        // @TODO maybe we should handle the diagonal case
         if (vec.x == vec.y) {
           throw std::invalid_argument("Vector cannot be converted to direction");
         }

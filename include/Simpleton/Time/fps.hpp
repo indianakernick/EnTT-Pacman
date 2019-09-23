@@ -31,7 +31,7 @@ namespace Time {
     uint32_t framesLastSecond = 0;
     uint32_t framesThisSecond = 0;
   };
-};
+}
 
 #include "fps.inl"
 

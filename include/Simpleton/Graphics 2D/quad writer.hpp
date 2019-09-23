@@ -29,7 +29,6 @@ namespace G2D {
   class Section {
   public:
     Section(Section &&) = default;
-    Section &operator=(Section &&) = default;
     Section(const RenderParams &, const Sprite::Sheet &);
   
     /// Get the RenderParams object

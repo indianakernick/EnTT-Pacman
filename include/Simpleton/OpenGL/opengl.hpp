@@ -9,9 +9,9 @@
 #ifndef engine_opengl_opengl_hpp
 #define engine_opengl_opengl_hpp
 
+#include <SDL.h>
 #include <cassert>
 #include <iostream>
-#include <SDL.h>
 
 #ifdef EMSCRIPTEN
 

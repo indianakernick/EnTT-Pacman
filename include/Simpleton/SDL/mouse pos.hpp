@@ -10,8 +10,8 @@
 #define engine_sdl_mouse_pos_hpp
 
 #include <glm/vec2.hpp>
-#include <glm/mat3x3.hpp>
 #include <SDL_events.h>
+#include <glm/mat3x3.hpp>
 
 namespace SDL {
   glm::vec2 mousePos(const glm::mat3 &);

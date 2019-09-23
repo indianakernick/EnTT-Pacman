@@ -25,6 +25,7 @@ namespace SDL {
   void runMainloop(AppClass *const app) {
     #ifdef EMSCRIPTEN
     
+    emscripten_set_main_loop_timing(EM_TIMING_RAF,  1);
     emscripten_set_main_loop_arg(mainloop<AppClass>, app, 0, 0);
     emscripten_pause_main_loop();
     app->init();

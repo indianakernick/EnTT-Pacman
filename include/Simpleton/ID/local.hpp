@@ -59,6 +59,6 @@ namespace ID {
     bool prevIsMax = false;
     #endif
   };
-};
+}
 
 #endif

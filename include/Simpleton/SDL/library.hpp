@@ -9,8 +9,8 @@
 #ifndef engine_sdl_library_hpp
 #define engine_sdl_library_hpp
 
-#include "error.hpp"
 #include <SDL.h>
+#include "error.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
 #include "../Utils/generic raii.hpp"

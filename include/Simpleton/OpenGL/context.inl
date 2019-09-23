@@ -32,7 +32,7 @@ inline void GL::Context::initLimitFPS(SDL_Window *const newWindow, const uint32_
 
 inline void GL::Context::quit() {
   #ifdef EMSCRIPTEN
-  SDL_DestroyRenderer(renderer);
+  emscripten_webgl_destroy_context(context);
   #else
   SDL_GL_DeleteContext(context);
   #endif
@@ -41,28 +41,28 @@ inline void GL::Context::quit() {
 }
 
 inline void GL::Context::preRender() {
+  #ifdef EMSCRIPTEN
+  emscripten_webgl_make_context_current(context);
+  #else
+  SDL_GL_MakeCurrent(window, context);
+  #endif
+
   glm::ivec2 size;
   SDL_GetWindowSize(window, &size.x, &size.y);
   glViewport(0, 0, size.x, size.y);
   CHECK_OPENGL_ERROR();
 
-  #ifdef EMSCRIPTEN
+  //#ifdef EMSCRIPTEN
   
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-  SDL_RenderClear(renderer);
+  //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+  //SDL_RenderClear(renderer);
   
-  #else
+  //#else
   
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  CHECK_OPENGL_ERROR();
-  glClearDepth(1.0f);
-  CHECK_OPENGL_ERROR();
-  glClearStencil(0);
-  CHECK_OPENGL_ERROR();
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   CHECK_OPENGL_ERROR();
   
-  #endif
+  //#endif
 }
 
 inline void GL::Context::postRender(const bool skipTiming) {
@@ -83,7 +83,7 @@ inline void GL::Context::postRender(const bool skipTiming) {
 inline glm::ivec2 GL::Context::getFrameSize() const {
   glm::ivec2 size;
   #ifdef EMSCRIPTEN
-  SDL_GetRendererOutputSize(renderer, &size.x, &size.y);
+  emscripten_get_canvas_element_size(nullptr, &size.x, &size.y);
   #else
   SDL_GL_GetDrawableSize(window, &size.x, &size.y);
   #endif
@@ -103,12 +103,13 @@ inline uint32_t GL::Context::getMonitorFPS() const {
 inline void GL::Context::initImpl(const bool vsync) {
   #ifdef EMSCRIPTEN
   
-  renderer = CHECK_SDL_NULL(SDL_CreateRenderer(
-    window,
-    -1,
-    SDL_RENDERER_ACCELERATED
-    | (vsync ? SDL_RENDERER_PRESENTVSYNC : 0)
-  ));
+  EmscriptenWebGLContextAttributes attrs;
+  emscripten_webgl_init_context_attributes(&attrs);
+  attrs.majorVersion = 2;
+  attrs.alpha = false;
+  context = emscripten_webgl_create_context(nullptr, &attrs);
+  assert(context > 0);
+  emscripten_webgl_make_context_current(context);
   
   #else
   
@@ -116,7 +117,6 @@ inline void GL::Context::initImpl(const bool vsync) {
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
   SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -137,7 +137,7 @@ inline void GL::Context::initImpl(const bool vsync) {
 
 inline void GL::Context::present() {
   #ifdef EMSCRIPTEN
-  SDL_RenderPresent(renderer);
+  //emscripten_webgl_commit_frame();
   #else
   SDL_GL_SwapWindow(window);
   #endif

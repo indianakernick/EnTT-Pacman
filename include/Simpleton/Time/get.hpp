@@ -74,6 +74,6 @@ namespace Time {
     std::strftime(const_cast<char *>(out.c_str()), 9, "%T", std::localtime(&now));
     return out;
   }
-};
+}
 
 #endif

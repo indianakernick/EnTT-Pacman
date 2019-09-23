@@ -12,6 +12,10 @@
 #include "opengl.hpp"
 #include <glm/vec2.hpp>
 
+#ifdef EMSCRIPTEN
+#include "emscripten/html5.h"
+#endif
+
 namespace GL {
   class Context {
   public:
@@ -30,7 +34,7 @@ namespace GL {
   
   private:
     #ifdef EMSCRIPTEN
-    SDL_Renderer *renderer = nullptr;
+    EMSCRIPTEN_WEBGL_CONTEXT_HANDLE context = 0;
     #else
     SDL_GLContext context = nullptr;
     #endif
