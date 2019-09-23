@@ -10,7 +10,7 @@
 #define engine_sdl_system_cursors_hpp
 
 #include <vector>
-#include <SDL2/SDL_mouse.h>
+#include <SDL_mouse.h>
 #include "../Utils/generic raii.hpp"
 
 namespace SDL {

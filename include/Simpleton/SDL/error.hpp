@@ -10,7 +10,7 @@
 #define engine_sdl_error_hpp
 
 #include <stdexcept>
-#include <SDL2/SDL_error.h>
+#include <SDL_error.h>
 
 namespace SDL {
   class Error final : public std::runtime_error {

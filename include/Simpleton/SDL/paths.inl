@@ -6,7 +6,7 @@
 //  Copyright © 2017 Indi Kernick. All rights reserved.
 //
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 inline std::string SDL::getSaveDir(
   const std::string_view companyName,

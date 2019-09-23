@@ -9,7 +9,7 @@
 #ifndef engine_sdl_surface_hpp
 #define engine_sdl_surface_hpp
 
-#include <SDL2/SDL_surface.h>
+#include <SDL_surface.h>
 #include "../Utils/generic raii.hpp"
 
 namespace SDL {

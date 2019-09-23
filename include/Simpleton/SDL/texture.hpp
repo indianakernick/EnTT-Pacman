@@ -10,7 +10,7 @@
 #define engine_sdl_texture_hpp
 
 #include "error.hpp"
-#include <SDL2/SDL_render.h>
+#include <SDL_render.h>
 #include "../Utils/generic raii.hpp"
 
 namespace SDL {

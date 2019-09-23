@@ -9,7 +9,7 @@
 #include <iostream>
 #include <exception>
 #include "core/app.hpp"
-#include <SDL2/SDL_main.h>
+#include <SDL_main.h>
 #include <Simpleton/SDL/library.hpp>
 
 extern "C" int main(int, char *[]) {

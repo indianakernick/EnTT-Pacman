@@ -9,8 +9,8 @@
 #ifndef engine_sdl_events_hpp
 #define engine_sdl_events_hpp
 
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_scancode.h>
+#include <SDL_events.h>
+#include <SDL_scancode.h>
 
 namespace SDL {
   bool keyDown(const SDL_Event &, SDL_Scancode);

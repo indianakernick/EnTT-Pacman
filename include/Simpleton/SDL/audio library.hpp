@@ -10,7 +10,7 @@
 #define engine_sdl_audio_library_hpp
 
 #include "error.hpp"
-#include <SDL2/SDL_mixer.h>
+#include <SDL_mixer.h>
 #include "../Utils/generic raii.hpp"
 #include "../Utils/instance limiter.hpp"
 

@@ -11,7 +11,7 @@
 
 #include <glm/vec2.hpp>
 #include <glm/mat3x3.hpp>
-#include <SDL2/SDL_events.h>
+#include <SDL_events.h>
 
 namespace SDL {
   glm::vec2 mousePos(const glm::mat3 &);

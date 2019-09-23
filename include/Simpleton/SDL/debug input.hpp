@@ -10,7 +10,7 @@
 #define engine_sdl_debug_input_hpp
 
 #include <cstdint>
-#include <SDL2/SDL_events.h>
+#include <SDL_events.h>
 
 namespace SDL {
   void printWindowEvent(SDL_WindowEvent);
