@@ -79,6 +79,11 @@ target_compile_features(Game
     cxx_std_17
 )
 
+target_compile_definitions(Game
+    PRIVATE
+    STBI_ONLY_PNG
+)
+
 if (CMAKE_BUILD_TYPE MATCHES DEBUG)
     target_compile_options(Game
         PRIVATE
