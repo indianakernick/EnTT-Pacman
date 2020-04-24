@@ -13,7 +13,6 @@
 #include "util/dir2vec.hpp"
 #include "comp/position.hpp"
 #include "core/constants.hpp"
-#include "core/constants.hpp"
 #include "comp/ghost_mode.hpp"
 #include <entt/entity/registry.hpp>
 

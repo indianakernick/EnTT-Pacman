@@ -8,31 +8,24 @@
 
 #include "app.hpp"
 
+#include <SDL.h>
 #include "game.hpp"
 #include "constants.hpp"
-#include <Simpleton/SDL/texture.hpp>
-#include <Simpleton/SDL/library.hpp>
+#include "../util/sdl_check.hpp"
+#include "../util/sdl_delete.hpp"
+#include "../util/sdl_load_texture.hpp"
 #include <Simpleton/Time/synchronizer.hpp>
 
 namespace {
-
-SDL::Window::Desc getWinDesc(const int scaleFactor) {
-  SDL::Window::Desc desc;
-  desc.title = "Pacman";
-  desc.size = tilesPx * scaleFactor;
-  desc.resizable = false;
-  desc.openGL = false;
-  return desc;
-}
 
 int getScaleFactor() {
   // Make the largest window possible with an integer scale factor
   SDL_Rect bounds;
   #if SDL_VERSION_ATLEAST(2, 0, 5)
-  CHECK_SDL_ERROR(SDL_GetDisplayUsableBounds(0, &bounds));
+  SDL_CHECK(SDL_GetDisplayUsableBounds(0, &bounds));
   #else
   #warning SDL 2.0.5 or later is recommended
-  CHECK_SDL_ERROR(SDL_GetDisplayBounds(0, &bounds));
+  SDL_CHECK(SDL_GetDisplayBounds(0, &bounds));
   #endif
   const glm::ivec2 scale = {bounds.w / tilesPx.x, bounds.h / tilesPx.y};
   return std::max(1, std::min(scale.x, scale.y));
@@ -40,22 +33,40 @@ int getScaleFactor() {
 
 }
 
-void runGame() {
-  SDL::Window window = SDL::makeWindow(getWinDesc(getScaleFactor()));
-  SDL::Renderer renderer = SDL::makeRenderer(window, true);
-  SDL::Texture maze = renderer.texture("sprites.png");
-  maze.blend(SDL_BLENDMODE_BLEND);
+Application::Application() {
+  SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
+}
+
+Application::~Application() {
+  SDL_Quit();
+}
+
+void Application::run() {
+  const int scaleFactor = getScaleFactor();
+  SDL::Window window{SDL_CHECK(SDL_CreateWindow(
+    "Pacman",
+    SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+    tilesPx.x * scaleFactor, tilesPx.y * scaleFactor,
+    SDL_WINDOW_SHOWN
+  ))};
+
+  SDL::Renderer renderer{SDL_CHECK(SDL_CreateRenderer(
+    window.get(),
+    -1,
+    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+  ))};
+  SDL_CHECK(SDL_RenderSetLogicalSize(renderer.get(), tilesPx.x, tilesPx.y));
+
+  SDL::Texture maze = SDL::loadTexture(renderer.get(), "sprites.png");
+
   Sprite::Sheet sheet = Sprite::makeSheetFromFile("sprites.atlas");
-  CHECK_SDL_ERROR(SDL_RenderSetLogicalSize(renderer.get(), tilesPx.x, tilesPx.y));
-  SDL::QuadWriter writer{renderer, sheet, maze};
+  SDL::QuadWriter writer{renderer.get(), maze.get(), sheet};
   Game game;
 
   game.init(sheet);
 
   int frame = 0;
   bool quit = false;
-  // align the synchronizer with vsync
-  renderer.present();
   while (!quit) {
     Time::Synchronizer sync{Time::sync_fps, fps};
 
@@ -77,9 +88,10 @@ void runGame() {
       }
     }
 
-    renderer.clear();
+    SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
+    SDL_CHECK(SDL_RenderClear(renderer.get()));
     game.render(writer, frame % tileSize);
     ++frame;
-    renderer.present();
+    SDL_RenderPresent(renderer.get());
   }
 }

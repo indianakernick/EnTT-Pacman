@@ -14,7 +14,7 @@
 #include <SDL_scancode.h>
 #include <entt/entity/registry.hpp>
 #include <Simpleton/Sprite/sheet.hpp>
-#include <Simpleton/SDL/quad writer.hpp>
+#include "../util/sdl_quad_writer.hpp"
 
 class Game {
 public:

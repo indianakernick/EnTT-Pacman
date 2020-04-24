@@ -13,6 +13,14 @@ add_executable(Game
     src/core/maze.hpp
     src/core/constants.hpp
     src/util/dir2vec.hpp
+    src/util/sdl_check.hpp
+    src/util/sdl_delete.hpp
+    src/util/sdl_load_texture.cpp
+    src/util/sdl_load_texture.hpp
+    src/util/sdl_quad_writer.cpp
+    src/util/sdl_quad_writer.hpp
+    src/util/stb_image.c
+    src/util/stb_image.h
     src/comp/position.hpp
     src/comp/player.hpp
     src/comp/sprite.hpp
@@ -70,7 +78,7 @@ endif()
 
 target_include_directories(Game
     PRIVATE
-    "${CMAKE_SOURCE_DIR}/include"
+    "${CMAKE_SOURCE_DIR}/third_party"
     "${CMAKE_SOURCE_DIR}/src"
 )
 
@@ -96,8 +104,8 @@ set_target_properties(Game
 )
 
 add_custom_command(
-	  TARGET Game POST_BUILD
-	  COMMAND ${CMAKE_COMMAND} -E copy_directory
-	          ${CMAKE_CURRENT_SOURCE_DIR}/assets/sheet
-	          $<TARGET_FILE_DIR:Game>
+    TARGET Game POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+	        ${CMAKE_CURRENT_SOURCE_DIR}/assets/sheet
+	        $<TARGET_FILE_DIR:Game>
 )

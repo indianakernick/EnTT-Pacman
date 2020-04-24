@@ -8,14 +8,13 @@
 
 #include <iostream>
 #include <exception>
-#include "core/app.hpp"
 #include <SDL_main.h>
-#include <Simpleton/SDL/library.hpp>
+#include "core/app.hpp"
 
 extern "C" int main(int, char *[]) {
-  SDL::Library lib = SDL::makeLibrary(SDL_INIT_VIDEO);
   try {
-    runGame();
+    Application app;
+    app.run();
   } catch (std::exception &e) {
     // The only exceptions we should get are from SDL
     std::cout << e.what() << '\n';

@@ -9,6 +9,12 @@
 #ifndef CORE_APP_HPP
 #define CORE_APP_HPP
 
-void runGame();
+class Application {
+public:
+  Application();
+  ~Application();
+
+  void run();
+};
 
 #endif
