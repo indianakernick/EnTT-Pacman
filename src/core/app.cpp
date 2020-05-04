@@ -59,7 +59,7 @@ void Application::run() {
 
   SDL::Texture maze = SDL::loadTexture(renderer.get(), "sprites.png");
 
-  Sprite::Sheet sheet = Sprite::makeSheetFromFile("sprites.atlas");
+  SpriteSheet sheet{"sprites.atlas"};
   SDL::QuadWriter writer{renderer.get(), maze.get(), sheet};
   Game game;
 

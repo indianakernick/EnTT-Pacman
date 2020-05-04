@@ -9,20 +9,20 @@
 #ifndef COMP_SPRITE_HPP
 #define COMP_SPRITE_HPP
 
-#include <Simpleton/Sprite/id.hpp>
+#include "../util/sprite_id.hpp"
 
 // Sprite components just store a sprite ID.
 // Rendering systems make assumptions about the animation and the
 // layout of frames
 
 struct PlayerSprite {
-  Sprite::ID id;
+  SpriteID id;
 };
 
 struct GhostSprite {
-  Sprite::ID id;
-  Sprite::ID scared;
-  Sprite::ID eyes;
+  SpriteID id;
+  SpriteID scared;
+  SpriteID eyes;
 };
 
 #endif

@@ -10,26 +10,24 @@
 #define UTIL_SDL_QUAD_WRITER_HPP
 
 #include <SDL_render.h>
-#include <Simpleton/Sprite/sheet.hpp>
+#include "sprite_sheet.hpp"
 
 namespace SDL {
 
 class QuadWriter {
 public:
-  QuadWriter(SDL_Renderer *, SDL_Texture *, const Sprite::Sheet &);
+  QuadWriter(SDL_Renderer *, SDL_Texture *, const SpriteSheet &);
 
   void tilePos(glm::ivec2, glm::ivec2, double = 0.0);
-  void tileTex(Sprite::Rect);
-  void tileTex(Sprite::ID);
+  void tileTex(SpriteRect);
+  void tileTex(SpriteID);
 
   void render() const;
-
-  const Sprite::Sheet &sheet() const;
 
 private:
   SDL_Renderer *renderer;
   SDL_Texture *texture;
-  const Sprite::Sheet &spritesheet;
+  const SpriteSheet &spritesheet;
 
   SDL_Rect srcRect;
   SDL_Rect dstRect;

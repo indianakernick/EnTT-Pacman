@@ -20,16 +20,16 @@
 #include "sys/change_ghost_mode.hpp"
 #include "sys/player_ghost_collide.hpp"
 
-void Game::init(const Sprite::Sheet &sheet) {
+void Game::init(const SpriteSheet &sheet) {
   maze = makeMazeState();
   const entt::entity player = makePlayer(reg, sheet);
   const entt::entity blinky = makeBlinky(reg, sheet, player);
   makePinky(reg, sheet, player);
   makeInky(reg, sheet, player, blinky);
   makeClyde(reg, sheet, player);
-  dotSprite = sheet.getIDfromName("dot 0");
-  winloseSprite = sheet.getIDfromName("winlose 0");
-  mazeSprite = sheet.getIDfromName("maze");
+  dotSprite = sheet.lookup("dot 0");
+  winloseSprite = sheet.lookup("winlose 0");
+  mazeSprite = sheet.lookup("maze");
   // seeding a pseudo random number generator with a random source
   rand.seed(std::random_device{}());
 }

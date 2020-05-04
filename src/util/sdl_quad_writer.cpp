@@ -13,7 +13,7 @@
 SDL::QuadWriter::QuadWriter(
   SDL_Renderer *renderer,
   SDL_Texture *texture,
-  const Sprite::Sheet &sheet
+  const SpriteSheet &sheet
 ) : renderer{renderer},
     texture{texture},
     spritesheet{sheet},
@@ -31,25 +31,21 @@ void SDL::QuadWriter::tilePos(
   angle = ang;
 }
 
-void SDL::QuadWriter::tileTex(const Sprite::Rect rect) {
+void SDL::QuadWriter::tileTex(const SpriteRect rect) {
   // swap rect.min.y and rect.max.y
-  const uint32_t length = spritesheet.getLength();
+  const std::uint32_t length = spritesheet.length();
   srcRect.x = rect.min.x * length;
   srcRect.y = rect.max.y * length;
   srcRect.w = (rect.max.x - rect.min.x) * length;
   srcRect.h = (rect.min.y - rect.max.y) * length;
 }
 
-void SDL::QuadWriter::tileTex(const Sprite::ID id) {
-  tileTex(spritesheet.getSprite(id));
+void SDL::QuadWriter::tileTex(const SpriteID id) {
+  tileTex(spritesheet.get(id));
 }
 
 void SDL::QuadWriter::render() const {
   SDL_CHECK(SDL_RenderCopyEx(
     renderer, texture, &srcRect, &dstRect, angle, nullptr, SDL_FLIP_NONE
   ));
-}
-
-const Sprite::Sheet &SDL::QuadWriter::sheet() const {
-  return spritesheet;
 }

@@ -12,13 +12,13 @@
 #include <random>
 #include "maze.hpp"
 #include <SDL_scancode.h>
+#include "../util/sprite_sheet.hpp"
 #include <entt/entity/registry.hpp>
-#include <Simpleton/Sprite/sheet.hpp>
 #include "../util/sdl_quad_writer.hpp"
 
 class Game {
 public:
-  void init(const Sprite::Sheet &);
+  void init(const SpriteSheet &);
   void input(SDL_Scancode);
   bool logic();
   void render(SDL::QuadWriter &, int);
@@ -32,9 +32,9 @@ private:
 
   entt::registry reg;
   MazeState maze;
-  Sprite::ID dotSprite;
-  Sprite::ID winloseSprite;
-  Sprite::ID mazeSprite;
+  SpriteID dotSprite;
+  SpriteID winloseSprite;
+  SpriteID mazeSprite;
   int dots = 0;
   std::mt19937 rand;
   State state = State::playing;

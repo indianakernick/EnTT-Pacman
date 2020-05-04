@@ -19,6 +19,9 @@ add_executable(Game
     src/util/sdl_load_texture.hpp
     src/util/sdl_quad_writer.cpp
     src/util/sdl_quad_writer.hpp
+    src/util/sprite_id.hpp
+    src/util/sprite_sheet.cpp
+    src/util/sprite_sheet.hpp
     src/util/stb_image.c
     src/util/stb_image.h
     src/comp/position.hpp
