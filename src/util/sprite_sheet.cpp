@@ -8,6 +8,7 @@
 
 #include "sprite_sheet.hpp"
 
+#include <memory>
 #include <fstream>
 #include <stdexcept>
 #include <Simpleton/Utils/parse string.hpp>
