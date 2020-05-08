@@ -70,7 +70,7 @@ std::vector<Grid::Pos> Grid::astar(
     
     // look at all of the tiles around the top node
     for (const Dir dir : dir_range) {
-      const Pos neighPos = topNode.pos + toVec<Coord>(dir);
+      const Pos neighPos = topNode.pos + toPos<Coord>(dir);
       if (neighPos == topNode.prevPos || grid.outOfRange(neighPos) || notPath(grid[neighPos])) {
         continue;
       }

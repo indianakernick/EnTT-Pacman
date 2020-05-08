@@ -8,7 +8,7 @@
 
 #ifndef engine_memory_alloc_hpp
 #define engine_memory_alloc_hpp
-
+static_assert(false);
 #include <new>
 #include <cstring>
 
