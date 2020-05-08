@@ -9,12 +9,13 @@
 #include "app.hpp"
 
 #include <SDL.h>
+#include <iostream>
 #include "game.hpp"
 #include "constants.hpp"
+#include "../util/frame_cap.hpp"
 #include "../util/sdl_check.hpp"
 #include "../util/sdl_delete.hpp"
 #include "../util/sdl_load_texture.hpp"
-#include <Simpleton/Time/synchronizer.hpp>
 
 namespace {
 
@@ -43,6 +44,8 @@ Application::~Application() {
 
 void Application::run() {
   const int scaleFactor = getScaleFactor();
+  std::cout << "Using scale factor: " << scaleFactor << '\n';
+
   SDL::Window window{SDL_CHECK(SDL_CreateWindow(
     "Pacman",
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -68,7 +71,7 @@ void Application::run() {
   int frame = 0;
   bool quit = false;
   while (!quit) {
-    Time::Synchronizer sync{Time::sync_fps, fps};
+    FrameCap sync{fps};
 
     SDL_Event e;
     while (SDL_PollEvent(&e)) {

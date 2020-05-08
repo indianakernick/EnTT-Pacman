@@ -13,6 +13,7 @@ add_executable(Game
     src/core/maze.hpp
     src/core/constants.hpp
     src/util/dir2vec.hpp
+    src/util/frame_cap.hpp
     src/util/sdl_check.hpp
     src/util/sdl_delete.hpp
     src/util/sdl_load_texture.cpp
