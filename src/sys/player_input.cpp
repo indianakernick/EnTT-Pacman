@@ -15,30 +15,30 @@
 
 namespace {
 
-Grid::Dir readDir(const SDL_Scancode key) {
+Dir readDir(const SDL_Scancode key) {
   switch (key) {
     case SDL_SCANCODE_W:
     case SDL_SCANCODE_UP:
-      return Grid::Dir::up;
+      return Dir::up;
     case SDL_SCANCODE_D:
     case SDL_SCANCODE_RIGHT:
-      return Grid::Dir::right;
+      return Dir::right;
     case SDL_SCANCODE_S:
     case SDL_SCANCODE_DOWN:
-      return Grid::Dir::down;
+      return Dir::down;
     case SDL_SCANCODE_A:
     case SDL_SCANCODE_LEFT:
-      return Grid::Dir::left;
+      return Dir::left;
     default:
-      return Grid::Dir::none;
+      return Dir::none;
   }
 }
 
 }
 
 Consumed playerInput(entt::registry &reg, const SDL_Scancode key) {
-  const Grid::Dir dir = readDir(key);
-  if (dir == Grid::Dir::none) {
+  const Dir dir = readDir(key);
+  if (dir == Dir::none) {
     return Consumed::no;
   }
   auto view = reg.view<Player, DesiredDir>();

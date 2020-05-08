@@ -28,8 +28,9 @@ int getScaleFactor() {
   #warning SDL 2.0.5 or later is recommended
   SDL_CHECK(SDL_GetDisplayBounds(0, &bounds));
   #endif
-  const glm::ivec2 scale = {bounds.w / tilesPx.x, bounds.h / tilesPx.y};
-  return std::max(1, std::min(scale.x, scale.y));
+  const int scaleX = bounds.w / tilesPx.x;
+  const int scaleY = bounds.h / tilesPx.y;
+  return std::max(1, std::min(scaleX, scaleY));
 }
 
 }

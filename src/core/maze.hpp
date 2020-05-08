@@ -9,9 +9,9 @@
 #ifndef CORE_MAZE_HPP
 #define CORE_MAZE_HPP
 
-#include <Simpleton/Grid/grid.hpp>
+#include "../util/grid.hpp"
 
-enum class Tile : uint8_t {
+enum class Tile : std::uint8_t {
   empty,
   dot,
   energizer,
@@ -19,7 +19,7 @@ enum class Tile : uint8_t {
   door
 };
 
-using MazeState = Grid::Grid<Tile>;
+using MazeState = Grid<Tile>;
 
 MazeState makeMazeState(); 
 

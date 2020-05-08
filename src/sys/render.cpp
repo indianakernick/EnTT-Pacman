@@ -10,7 +10,7 @@
 
 #include "comp/dir.hpp"
 #include "comp/sprite.hpp"
-#include "util/dir2vec.hpp"
+#include "util/dir_to_pos.hpp"
 #include "comp/position.hpp"
 #include "core/constants.hpp"
 #include "comp/ghost_mode.hpp"
@@ -19,10 +19,10 @@
 void playerRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) {
   const auto view = reg.view<Position, ActualDir, DesiredDir, PlayerSprite>();
   for (const entt::entity e : view) {
-    const Grid::Pos pos = view.get<Position>(e).p * tileSize;
-    const Grid::Dir actualDir = view.get<ActualDir>(e).d;
-    const double angle = Grid::toNum(view.get<DesiredDir>(e).d, 90.0);
-    writer.tilePos(pos + toVec(actualDir, frame), glm::ivec2(tileSize), angle);
+    const Pos pos = view.get<Position>(e).p * tileSize;
+    const Dir actualDir = view.get<ActualDir>(e).d;
+    const double angle = static_cast<double>(view.get<DesiredDir>(e).d) * 90.0;
+    writer.tilePos(pos + toPos(actualDir, frame), Pos{tileSize, tileSize}, angle);
     writer.tileTex(view.get<PlayerSprite>(e).id + frame);
     writer.render();
   }
@@ -31,11 +31,11 @@ void playerRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame)
 void ghostRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) {
   const auto view = reg.view<Position, ActualDir, GhostSprite>();
   for (const entt::entity e : view) {
-    const Grid::Pos pos = view.get<Position>(e).p * tileSize;
-    const Grid::Dir actualDir = view.get<ActualDir>(e).d;
-    writer.tilePos(pos + toVec(actualDir, frame), glm::ivec2(tileSize));
+    const Pos pos = view.get<Position>(e).p * tileSize;
+    const Dir actualDir = view.get<ActualDir>(e).d;
+    writer.tilePos(pos + toPos(actualDir, frame), Pos{tileSize, tileSize});
     const SpriteID dirOffset = (
-      actualDir == Grid::Dir::none ? 0 : Grid::toNum<SpriteID>(actualDir)
+      actualDir == Dir::none ? 0 : static_cast<SpriteID>(actualDir)
     );
     const GhostSprite sprite = view.get<GhostSprite>(e);
     if (reg.has<ChaseMode>(e) || reg.has<ScatterMode>(e)) {
@@ -54,9 +54,9 @@ void ghostRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) 
 }
 
 void dotRender(SDL::QuadWriter &writer, const MazeState &maze, const SpriteID sprite) {
-  for (const Grid::Coord y : maze.vert()) {
-    for (const Grid::Coord x : maze.hori()) {
-      const Tile tile = maze(x, y);
+  for (const int y : maze.vert()) {
+    for (const int x : maze.hori()) {
+      const Tile tile = maze[{x, y}];
       writer.tilePos({x * tileSize, y * tileSize}, {tileSize, tileSize});
       if (tile == Tile::dot) {
         writer.tileTex(sprite);

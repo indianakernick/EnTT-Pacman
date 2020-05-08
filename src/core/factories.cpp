@@ -33,7 +33,7 @@ entt::entity makePlayer(entt::registry &reg, const SpriteSheet &sheet) {
 
 namespace {
 
-entt::entity makeGhost(entt::registry &reg, const Grid::Pos home, const Grid::Pos scatter) {
+entt::entity makeGhost(entt::registry &reg, const Pos home, const Pos scatter) {
   const entt::entity e = reg.create();
   reg.assign<Position>(e, home);
   reg.assign<HomePosition>(e, home, scatter);

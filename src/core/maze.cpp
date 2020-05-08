@@ -30,10 +30,10 @@ Tile stateChar(const char c) {
   }
 }
 
-template <size_t Size>
+template <std::size_t Size>
 void stateStr(MazeState &state, const char (&str)[Size]) {
   assert(state.area() + 1 == Size);
-  for (size_t i = 0; i != Size - 1; ++i) {
+  for (std::size_t i = 0; i != Size - 1; ++i) {
     state[i] = stateChar(str[i]);
   }
 }

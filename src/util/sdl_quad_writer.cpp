@@ -22,7 +22,7 @@ SDL::QuadWriter::QuadWriter(
     angle{} {}
 
 void SDL::QuadWriter::tilePos(
-  const glm::ivec2 pos, const glm::ivec2 size, const double ang
+  const Pos pos, const Pos size, const double ang
 ) {
   dstRect.x = pos.x;
   dstRect.y = pos.y;
@@ -33,11 +33,10 @@ void SDL::QuadWriter::tilePos(
 
 void SDL::QuadWriter::tileTex(const SpriteRect rect) {
   // swap rect.min.y and rect.max.y
-  const std::uint32_t length = spritesheet.length();
-  srcRect.x = rect.min.x * length;
-  srcRect.y = rect.max.y * length;
-  srcRect.w = (rect.max.x - rect.min.x) * length;
-  srcRect.h = (rect.min.y - rect.max.y) * length;
+  srcRect.x = rect.min.x;
+  srcRect.y = rect.max.y;
+  srcRect.w = rect.max.x - rect.min.x;
+  srcRect.h = rect.min.y - rect.max.y;
 }
 
 void SDL::QuadWriter::tileTex(const SpriteID id) {

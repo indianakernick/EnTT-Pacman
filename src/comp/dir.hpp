@@ -9,16 +9,16 @@
 #ifndef COMP_DIR_HPP
 #define COMP_DIR_HPP
 
-#include <Simpleton/Grid/dir.hpp>
+#include "../util/dir.hpp"
 
 // The direction that the entity wants to go
 struct DesiredDir {
-  Grid::Dir d = Grid::Dir::none;
+  Dir d = Dir::none;
 };
 
 // The direction that the entity is actually going in
 struct ActualDir {
-  Grid::Dir d = Grid::Dir::none;
+  Dir d = Dir::none;
 };
 
 #endif

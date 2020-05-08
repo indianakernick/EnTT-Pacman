@@ -9,11 +9,11 @@
 #ifndef COMP_HOME_POSITION_HPP
 #define COMP_HOME_POSITION_HPP
 
-#include <Simpleton/Grid/pos.hpp>
+#include "../util/pos.hpp"
 
 struct HomePosition {
-  Grid::Pos home;    // position in the ghost house
-  Grid::Pos scatter; // unreachable point in a corner
+  Pos home;    // position in the ghost house
+  Pos scatter; // unreachable point in a corner
 };
 
 #endif

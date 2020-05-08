@@ -18,7 +18,7 @@ int countConsumptions(entt::registry &reg, MazeState &maze, const Tile food) {
   int count = 0;
   const auto view = reg.view<Player, Position>();
   for (const entt::entity e : view) {
-    const Grid::Pos pos = view.get<Position>(e).p;
+    const Pos pos = view.get<Position>(e).p;
     if (maze.outOfRange(pos)) {
       continue;
     }

@@ -11,15 +11,15 @@
 
 #include <string>
 #include <vector>
+#include "pos.hpp"
 #include <cstdint>
 #include <string_view>
-#include <glm/vec2.hpp>
 #include <unordered_map>
 #include "sprite_id.hpp"
 
 struct SpriteRect {
-  glm::vec2 min;
-  glm::vec2 max;
+  Pos min;
+  Pos max;
 };
 
 class SpriteSheet {

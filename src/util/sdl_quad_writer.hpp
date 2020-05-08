@@ -18,7 +18,7 @@ class QuadWriter {
 public:
   QuadWriter(SDL_Renderer *, SDL_Texture *, const SpriteSheet &);
 
-  void tilePos(glm::ivec2, glm::ivec2, double = 0.0);
+  void tilePos(Pos, Pos, double = 0.0);
   void tileTex(SpriteRect);
   void tileTex(SpriteID);
 

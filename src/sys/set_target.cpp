@@ -11,13 +11,12 @@
 #include "can_move.hpp"
 #include "comp/dir.hpp"
 #include "comp/target.hpp"
-#include "util/dir2vec.hpp"
 #include "comp/position.hpp"
+#include "util/dir_to_pos.hpp"
 #include "comp/ghost_mode.hpp"
 #include "comp/chase_target.hpp"
 #include "comp/home_position.hpp"
 #include <entt/entity/registry.hpp>
-#include <Simpleton/Grid/distance.hpp>
 
 void setBlinkyChaseTarget(entt::registry &reg) {
   auto view = reg.view<Target, ChaseMode, BlinkyChaseTarget>();
@@ -31,9 +30,9 @@ void setPinkyChaseTarget(entt::registry &reg) {
   auto view = reg.view<Target, ChaseMode, PinkyChaseTarget>();
   for (const entt::entity e : view) {
     const entt::entity player = view.get<PinkyChaseTarget>(e).player;
-    const Grid::Pos playerPos = reg.get<Position>(player).p;
-    const Grid::Dir playerDir = reg.get<ActualDir>(player).d;
-    view.get<Target>(e).p = playerPos + toVec(playerDir, 4);
+    const Pos playerPos = reg.get<Position>(player).p;
+    const Dir playerDir = reg.get<ActualDir>(player).d;
+    view.get<Target>(e).p = playerPos + toPos(playerDir, 4);
   }
 }
 
@@ -41,10 +40,10 @@ void setInkyChaseTarget(entt::registry &reg) {
   auto view = reg.view<Target, ChaseMode, InkyChaseTarget>();
   for (const entt::entity e : view) {
     const InkyChaseTarget target = view.get<InkyChaseTarget>(e);
-    const Grid::Pos playerPos = reg.get<Position>(target.player).p;
-    const Grid::Dir playerDir = reg.get<ActualDir>(target.player).d;
-    const Grid::Pos offset = playerPos + toVec(playerDir, 2);
-    const Grid::Pos blinkyPos = reg.get<Position>(target.blinky).p;
+    const Pos playerPos = reg.get<Position>(target.player).p;
+    const Dir playerDir = reg.get<ActualDir>(target.player).d;
+    const Pos offset = playerPos + toPos(playerDir, 2);
+    const Pos blinkyPos = reg.get<Position>(target.blinky).p;
     view.get<Target>(e).p = blinkyPos + (offset - blinkyPos) * 2;
   }
 }
@@ -55,8 +54,8 @@ void setClydeChaseTarget(entt::registry &reg) {
   >();
   for (const entt::entity e : view) {
     const entt::entity player = view.get<ClydeChaseTarget>(e).player;
-    const Grid::Pos playerPos = reg.get<Position>(player).p;
-    const float dist = Grid::euclid(playerPos, view.get<Position>(e).p);
+    const Pos playerPos = reg.get<Position>(player).p;
+    const float dist = distance(playerPos, view.get<Position>(e).p);
     if (dist >= 8.0f) {
       view.get<Target>(e).p = playerPos;
     } else {
@@ -75,25 +74,25 @@ void setScatterTarget(entt::registry &reg) {
 void setScaredTarget(entt::registry &reg, const MazeState &maze, std::mt19937 &rand) {
   auto view = reg.view<Target, Position, ScaredMode, ActualDir>();
   for (const entt::entity e : view) {
-    const Grid::Pos pos = view.get<Position>(e).p;
-    const Grid::Dir dir = view.get<ActualDir>(e).d;
-    const Grid::Pos nextPos = pos + toVec(dir);
+    const Pos pos = view.get<Position>(e).p;
+    const Dir dir = view.get<ActualDir>(e).d;
+    const Pos nextPos = pos + toPos(dir);
     std::uniform_int_distribution<int> dist(0, 3);
-    Grid::Dir candDir = Grid::toDir(dist(rand));
-    Grid::Pos candPos = nextPos;
+    Dir candDir = static_cast<Dir>(dist(rand));
+    Pos candPos = nextPos;
 
     for (int i = 0; i != 4; ++i) {
-      if (candDir == Grid::opposite(dir)) {
-        candDir = Grid::rotateCW(candDir);
+      if (candDir == opposite(dir)) {
+        candDir = rotateCW(candDir);
         continue;
       }
       
       if (!canMove(reg, maze, e, nextPos, candDir)) {
-        candDir = Grid::rotateCW(candDir);
+        candDir = rotateCW(candDir);
         continue;
       }
       
-      candPos = nextPos + toVec(candDir);
+      candPos = nextPos + toPos(candDir);
       break;
     }
 

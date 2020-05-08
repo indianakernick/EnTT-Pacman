@@ -58,8 +58,6 @@ SpriteSheet::SpriteSheet(const std::string &path) {
     string.parseNumber(rect.max.y);
     string.expect(']');
 
-    rect.min /= glm::vec2(length_);
-    rect.max /= glm::vec2(length_);
     rects.push_back(rect);
 
     if (string.check(']')) {
