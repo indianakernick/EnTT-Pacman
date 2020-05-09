@@ -30,24 +30,6 @@ If you're on a Debian based system,
 sudo apt-get install libsdl2-dev
 ```
 
-If you're on a Red Hat based system,
-
-```
-sudo yum install SDL2-devel
-```
-
-If you're on some other Linux system that doesn't have an SDL2 package, you'll have to build the source.
-
-```
-hg clone https://hg.libsdl.org/SDL SDL
-cd SDL
-mkdir build
-cd build
-../configure
-make
-sudo make install
-```
-
 If you're on Windows,
 
 ```
@@ -56,7 +38,7 @@ vcpkg install sdl2
 
 ## Building
 
-The other dependencies ([GLM](https://github.com/g-truc/glm), [EnTT](https://github.com/skypjack/entt), [Simpleton](https://github.com/Kerndog73/Simpleton-Engine)) are bundled with the project to make building this as easy as possible. On Windows, you'll need to specify the vcpkg toolchain file.
+[EnTT](https://github.com/skypjack/entt) is bundled with the project to make building this as easy as possible.
 
 ```
 git clone https://github.com/Kerndog73/EnTT-Pacman.git
