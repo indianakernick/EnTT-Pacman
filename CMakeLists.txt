@@ -16,7 +16,6 @@ add_executable(Game
     src/util/dir_to_pos.hpp
     src/util/frame_cap.hpp
     src/util/grid.hpp
-    src/util/int_range.hpp
     src/util/pos.hpp
     src/util/sdl_check.hpp
     src/util/sdl_delete.hpp

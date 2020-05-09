@@ -26,7 +26,7 @@ bool canMove(
   if (maze.outOfRange(desiredPos)) {
     // The tunnel is the only place where playable space meets the edge of the map.
     // The movement system handles the tunnel
-    return isHori(desiredDir);
+    return desiredDir == Dir::left || desiredDir == Dir::right;
   }
 
   // just like we assumed the position of the tunnel, we're assuming the

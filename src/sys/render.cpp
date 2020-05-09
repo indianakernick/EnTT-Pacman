@@ -54,8 +54,8 @@ void ghostRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) 
 }
 
 void dotRender(SDL::QuadWriter &writer, const MazeState &maze, const SpriteID sprite) {
-  for (const int y : maze.vert()) {
-    for (const int x : maze.hori()) {
+  for (int y = 0; y != maze.height(); ++y) {
+    for (int x = 0; x != maze.width(); ++x) {
       const Tile tile = maze[{x, y}];
       writer.tilePos({x * tileSize, y * tileSize}, {tileSize, tileSize});
       if (tile == Tile::dot) {

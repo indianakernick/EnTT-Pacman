@@ -73,7 +73,7 @@ SpriteSheet::SpriteSheet(const std::string &path) {
 
   rects.reserve(names.size());
   expect(file, ",\"rects\":[");
-  
+
   while (true) {
     SpriteRect rect;
     expect(file, '[');

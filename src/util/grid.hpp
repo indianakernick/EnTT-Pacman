@@ -12,29 +12,23 @@
 #include <vector>
 #include <cassert>
 #include "pos.hpp"
-#include "int_range.hpp"
 
 template <typename Elem>
 class Grid {
 public:
-  using value_type = Elem;
-  using reference = value_type &;
-  using const_reference = const value_type &;
-
   Grid()
-    : size_{0, 0}, storage_{} {}
+    : size{0, 0}, storage{} {}
   explicit Grid(const Pos size)
-    : size_{size}, storage_(area()) {}
+    : size{size}, storage(area()) {}
 
   int area() const {
-    return size_.x * size_.y;
+    return size.x * size.y;
   }
-
-  IntRange<int> hori() const {
-    return {0, size_.x};
+  int width() const {
+    return size.x;
   }
-  IntRange<int> vert() const {
-    return {0, size_.y};
+  int height() const {
+    return size.y;
   }
 
   bool outOfRange(const std::size_t i) const {
@@ -42,28 +36,28 @@ public:
   }
   bool outOfRange(const Pos pos) const {
     return pos.x < 0 || pos.y < 0 ||
-           pos.x >= size_.x || pos.y >= size_.y;
+           pos.x >= size.x || pos.y >= size.y;
   }
 
-  reference operator[](const std::size_t i) {
-    return const_cast<reference>(std::as_const(*this)[i]);
+  Elem &operator[](const std::size_t i) {
+    return const_cast<Elem &>(std::as_const(*this)[i]);
   }
-  reference operator[](const Pos pos) {
-    return const_cast<reference>(std::as_const(*this)[pos]);
+  Elem &operator[](const Pos pos) {
+    return const_cast<Elem &>(std::as_const(*this)[pos]);
   }
 
-  const_reference operator[](const std::size_t i) const {
+  const Elem &operator[](const std::size_t i) const {
     assert(!outOfRange(i));
-    return storage_[i];
+    return storage[i];
   }
-  const_reference operator[](const Pos pos) const {
+  const Elem &operator[](const Pos pos) const {
     assert(!outOfRange(pos));
-    return storage_[pos.y * size_.x + pos.x];
+    return storage[pos.y * size.x + pos.x];
   }
 
 private:
-  Pos size_;
-  std::vector<value_type> storage_;
+  Pos size;
+  std::vector<Elem> storage;
 };
 
 #endif
