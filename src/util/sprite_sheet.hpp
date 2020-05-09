@@ -17,6 +17,9 @@
 #include <unordered_map>
 #include "sprite_id.hpp"
 
+// This file is temporary.
+// Soon we won't need to parse anything...
+
 struct SpriteRect {
   Pos min;
   Pos max;

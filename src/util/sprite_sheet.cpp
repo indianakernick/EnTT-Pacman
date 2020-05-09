@@ -8,10 +8,36 @@
 
 #include "sprite_sheet.hpp"
 
-#include <memory>
 #include <fstream>
 #include <stdexcept>
-#include <Simpleton/Utils/parse string.hpp>
+
+namespace {
+
+void expect(std::istream &stream, const std::string_view expected) {
+  std::string actual(expected.size(), ' ');
+  stream.read(actual.data(), expected.size());
+  if (!stream || actual != expected) {
+    throw std::runtime_error("Expected \"" + std::string{expected} + "\"");
+  }
+}
+
+void expect(std::istream &stream, const char expected) {
+  const char actual = stream.get();
+  if (!stream || actual != expected) {
+    throw std::runtime_error("Expected '" + std::string{1, actual} + "'");
+  }
+}
+
+bool check(std::istream &stream, const char expected) {
+  if (stream.peek() == expected) {
+    stream.ignore();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+}
 
 SpriteSheet::SpriteSheet(const std::string &path) {
   std::ifstream file{path};
@@ -23,51 +49,53 @@ SpriteSheet::SpriteSheet(const std::string &path) {
   const long size = file.tellg();
   file.seekg(0, std::ios_base::beg);
 
-  auto buffer = std::make_unique<char []>(size);
-  file.read(buffer.get(), size);
+  expect(file, "{\"length\":");
+  file >> length_;
+  expect(file, ",\"names\":{");
 
-  Utils::ParseString string(buffer.get(), size);
-
-  string.expect("{\"length\":");
-  string.parseNumber(length_);
-  string.expect(",\"names\":{");
   while (true) {
-    string.expect('"');
+    expect(file, '"');
     std::string name;
-    string.copyUntil(name, '"');
-    string.expect("\":");
-    names.emplace(name, string.parseNumber<SpriteID>());
-    if (string.check('}')) {
+    std::getline(file, name, '"');
+    expect(file, ':');
+
+    SpriteID id;
+    file >> id;
+
+    names.emplace(name, id);
+
+    if (check(file, '}')) {
       break;
     } else {
-      string.expect(',');
+      expect(file, ',');
     }
   }
 
   rects.reserve(names.size());
-  string.expect(",\"rects\":[");
+  expect(file, ",\"rects\":[");
+  
   while (true) {
     SpriteRect rect;
-    string.expect('[');
-    string.parseNumber(rect.min.x);
-    string.expect(',');
-    string.parseNumber(rect.min.y);
-    string.expect(',');
-    string.parseNumber(rect.max.x);
-    string.expect(',');
-    string.parseNumber(rect.max.y);
-    string.expect(']');
+    expect(file, '[');
+    file >> rect.min.x;
+    expect(file, ',');
+    file >> rect.min.y;
+    expect(file, ',');
+    file >> rect.max.x;
+    expect(file, ',');
+    file >> rect.max.y;
+    expect(file, ']');
 
     rects.push_back(rect);
 
-    if (string.check(']')) {
+    if (check(file, ']')) {
       break;
     } else {
-      string.expect(',');
+      expect(file, ',');
     }
   }
 
-  string.expect("}\n");
+  expect(file, "}\n");
 }
 
 SpriteID SpriteSheet::lookup(const std::string_view name) const {
