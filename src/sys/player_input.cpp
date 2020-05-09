@@ -2,8 +2,8 @@
 //  player_input.cpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 19/9/18.
-//  Copyright © 2018 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 19/9/18.
+//  Copyright © 2018 Indiana Kernick. All rights reserved.
 //
 
 #include "player_input.hpp"

@@ -2,8 +2,8 @@
 //  dir.hpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 8/5/20.
-//  Copyright © 2020 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 8/5/20.
+//  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
 #ifndef UTIL_DIR_HPP

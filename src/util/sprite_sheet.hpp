@@ -2,8 +2,8 @@
 //  sprite_sheet.hpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 4/5/20.
-//  Copyright © 2020 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 4/5/20.
+//  Copyright © 2020 Indiana Kernick. All rights reserved.
 //
 
 #ifndef UTIL_SPRITE_SHEET_HPP

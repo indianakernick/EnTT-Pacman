@@ -2,8 +2,8 @@
 //  pursue_target.hpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 22/9/18.
-//  Copyright © 2018 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 22/9/18.
+//  Copyright © 2018 Indiana Kernick. All rights reserved.
 //
 
 #ifndef SYS_PURSUE_TARGET_HPP

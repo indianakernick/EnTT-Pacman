@@ -2,8 +2,8 @@
 //  can_move.hpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 27/9/18.
-//  Copyright © 2018 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 27/9/18.
+//  Copyright © 2018 Indiana Kernick. All rights reserved.
 //
 
 #ifndef SYS_CAN_MOVE_HPP

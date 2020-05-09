@@ -2,8 +2,8 @@
 //  house.cpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 29/9/18.
-//  Copyright © 2018 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 29/9/18.
+//  Copyright © 2018 Indiana Kernick. All rights reserved.
 //
 
 #include "house.hpp"

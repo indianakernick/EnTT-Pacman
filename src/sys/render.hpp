@@ -2,8 +2,8 @@
 //  render.hpp
 //  EnTT Pacman
 //
-//  Created by Indi Kernick on 24/9/18.
-//  Copyright © 2018 Indi Kernick. All rights reserved.
+//  Created by Indiana Kernick on 24/9/18.
+//  Copyright © 2018 Indiana Kernick. All rights reserved.
 //
 
 #ifndef SYS_RENDER_HPP
