@@ -21,9 +21,9 @@ void enterHouse(entt::registry &reg) {
   for (const entt::entity e : view) {
     if (view.get<Position>(e).p == view.get<HomePosition>(e).home) {
       reg.remove<EnterHouse>(e);
-      reg.assign<LeaveHouse>(e);
+      reg.emplace<LeaveHouse>(e);
       reg.remove<EatenMode>(e);
-      reg.assign<ChaseMode>(e);
+      reg.emplace<ChaseMode>(e);
     }
   }
 }
