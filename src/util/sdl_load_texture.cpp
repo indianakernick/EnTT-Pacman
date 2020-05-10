@@ -9,7 +9,7 @@
 #include "sdl_load_texture.hpp"
 
 #include <string>
-#include "stb_image.h"
+#include <stb_image.h>
 #include "sdl_check.hpp"
 #include <SDL_filesystem.h>
 

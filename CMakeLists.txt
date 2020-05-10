@@ -26,8 +26,6 @@ add_executable(Game
     src/util/sprite_id.hpp
     src/util/sprite_sheet.cpp
     src/util/sprite_sheet.hpp
-    src/util/stb_image.c
-    src/util/stb_image.h
     src/comp/position.hpp
     src/comp/player.hpp
     src/comp/sprite.hpp
@@ -57,6 +55,8 @@ add_executable(Game
     src/sys/change_ghost_mode.hpp
     src/sys/house.cpp
     src/sys/house.hpp
+    third_party/stb_image.c
+    third_party/stb_image.h
 )
 
 if(CMAKE_TOOLCHAIN_FILE)
