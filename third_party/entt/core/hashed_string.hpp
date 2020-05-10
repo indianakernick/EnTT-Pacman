@@ -3,7 +3,9 @@
 
 
 #include <cstddef>
+#include <cstdint>
 #include "../config/config.h"
+#include "fwd.hpp"
 
 
 namespace entt {
@@ -24,6 +26,7 @@ struct fnv1a_traits;
 
 template<>
 struct fnv1a_traits<std::uint32_t> {
+    using type = std::uint32_t;
     static constexpr std::uint32_t offset = 2166136261;
     static constexpr std::uint32_t prime = 16777619;
 };
@@ -31,6 +34,7 @@ struct fnv1a_traits<std::uint32_t> {
 
 template<>
 struct fnv1a_traits<std::uint64_t> {
+    using type = std::uint64_t;
     static constexpr std::uint64_t offset = 14695981039346656037ull;
     static constexpr std::uint64_t prime = 1099511628211ull;
 };
@@ -53,24 +57,35 @@ struct fnv1a_traits<std::uint64_t> {
  * counterparts at runtime.<br/>
  * Because of that, a hashed string can also be used in constant expressions if
  * required.
+ *
+ * @tparam Char Character type.
  */
-class hashed_string {
-    using traits_type = internal::fnv1a_traits<ENTT_ID_TYPE>;
+template<typename Char>
+class basic_hashed_string {
+    using traits_type = internal::fnv1a_traits<id_type>;
 
     struct const_wrapper {
         // non-explicit constructor on purpose
-        constexpr const_wrapper(const char *curr) ENTT_NOEXCEPT: str{curr} {}
-        const char *str;
+        constexpr const_wrapper(const Char *curr) ENTT_NOEXCEPT: str{curr} {}
+        const Char *str;
     };
 
     // Fowler–Noll–Vo hash function v. 1a - the good
-    inline static constexpr ENTT_ID_TYPE helper(ENTT_ID_TYPE partial, const char *curr) ENTT_NOEXCEPT {
-        return curr[0] == 0 ? partial : helper((partial^curr[0])*traits_type::prime, curr+1);
+    static constexpr id_type helper(const Char *curr) ENTT_NOEXCEPT {
+        auto value = traits_type::offset;
+
+        while(*curr != 0) {
+            value = (value ^ static_cast<traits_type::type>(*(curr++))) * traits_type::prime;
+        }
+
+        return value;
     }
 
 public:
+    /*! @brief Character type. */
+    using value_type = Char;
     /*! @brief Unsigned integer type. */
-    using hash_type = ENTT_ID_TYPE;
+    using hash_type = id_type;
 
     /**
      * @brief Returns directly the numeric representation of a string.
@@ -80,7 +95,7 @@ public:
      * characters.<br/>
      * Example of use:
      * @code{.cpp}
-     * const auto value = hashed_string::to_value("my.png");
+     * const auto value = basic_hashed_string<char>::to_value("my.png");
      * @endcode
      *
      * @tparam N Number of characters of the identifier.
@@ -88,8 +103,8 @@ public:
      * @return The numeric representation of the string.
      */
     template<std::size_t N>
-    inline static constexpr hash_type to_value(const char (&str)[N]) ENTT_NOEXCEPT {
-        return helper(traits_type::offset, str);
+    static constexpr hash_type value(const value_type (&str)[N]) ENTT_NOEXCEPT {
+        return helper(str);
     }
 
     /**
@@ -97,8 +112,8 @@ public:
      * @param wrapper Helps achieving the purpose by relying on overloading.
      * @return The numeric representation of the string.
      */
-    inline static hash_type to_value(const_wrapper wrapper) ENTT_NOEXCEPT {
-        return helper(traits_type::offset, wrapper.str);
+    static hash_type value(const_wrapper wrapper) ENTT_NOEXCEPT {
+        return helper(wrapper.str);
     }
 
     /**
@@ -107,50 +122,50 @@ public:
      * @param size Length of the string to hash.
      * @return The numeric representation of the string.
      */
-    inline static hash_type to_value(const char *str, std::size_t size) ENTT_NOEXCEPT {
-        ENTT_ID_TYPE partial{traits_type::offset};
+    static hash_type value(const value_type *str, std::size_t size) ENTT_NOEXCEPT {
+        id_type partial{traits_type::offset};
         while(size--) { partial = (partial^(str++)[0])*traits_type::prime; }
         return partial;
     }
 
     /*! @brief Constructs an empty hashed string. */
-    constexpr hashed_string() ENTT_NOEXCEPT
+    constexpr basic_hashed_string() ENTT_NOEXCEPT
         : str{nullptr}, hash{}
     {}
 
     /**
-     * @brief Constructs a hashed string from an array of const chars.
+     * @brief Constructs a hashed string from an array of const characters.
      *
      * Forcing template resolution avoids implicit conversions. An
      * human-readable identifier can be anything but a plain, old bunch of
      * characters.<br/>
      * Example of use:
      * @code{.cpp}
-     * hashed_string hs{"my.png"};
+     * basic_hashed_string<char> hs{"my.png"};
      * @endcode
      *
      * @tparam N Number of characters of the identifier.
      * @param curr Human-readable identifer.
      */
     template<std::size_t N>
-    constexpr hashed_string(const char (&curr)[N]) ENTT_NOEXCEPT
-        : str{curr}, hash{helper(traits_type::offset, curr)}
+    constexpr basic_hashed_string(const value_type (&curr)[N]) ENTT_NOEXCEPT
+        : str{curr}, hash{helper(curr)}
     {}
 
     /**
      * @brief Explicit constructor on purpose to avoid constructing a hashed
-     * string directly from a `const char *`.
+     * string directly from a `const value_type *`.
      * @param wrapper Helps achieving the purpose by relying on overloading.
      */
-    explicit constexpr hashed_string(const_wrapper wrapper) ENTT_NOEXCEPT
-        : str{wrapper.str}, hash{helper(traits_type::offset, wrapper.str)}
+    explicit constexpr basic_hashed_string(const_wrapper wrapper) ENTT_NOEXCEPT
+        : str{wrapper.str}, hash{helper(wrapper.str)}
     {}
 
     /**
      * @brief Returns the human-readable representation of a hashed string.
      * @return The string used to initialize the instance.
      */
-    constexpr const char * data() const ENTT_NOEXCEPT {
+    constexpr const value_type * data() const ENTT_NOEXCEPT {
         return str;
     }
 
@@ -162,39 +177,64 @@ public:
         return hash;
     }
 
-    /**
-     * @brief Returns the human-readable representation of a hashed string.
-     * @return The string used to initialize the instance.
-     */
-    constexpr operator const char *() const ENTT_NOEXCEPT { return str; }
+    /*! @copydoc data */
+    constexpr operator const value_type *() const ENTT_NOEXCEPT { return data(); }
 
-    /*! @copydoc value */
-    constexpr operator hash_type() const ENTT_NOEXCEPT { return hash; }
+    /**
+     * @brief Returns the numeric representation of a hashed string.
+     * @return The numeric representation of the instance.
+     */
+    constexpr operator hash_type() const ENTT_NOEXCEPT { return value(); }
 
     /**
      * @brief Compares two hashed strings.
      * @param other Hashed string with which to compare.
      * @return True if the two hashed strings are identical, false otherwise.
      */
-    constexpr bool operator==(const hashed_string &other) const ENTT_NOEXCEPT {
+    constexpr bool operator==(const basic_hashed_string &other) const ENTT_NOEXCEPT {
         return hash == other.hash;
     }
 
 private:
-    const char *str;
+    const value_type *str;
     hash_type hash;
 };
 
 
 /**
+ * @brief Deduction guide.
+ *
+ * It allows to deduce the character type of the hashed string directly from a
+ * human-readable identifer provided to the constructor.
+ *
+ * @tparam Char Character type.
+ * @tparam N Number of characters of the identifier.
+ * @param str Human-readable identifer.
+ */
+template<typename Char, std::size_t N>
+basic_hashed_string(const Char (&str)[N]) ENTT_NOEXCEPT
+-> basic_hashed_string<Char>;
+
+
+/**
  * @brief Compares two hashed strings.
+ * @tparam Char Character type.
  * @param lhs A valid hashed string.
  * @param rhs A valid hashed string.
  * @return True if the two hashed strings are identical, false otherwise.
  */
-constexpr bool operator!=(const hashed_string &lhs, const hashed_string &rhs) ENTT_NOEXCEPT {
+template<typename Char>
+constexpr bool operator!=(const basic_hashed_string<Char> &lhs, const basic_hashed_string<Char> &rhs) ENTT_NOEXCEPT {
     return !(lhs == rhs);
 }
+
+
+/*! @brief Aliases for common character types. */
+using hashed_string = basic_hashed_string<char>;
+
+
+/*! @brief Aliases for common character types. */
+using hashed_wstring = basic_hashed_string<wchar_t>;
 
 
 }
@@ -210,4 +250,14 @@ constexpr entt::hashed_string operator"" ENTT_HS_SUFFIX(const char *str, std::si
 }
 
 
-#endif // ENTT_CORE_HASHED_STRING_HPP
+/**
+ * @brief User defined literal for hashed wstrings.
+ * @param str The literal without its suffix.
+ * @return A properly initialized hashed wstring.
+ */
+constexpr entt::hashed_wstring operator"" ENTT_HWS_SUFFIX(const wchar_t *str, std::size_t) ENTT_NOEXCEPT {
+    return entt::hashed_wstring{str};
+}
+
+
+#endif

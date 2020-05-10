@@ -2,26 +2,23 @@
 #define ENTT_RESOURCE_FWD_HPP
 
 
-#include "../config/config.h"
-
-
 namespace entt {
 
 
-/*! @class resource_cache */
+/*! @struct cache */
 template<typename>
-class resource_cache;
+struct cache;
 
-/*! @class resource_handle */
+/*! @class handle */
 template<typename>
-class resource_handle;
+class handle;
 
-/*! @class resource_loader */
+/*! @class loader */
 template<typename, typename>
-class resource_loader;
+class loader;
 
 
 }
 
 
-#endif // ENTT_RESOURCE_FWD_HPP
+#endif

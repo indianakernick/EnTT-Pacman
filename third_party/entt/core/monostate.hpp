@@ -2,9 +2,8 @@
 #define ENTT_CORE_MONOSTATE_HPP
 
 
-#include <cassert>
 #include "../config/config.h"
-#include "hashed_string.hpp"
+#include "fwd.hpp"
 
 
 namespace entt {
@@ -21,7 +20,7 @@ namespace entt {
  * both during an assignment and when they try to read back their data.
  * Otherwise, they can incur in unexpected results.
  */
-template<hashed_string::hash_type>
+template<id_type>
 struct monostate {
     /**
      * @brief Assigns a value of a specific type to a given key.
@@ -45,7 +44,7 @@ struct monostate {
 
 private:
     template<typename Type>
-    inline static maybe_atomic_t<Type> value{};
+    inline static ENTT_MAYBE_ATOMIC(Type) value{};
 };
 
 
@@ -53,11 +52,11 @@ private:
  * @brief Helper variable template.
  * @tparam Value Value used to differentiate between different variables.
  */
-template<hashed_string::hash_type Value>
+template<id_type Value>
 inline monostate<Value> monostate_v = {};
 
 
 }
 
 
-#endif // ENTT_CORE_MONOSTATE_HPP
+#endif

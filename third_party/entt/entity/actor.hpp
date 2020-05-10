@@ -2,7 +2,6 @@
 #define ENTT_ENTITY_ACTOR_HPP
 
 
-#include <cassert>
 #include <utility>
 #include <type_traits>
 #include "../config/config.h"
@@ -15,10 +14,12 @@ namespace entt {
 
 
 /**
- * @brief Dedicated to those who aren't confident with entity-component systems.
+ * @brief Dedicated to those who aren't confident with the
+ * entity-component-system architecture.
  *
  * Tiny wrapper around a registry, for all those users that aren't confident
- * with entity-component systems and prefer to iterate objects directly.
+ * with entity-component-system architecture and prefer to iterate objects
+ * directly.
  *
  * @tparam Entity A valid entity type (see entt_traits for more details).
  */
@@ -29,18 +30,9 @@ struct basic_actor {
     /*! @brief Underlying entity identifier. */
     using entity_type = Entity;
 
-    /**
-     * @brief Constructs an actor by using the given registry.
-     * @param ref An entity-component system properly initialized.
-     */
-    basic_actor(registry_type &ref)
-        : reg{&ref}, entt{ref.create()}
+    basic_actor() ENTT_NOEXCEPT
+        : entt{entt::null}, reg{nullptr}
     {}
-
-    /*! @brief Default destructor. */
-    virtual ~basic_actor() {
-        reg->destroy(entt);
-    }
 
     /**
      * @brief Move constructor.
@@ -51,10 +43,36 @@ struct basic_actor {
      *
      * @param other The instance to move from.
      */
-    basic_actor(basic_actor &&other)
-        : reg{other.reg}, entt{other.entt}
+    basic_actor(basic_actor &&other) ENTT_NOEXCEPT
+        : entt{other.entt}, reg{other.reg}
     {
         other.entt = null;
+    }
+
+    /**
+     * @brief Constructs an actor from a given registry.
+     * @param ref An instance of the registry class.
+     */
+    explicit basic_actor(registry_type &ref)
+        : entt{ref.create()}, reg{&ref}
+    {}
+
+    /**
+     * @brief Constructs an actor from a given entity.
+     * @param entity A valid entity identifier.
+     * @param ref An instance of the registry class.
+     */
+    explicit basic_actor(entity_type entity, registry_type &ref) ENTT_NOEXCEPT
+        : entt{entity}, reg{&ref}
+    {
+        ENTT_ASSERT(ref.valid(entity));
+    }
+
+    /*! @brief Default destructor. */
+    virtual ~basic_actor() {
+        if(*this) {
+            reg->destroy(entt);
+        }
     }
 
     /**
@@ -67,7 +85,7 @@ struct basic_actor {
      * @param other The instance to move from.
      * @return This actor.
      */
-    basic_actor & operator=(basic_actor &&other) {
+    basic_actor & operator=(basic_actor &&other) ENTT_NOEXCEPT {
         if(this != &other) {
             auto tmp{std::move(other)};
             std::swap(reg, tmp.reg);
@@ -93,7 +111,7 @@ struct basic_actor {
      */
     template<typename Component, typename... Args>
     decltype(auto) assign(Args &&... args) {
-        return reg->template assign_or_replace<Component>(entt, std::forward<Args>(args)...);
+        return reg->template emplace_or_replace<Component>(entt, std::forward<Args>(args)...);
     }
 
     /**
@@ -106,13 +124,13 @@ struct basic_actor {
     }
 
     /**
-     * @brief Checks if an actor has the given component.
-     * @tparam Component Type of the component for which to perform the check.
-     * @return True if the actor has the component, false otherwise.
+     * @brief Checks if an actor has the given components.
+     * @tparam Component Components for which to perform the check.
+     * @return True if the actor has all the components, false otherwise.
      */
-    template<typename Component>
-    bool has() const ENTT_NOEXCEPT {
-        return reg->template has<Component>(entt);
+    template<typename... Component>
+    bool has() const {
+        return reg->template has<Component...>(entt);
     }
 
     /**
@@ -121,13 +139,13 @@ struct basic_actor {
      * @return References to the components owned by the actor.
      */
     template<typename... Component>
-    decltype(auto) get() const ENTT_NOEXCEPT {
+    decltype(auto) get() const {
         return std::as_const(*reg).template get<Component...>(entt);
     }
 
     /*! @copydoc get */
     template<typename... Component>
-    decltype(auto) get() ENTT_NOEXCEPT {
+    decltype(auto) get() {
         return reg->template get<Component...>(entt);
     }
 
@@ -137,13 +155,13 @@ struct basic_actor {
      * @return Pointers to the components owned by the actor.
      */
     template<typename... Component>
-    auto try_get() const ENTT_NOEXCEPT {
+    auto try_get() const {
         return std::as_const(*reg).template try_get<Component...>(entt);
     }
 
     /*! @copydoc try_get */
     template<typename... Component>
-    auto try_get() ENTT_NOEXCEPT {
+    auto try_get() {
         return reg->template try_get<Component...>(entt);
     }
 
@@ -151,12 +169,12 @@ struct basic_actor {
      * @brief Returns a reference to the underlying registry.
      * @return A reference to the underlying registry.
      */
-    inline const registry_type & backend() const ENTT_NOEXCEPT {
+    const registry_type & backend() const ENTT_NOEXCEPT {
         return *reg;
     }
 
     /*! @copydoc backend */
-    inline registry_type & backend() ENTT_NOEXCEPT {
+    registry_type & backend() ENTT_NOEXCEPT {
         return const_cast<registry_type &>(std::as_const(*this).backend());
     }
 
@@ -164,17 +182,25 @@ struct basic_actor {
      * @brief Returns the entity associated with an actor.
      * @return The entity associated with the actor.
      */
-    inline entity_type entity() const ENTT_NOEXCEPT {
+    entity_type entity() const ENTT_NOEXCEPT {
         return entt;
     }
 
+    /**
+     * @brief Checks if an actor refers to a valid entity or not.
+     * @return True if the actor refers to a valid entity, false otherwise.
+     */
+    explicit operator bool() const {
+        return reg && reg->valid(entt);
+    }
+
 private:
+    entity_type entt;
     registry_type *reg;
-    Entity entt;
 };
 
 
 }
 
 
-#endif // ENTT_ENTITY_ACTOR_HPP
+#endif

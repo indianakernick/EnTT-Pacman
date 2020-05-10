@@ -111,10 +111,10 @@ class scheduler {
 
 public:
     /*! @brief Unsigned integer type. */
-    using size_type = typename std::vector<process_handler>::size_type;
+    using size_type = std::size_t;
 
     /*! @brief Default constructor. */
-    scheduler() ENTT_NOEXCEPT = default;
+    scheduler() = default;
 
     /*! @brief Default move constructor. */
     scheduler(scheduler &&) = default;
@@ -281,9 +281,9 @@ public:
         decltype(handlers) exec;
         exec.swap(handlers);
 
-        std::for_each(exec.begin(), exec.end(), [immediately](auto &handler) {
+        for(auto &&handler: exec) {
             handler.abort(handler, immediately);
-        });
+        }
 
         std::move(handlers.begin(), handlers.end(), std::back_inserter(exec));
         handlers.swap(exec);
@@ -297,4 +297,4 @@ private:
 }
 
 
-#endif // ENTT_PROCESS_SCHEDULER_HPP
+#endif
