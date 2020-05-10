@@ -49,7 +49,7 @@ void wallCollide(entt::registry &reg, const MazeState &maze) {
     if (canMove(reg, maze, e, pos, prevDir)) {
       continue;
     }
-    
+
     view.get<ActualDir>(e).d = Dir::none;
   }
 }

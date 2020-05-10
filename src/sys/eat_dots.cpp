@@ -25,7 +25,7 @@ int countConsumptions(entt::registry &reg, MazeState &maze, const Tile food) {
     Tile &tile = maze[pos];
     if (tile == food) {
       ++count;
-       tile = Tile::empty;
+      tile = Tile::empty;
     }
   }
   return count;

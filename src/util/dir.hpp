@@ -75,11 +75,12 @@ struct DirRange {
   constexpr Dir begin() const {
     return Dir::begin;
   }
+
   constexpr Dir end() const {
     return Dir::end;
   }
 };
 
-constexpr DirRange dir_range {};
+constexpr DirRange dir_range{};
 
 #endif

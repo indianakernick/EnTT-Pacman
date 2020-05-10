@@ -14,16 +14,11 @@ namespace {
 
 Tile stateChar(const char c) {
   switch (c) {
-    case ' ':
-      return Tile::empty;
-    case '.':
-      return Tile::dot;
-    case 'o':
-      return Tile::energizer;
-    case '#':
-      return Tile::wall;
-    case '-':
-      return Tile::door;
+    case ' ': return Tile::empty;
+    case '.': return Tile::dot;
+    case 'o': return Tile::energizer;
+    case '#': return Tile::wall;
+    case '-': return Tile::door;
     default:
       assert(false);
       return {};

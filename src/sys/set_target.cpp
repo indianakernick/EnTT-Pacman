@@ -86,12 +86,12 @@ void setScaredTarget(entt::registry &reg, const MazeState &maze, std::mt19937 &r
         candDir = rotateCW(candDir);
         continue;
       }
-      
+
       if (!canMove(reg, maze, e, nextPos, candDir)) {
         candDir = rotateCW(candDir);
         continue;
       }
-      
+
       candPos = nextPos + toPos(candDir);
       break;
     }

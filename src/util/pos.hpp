@@ -42,7 +42,7 @@ constexpr bool operator!=(const Pos lhs, const Pos rhs) {
 inline int distance2(const Pos a, const Pos b) {
   const int dx = a.x - b.x;
   const int dy = a.y - b.y;
-  return dx*dx + dy*dy;
+  return dx * dx + dy * dy;
 }
 
 inline float distance(const Pos a, const Pos b) {

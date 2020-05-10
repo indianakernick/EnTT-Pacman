@@ -37,7 +37,7 @@ void leaveHouse(entt::registry &reg) {
       // leaveHouse is called after the set*Target systems so this will
       // overwrite the target position. It's a little bit hacky but it
       // works here.
-      
+
       // We actually need to do this because ghosts can sometimes get stuck
       // in the house. If their target is towards the bottom of the maze,
       // they will move left and right without going up and out of the house

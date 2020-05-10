@@ -15,10 +15,13 @@
 
 // Render the player (the yellow guy)
 void playerRender(entt::registry &, SDL::QuadWriter &, int);
+
 // Render the ghosts
 void ghostRender(entt::registry &, SDL::QuadWriter &, int);
+
 // Render the dots and energizers
 void dotRender(SDL::QuadWriter &, const MazeState &, SpriteID);
+
 // Render a sprite that covers the whole screen (maze, win-lose)
 void fullRender(SDL::QuadWriter &, SpriteID);
 

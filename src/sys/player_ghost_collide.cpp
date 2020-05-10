@@ -11,8 +11,8 @@
 #include "comp/dir.hpp"
 #include "comp/ghost.hpp"
 #include "comp/player.hpp"
-#include "util/dir_to_pos.hpp"
 #include "comp/position.hpp"
+#include "util/dir_to_pos.hpp"
 #include "comp/ghost_mode.hpp"
 #include <entt/entity/registry.hpp>
 

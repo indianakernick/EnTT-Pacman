@@ -22,6 +22,6 @@ enum class Tile : std::uint8_t {
 
 using MazeState = Grid<Tile>;
 
-MazeState makeMazeState(); 
+MazeState makeMazeState();
 
 #endif
