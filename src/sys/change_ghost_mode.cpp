@@ -16,16 +16,11 @@
 void ghostScared(entt::registry &reg) {
   const auto view = reg.view<Ghost>();
   for (const entt::entity e : view) {
-    if (reg.has<ChaseMode>(e)) {
-      reg.remove<ChaseMode>(e);
-    } else if (reg.has<ScatterMode>(e)) {
-      reg.remove<ScatterMode>(e);
-    } else if (reg.has<ScaredMode>(e)) {
-      reg.remove<ScaredMode>(e);
-    } else {
-      continue; // Ghosts in EatenMode don't get scared
+    reg.remove_if_exists<ChaseMode, ScatterMode, ScaredMode>(e);
+    // Ghosts in EatenMode don't get scared
+    if (!reg.has<EatenMode>(e)) {
+      reg.emplace<ScaredMode>(e);
     }
-    reg.emplace<ScaredMode>(e);
   }
 }
 

@@ -8,9 +8,7 @@
 
 #include "can_move.hpp"
 
-#include "comp/dir.hpp"
 #include "comp/house.hpp"
-#include "comp/position.hpp"
 #include "util/dir_to_pos.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -38,7 +36,7 @@ bool canMove(
     if (reg.has<EnterHouse>(e) && desiredDir == Dir::down) {
       return true;
     } else if (reg.has<LeaveHouse>(e) && desiredDir == Dir::up) {
-       return true;
+      return true;
     }
   } else if (desiredTile != Tile::wall) {
     return true;
