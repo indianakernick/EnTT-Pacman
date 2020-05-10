@@ -29,7 +29,7 @@ constexpr Dir opposite(const Dir dir) {
     case Dir::right: return Dir::left;
     case Dir::down:  return Dir::up;
     case Dir::left:  return Dir::right;
-    case Dir::none:  return Dir::none;
+    default:         return Dir::none;
   }
 }
 
@@ -39,7 +39,7 @@ constexpr Dir rotateCW(const Dir dir) {
     case Dir::right: return Dir::down;
     case Dir::down:  return Dir::left;
     case Dir::left:  return Dir::up;
-    case Dir::none:  return Dir::none;
+    default:         return Dir::none;
   }
 }
 

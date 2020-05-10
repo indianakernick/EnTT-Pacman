@@ -18,7 +18,7 @@ constexpr Pos toPos(const Dir dir, const int length = 1) {
     case Dir::right: return {1 * length, 0};
     case Dir::down:  return {0, 1 * length};
     case Dir::left:  return {-1 * length, 0};
-    case Dir::none:  return {0, 0};
+    default:         return {0, 0};
   }
 }
 
