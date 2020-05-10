@@ -2,16 +2,44 @@ cmake_minimum_required(VERSION 3.8)
 project(EnTT_Pacman)
 
 add_executable(Game
-    src/main.cpp
-    src/core/game.cpp
-    src/core/game.hpp
+    src/comp/chase_target.hpp
+    src/comp/dir.hpp
+    src/comp/ghost.hpp
+    src/comp/ghost_mode.hpp
+    src/comp/home_position.hpp
+    src/comp/player.hpp
+    src/comp/position.hpp
+    src/comp/sprite.hpp
+    src/comp/target.hpp
     src/core/app.cpp
     src/core/app.hpp
+    src/core/constants.hpp
     src/core/factories.cpp
     src/core/factories.hpp
+    src/core/game.cpp
+    src/core/game.hpp
     src/core/maze.cpp
     src/core/maze.hpp
-    src/core/constants.hpp
+    src/sys/can_move.cpp
+    src/sys/can_move.hpp
+    src/sys/change_ghost_mode.cpp
+    src/sys/change_ghost_mode.hpp
+    src/sys/eat_dots.cpp
+    src/sys/eat_dots.hpp
+    src/sys/house.cpp
+    src/sys/house.hpp
+    src/sys/movement.cpp
+    src/sys/movement.hpp
+    src/sys/player_ghost_collide.cpp
+    src/sys/player_ghost_collide.hpp
+    src/sys/player_input.cpp
+    src/sys/player_input.hpp
+    src/sys/pursue_target.cpp
+    src/sys/pursue_target.hpp
+    src/sys/render.cpp
+    src/sys/render.hpp
+    src/sys/set_target.cpp
+    src/sys/set_target.hpp
     src/util/dir.hpp
     src/util/dir_to_pos.hpp
     src/util/frame_cap.hpp
@@ -26,35 +54,7 @@ add_executable(Game
     src/util/sprite_id.hpp
     src/util/sprite_sheet.cpp
     src/util/sprite_sheet.hpp
-    src/comp/position.hpp
-    src/comp/player.hpp
-    src/comp/sprite.hpp
-    src/comp/dir.hpp
-    src/comp/home_position.hpp
-    src/comp/ghost_mode.hpp
-    src/comp/target.hpp
-    src/comp/chase_target.hpp
-    src/comp/ghost.hpp
-    src/sys/movement.cpp
-    src/sys/movement.hpp
-    src/sys/player_input.cpp
-    src/sys/player_input.hpp
-    src/sys/render.cpp
-    src/sys/render.hpp
-    src/sys/eat_dots.cpp
-    src/sys/eat_dots.hpp
-    src/sys/can_move.cpp
-    src/sys/can_move.hpp
-    src/sys/pursue_target.cpp
-    src/sys/pursue_target.hpp
-    src/sys/set_target.cpp
-    src/sys/set_target.hpp
-    src/sys/player_ghost_collide.cpp
-    src/sys/player_ghost_collide.hpp
-    src/sys/change_ghost_mode.cpp
-    src/sys/change_ghost_mode.hpp
-    src/sys/house.cpp
-    src/sys/house.hpp
+    src/main.cpp
     third_party/stb_image.c
     third_party/stb_image.h
 )
@@ -99,7 +99,7 @@ target_compile_definitions(Game
     STBI_ONLY_PNG
 )
 
-if (CMAKE_BUILD_TYPE MATCHES DEBUG)
+if(CMAKE_BUILD_TYPE MATCHES DEBUG)
     target_compile_options(Game
         PRIVATE
         -Wall -Wextra -Wpedantic
