@@ -46,7 +46,7 @@ inline int distance2(const Pos a, const Pos b) {
 }
 
 inline float distance(const Pos a, const Pos b) {
-  return std::sqrt(distance2(a, b));
+  return std::sqrtf(distance2(a, b));
 }
 
 #endif
