@@ -9,8 +9,8 @@
 #ifndef CORE_CONSTANTS_HPP
 #define CORE_CONSTANTS_HPP
 
-#include "../util/pos.hpp"
-#include "../util/dir.hpp"
+#include "util/pos.hpp"
+#include "util/dir.hpp"
 
 // The width and height of the maze in tiles
 constexpr Pos tiles = {19, 22};

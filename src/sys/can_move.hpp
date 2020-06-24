@@ -9,8 +9,8 @@
 #ifndef SYS_CAN_MOVE_HPP
 #define SYS_CAN_MOVE_HPP
 
+#include "util/dir.hpp"
 #include "core/maze.hpp"
-#include "../util/dir.hpp"
 #include <entt/entity/fwd.hpp>
 
 // Checks whether an entity can move in some direction.

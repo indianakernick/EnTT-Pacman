@@ -10,7 +10,7 @@
 #define CORE_MAZE_HPP
 
 #include <cstdint>
-#include "../util/grid.hpp"
+#include "util/grid.hpp"
 
 enum class Tile : std::uint8_t {
   empty,

@@ -12,9 +12,9 @@
 #include <random>
 #include "maze.hpp"
 #include <SDL_scancode.h>
-#include "../util/sprite_sheet.hpp"
+#include "util/sprite_sheet.hpp"
+#include "util/sdl_quad_writer.hpp"
 #include <entt/entity/registry.hpp>
-#include "../util/sdl_quad_writer.hpp"
 
 class Game {
 public:

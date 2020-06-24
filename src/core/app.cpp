@@ -12,10 +12,10 @@
 #include <iostream>
 #include "game.hpp"
 #include "constants.hpp"
-#include "../util/frame_cap.hpp"
-#include "../util/sdl_check.hpp"
-#include "../util/sdl_delete.hpp"
-#include "../util/sdl_load_texture.hpp"
+#include "util/frame_cap.hpp"
+#include "util/sdl_check.hpp"
+#include "util/sdl_delete.hpp"
+#include "util/sdl_load_texture.hpp"
 
 namespace {
 

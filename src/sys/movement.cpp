@@ -9,9 +9,9 @@
 #include "movement.hpp"
 
 #include "comp/dir.hpp"
-#include "util/dir_to_pos.hpp"
 #include "sys/can_move.hpp"
 #include "comp/position.hpp"
+#include "util/dir_to_pos.hpp"
 #include <entt/entity/registry.hpp>
 
 void movement(entt::registry &reg) {

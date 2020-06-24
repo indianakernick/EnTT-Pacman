@@ -11,7 +11,7 @@
 
 #include "core/maze.hpp"
 #include <entt/entity/fwd.hpp>
-#include "../util/sdl_quad_writer.hpp"
+#include "util/sdl_quad_writer.hpp"
 
 // Render the player (the yellow guy)
 void playerRender(entt::registry &, SDL::QuadWriter &, int);

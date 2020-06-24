@@ -36,14 +36,14 @@ Dir readDir(const SDL_Scancode key) {
 
 }
 
-Consumed playerInput(entt::registry &reg, const SDL_Scancode key) {
+bool playerInput(entt::registry &reg, const SDL_Scancode key) {
   const Dir dir = readDir(key);
   if (dir == Dir::none) {
-    return Consumed::no;
+    return false;
   }
   auto view = reg.view<Player, DesiredDir>();
   for (const entt::entity e : view) {
     view.get<DesiredDir>(e).d = dir;
   }
-  return Consumed::yes;
+  return true;
 }

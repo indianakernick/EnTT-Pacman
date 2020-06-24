@@ -9,7 +9,7 @@
 #ifndef COMP_DIR_HPP
 #define COMP_DIR_HPP
 
-#include "../util/dir.hpp"
+#include "util/dir.hpp"
 
 // The direction that the entity wants to go
 struct DesiredDir {

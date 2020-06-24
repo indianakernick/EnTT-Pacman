@@ -9,7 +9,7 @@
 #ifndef COMP_TARGET_HPP
 #define COMP_TARGET_HPP
 
-#include "../util/pos.hpp"
+#include "util/pos.hpp"
 
 // This is the target that a ghost is aiming for. If Blinky is in chase mode
 // then his target is set to the player position.

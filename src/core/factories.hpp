@@ -10,7 +10,7 @@
 #define CORE_FACTORIES_HPP
 
 #include <entt/entity/fwd.hpp>
-#include "../util/sprite_sheet.hpp"
+#include "util/sprite_sheet.hpp"
 
 // You typically don't need to store the entity ID after making an entity.
 // Sometimes you do so it's probably a good idea to return the entity ID
