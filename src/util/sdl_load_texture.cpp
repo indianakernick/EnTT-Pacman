@@ -8,10 +8,8 @@
 
 #include "sdl_load_texture.hpp"
 
-#include <string>
 #include <stb_image.h>
 #include "sdl_check.hpp"
-#include <SDL_filesystem.h>
 
 namespace {
 
@@ -33,18 +31,17 @@ struct Image {
   throw std::runtime_error{error};
 }
 
-Image loadImage(const char *path) {
+Image loadImage(const unsigned char *data, const std::size_t size) {
   int width, height;
-  ImageData data{stbi_load(path, &width, &height, nullptr, 4)};
-  if (data == nullptr) raiseImageError();
-  return {std::move(data), width, height};
+  ImageData image{stbi_load_from_memory(data, size, &width, &height, nullptr, 4)};
+  if (image == nullptr) raiseImageError();
+  return {std::move(image), width, height};
 }
 
 }
 
-SDL::Texture SDL::loadTexture(SDL_Renderer *renderer, std::string path) {
-  path.insert(0, SDL_CHECK(SDL_GetBasePath()));
-  Image img = loadImage(path.c_str());
+SDL::Texture SDL::loadTexture(SDL_Renderer *renderer, const unsigned char *data, const std::size_t size) {
+  Image img = loadImage(data, size);
   SDL::Texture tex{SDL_CHECK(SDL_CreateTexture(
     renderer,
     SDL_PIXELFORMAT_ABGR8888,

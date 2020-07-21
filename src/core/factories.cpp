@@ -21,13 +21,13 @@
 #include "comp/home_position.hpp"
 #include <entt/entity/registry.hpp>
 
-entt::entity makePlayer(entt::registry &reg, const SpriteSheet &sheet) {
+entt::entity makePlayer(entt::registry &reg) {
   const entt::entity e = reg.create();
   reg.emplace<Player>(e);
   reg.emplace<DesiredDir>(e, playerSpawnDir);
   reg.emplace<ActualDir>(e, playerSpawnDir);
   reg.emplace<Position>(e, playerSpawnPos);
-  reg.emplace<PlayerSprite>(e, sheet.lookup("pacman 0"));
+  reg.emplace<PlayerSprite>(e, animera::SpriteID::pacman_beg_);
   return e;
 }
 
@@ -46,46 +46,37 @@ entt::entity makeGhost(entt::registry &reg, const Pos home, const Pos scatter) {
   return e;
 }
 
-GhostSprite makeGhostSprite(const SpriteSheet &sheet, const std::string_view name) {
-  GhostSprite sprite;
-  sprite.id = sheet.lookup(name);
-  sprite.scared = sheet.lookup("scared 0");
-  sprite.eyes = sheet.lookup("eyes 0");
-  return sprite;
 }
 
-}
-
-entt::entity makeBlinky(entt::registry &reg, const SpriteSheet &sheet, const entt::entity player) {
+entt::entity makeBlinky(entt::registry &reg, const entt::entity player) {
   const entt::entity e = makeGhost(reg, blinkyHome, blinkyScatter);
   reg.get<Position>(e).p = outsideHouse;
   reg.emplace<BlinkyChaseTarget>(e, player);
-  reg.emplace<GhostSprite>(e, makeGhostSprite(sheet, "blinky 0"));
+  reg.emplace<GhostSprite>(e, animera::SpriteID::blinky_beg_);
   return e;
 }
 
-entt::entity makePinky(entt::registry &reg, const SpriteSheet &sheet, const entt::entity player) {
+entt::entity makePinky(entt::registry &reg, const entt::entity player) {
   const entt::entity e = makeGhost(reg, pinkyHome, pinkyScatter);
   reg.emplace<PinkyChaseTarget>(e, player);
-  reg.emplace<GhostSprite>(e, makeGhostSprite(sheet, "pinky 0"));
+  reg.emplace<GhostSprite>(e, animera::SpriteID::pinky_beg_);
   return e;
 }
 
 entt::entity makeInky(
   entt::registry &reg,
-  const SpriteSheet &sheet,
   const entt::entity player,
   const entt::entity blinky
 ) {
   const entt::entity e = makeGhost(reg, inkyHome, inkyScatter);
   reg.emplace<InkyChaseTarget>(e, player, blinky);
-  reg.emplace<GhostSprite>(e, makeGhostSprite(sheet, "inky 0"));
+  reg.emplace<GhostSprite>(e, animera::SpriteID::inky_beg_);
   return e;
 }
 
-entt::entity makeClyde(entt::registry &reg, const SpriteSheet &sheet, const entt::entity player) {
+entt::entity makeClyde(entt::registry &reg, const entt::entity player) {
   const entt::entity e = makeGhost(reg, clydeHome, clydeScatter);
   reg.emplace<ClydeChaseTarget>(e, player);
-  reg.emplace<GhostSprite>(e, makeGhostSprite(sheet, "clyde 0"));
+  reg.emplace<GhostSprite>(e, animera::SpriteID::clyde_beg_);
   return e;
 }

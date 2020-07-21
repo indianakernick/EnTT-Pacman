@@ -9,12 +9,11 @@
 #ifndef UTIL_SDL_LOAD_TEXTURE_HPP
 #define UTIL_SDL_LOAD_TEXTURE_HPP
 
-#include <string>
 #include "sdl_delete.hpp"
 
 namespace SDL {
 
-Texture loadTexture(SDL_Renderer *, std::string);
+Texture loadTexture(SDL_Renderer *, const unsigned char *, std::size_t);
 
 }
 

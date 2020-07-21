@@ -9,20 +9,18 @@
 #ifndef COMP_SPRITE_HPP
 #define COMP_SPRITE_HPP
 
-#include "util/sprite_id.hpp"
+#include "util/sprites.hpp"
 
 // Sprite components just store a sprite ID.
 // Rendering systems make assumptions about the animation and the
 // layout of frames
 
 struct PlayerSprite {
-  SpriteID id;
+  animera::SpriteID id;
 };
 
 struct GhostSprite {
-  SpriteID id;
-  SpriteID scared;
-  SpriteID eyes;
+  animera::SpriteID id;
 };
 
 #endif

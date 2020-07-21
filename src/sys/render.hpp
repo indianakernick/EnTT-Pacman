@@ -10,6 +10,7 @@
 #define SYS_RENDER_HPP
 
 #include "core/maze.hpp"
+#include "util/sprites.hpp"
 #include <entt/entity/fwd.hpp>
 #include "util/sdl_quad_writer.hpp"
 
@@ -20,9 +21,9 @@ void playerRender(entt::registry &, SDL::QuadWriter &, int);
 void ghostRender(entt::registry &, SDL::QuadWriter &, int);
 
 // Render the dots and energizers
-void dotRender(SDL::QuadWriter &, const MazeState &, SpriteID);
+void dotRender(SDL::QuadWriter &, const MazeState &);
 
-// Render a sprite that covers the whole screen (maze, win-lose)
-void fullRender(SDL::QuadWriter &, SpriteID);
+// Render a sprite that covers the whole screen (maze, win, lose)
+void fullRender(SDL::QuadWriter &, animera::SpriteID);
 
 #endif

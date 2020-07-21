@@ -34,8 +34,8 @@ void ghostRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) 
     const Pos pos = view.get<Position>(e).p * tileSize;
     const Dir actualDir = view.get<ActualDir>(e).d;
     writer.tilePos(pos + toPos(actualDir, frame), Pos{tileSize, tileSize});
-    const SpriteID dirOffset = (
-      actualDir == Dir::none ? 0 : static_cast<SpriteID>(actualDir)
+    const int dirOffset = (
+      actualDir == Dir::none ? 0 : static_cast<int>(actualDir)
     );
     const GhostSprite sprite = view.get<GhostSprite>(e);
     if (reg.has<ChaseMode>(e) || reg.has<ScatterMode>(e)) {
@@ -45,23 +45,23 @@ void ghostRender(entt::registry &reg, SDL::QuadWriter &writer, const int frame) 
       const int flash = (
         scaredTimer <= ghostScaredFlashTime ? (frame / ghostScaredFlashRate) % 2 : 0
       );
-      writer.tileTex(sprite.scared + flash);
+      writer.tileTex(animera::SpriteID::scared_beg_ + flash);
     } else if (reg.has<EatenMode>(e)) {
-      writer.tileTex(sprite.eyes + dirOffset);
+      writer.tileTex(animera::SpriteID::eyes_beg_ + dirOffset);
     }
     writer.render();
   }
 }
 
-void dotRender(SDL::QuadWriter &writer, const MazeState &maze, const SpriteID sprite) {
+void dotRender(SDL::QuadWriter &writer, const MazeState &maze) {
   for (int y = 0; y != maze.height(); ++y) {
     for (int x = 0; x != maze.width(); ++x) {
       const Tile tile = maze[{x, y}];
       writer.tilePos({x * tileSize, y * tileSize}, {tileSize, tileSize});
       if (tile == Tile::dot) {
-        writer.tileTex(sprite);
+        writer.tileTex(animera::SpriteID::dot);
       } else if (tile == Tile::energizer) {
-        writer.tileTex(sprite + 1);
+        writer.tileTex(animera::SpriteID::energizer);
       } else {
         continue;
       }
@@ -70,7 +70,7 @@ void dotRender(SDL::QuadWriter &writer, const MazeState &maze, const SpriteID sp
   }
 }
 
-void fullRender(SDL::QuadWriter &writer, const SpriteID sprite) {
+void fullRender(SDL::QuadWriter &writer, const animera::SpriteID sprite) {
   writer.tilePos({0, 0}, tilesPx);
   writer.tileTex(sprite);
   writer.render();

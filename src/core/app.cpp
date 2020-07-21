@@ -61,13 +61,10 @@ void Application::run() {
   ))};
   SDL_CHECK(SDL_RenderSetLogicalSize(renderer.get(), tilesPx.x, tilesPx.y));
 
-  SDL::Texture maze = SDL::loadTexture(renderer.get(), "sprites.png");
-
-  SpriteSheet sheet{"sprites.atlas"};
-  SDL::QuadWriter writer{renderer.get(), maze.get(), sheet};
+  SDL::Texture maze = SDL::loadTexture(renderer.get(), animera::texture_data, animera::texture_size);
+  SDL::QuadWriter writer{renderer.get(), maze.get()};
   Game game;
-
-  game.init(sheet);
+  game.init();
 
   int frame = 0;
   bool quit = false;

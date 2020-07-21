@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(EnTT_Pacman)
 
-add_executable(Game
+add_executable(pacman
     src/comp/chase_target.hpp
     src/comp/dir.hpp
     src/comp/ghost.hpp
@@ -51,9 +51,8 @@ add_executable(Game
     src/util/sdl_load_texture.hpp
     src/util/sdl_quad_writer.cpp
     src/util/sdl_quad_writer.hpp
-    src/util/sprite_id.hpp
-    src/util/sprite_sheet.cpp
-    src/util/sprite_sheet.hpp
+    src/util/sprites.cpp
+    src/util/sprites.hpp
     src/main.cpp
     third_party/stb_image.c
     third_party/stb_image.h
@@ -63,7 +62,7 @@ if(CMAKE_TOOLCHAIN_FILE)
     message("Using SDL2 toolchain file")
     message(${CMAKE_TOOLCHAIN_FILE})
     find_package(SDL2 CONFIG REQUIRED)
-    target_link_libraries(Game 
+    target_link_libraries(pacman
         PRIVATE
         SDL2::SDL2
         SDL2::SDL2main
@@ -73,46 +72,37 @@ else()
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
     find_package(SDL2 REQUIRED)
 
-    target_include_directories(Game
+    target_include_directories(pacman
         PRIVATE
         "${SDL2_INCLUDE_DIR}"
     )
-    target_link_libraries(Game
+    target_link_libraries(pacman
         PRIVATE
         "${SDL2_LIBRARY}"
     )
 endif()
 
-target_include_directories(Game
+target_include_directories(pacman
     PRIVATE
     "${CMAKE_SOURCE_DIR}/third_party"
     "${CMAKE_SOURCE_DIR}/src"
 )
 
-target_compile_features(Game
+target_compile_features(pacman
     PRIVATE
     cxx_std_17
 )
 
-target_compile_definitions(Game
+target_compile_definitions(pacman
     PRIVATE
     STBI_ONLY_PNG
+    ANIMERA_SPRITE_RECT_HEADER=<SDL_rect.h>
+    ANIMERA_SPRITE_RECT=SDL_Rect
 )
 
 if(CMAKE_BUILD_TYPE MATCHES DEBUG)
-    target_compile_options(Game
+    target_compile_options(pacman
         PRIVATE
         -Wall -Wextra -Wpedantic
     )
 endif()
-
-set_target_properties(Game
-    PROPERTIES OUTPUT_NAME "example"
-)
-
-add_custom_command(
-    TARGET Game POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	        ${CMAKE_CURRENT_SOURCE_DIR}/assets/sheet
-	        $<TARGET_FILE_DIR:Game>
-)
