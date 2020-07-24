@@ -30,7 +30,10 @@ void SDL::QuadWriter::tilePos(
 }
 
 void SDL::QuadWriter::tileTex(const animera::SpriteRect rect) {
-  srcRect = rect;
+  srcRect.x = rect.x;
+  srcRect.y = rect.y;
+  srcRect.w = rect.w;
+  srcRect.h = rect.h;
 }
 
 void SDL::QuadWriter::tileTex(const animera::SpriteID id) {

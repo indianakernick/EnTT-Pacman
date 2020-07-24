@@ -9,11 +9,12 @@
 #ifndef UTIL_SDL_LOAD_TEXTURE_HPP
 #define UTIL_SDL_LOAD_TEXTURE_HPP
 
+#include "sprites.hpp"
 #include "sdl_delete.hpp"
 
 namespace SDL {
 
-Texture loadTexture(SDL_Renderer *, const unsigned char *, std::size_t);
+Texture loadTexture(SDL_Renderer *, const animera::TextureInfo &);
 
 }
 

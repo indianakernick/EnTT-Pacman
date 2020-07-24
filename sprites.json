@@ -1,12 +1,7 @@
-#!/bin/sh
-
-alias Animera=/Users/indikernick/Library/Developer/Xcode/DerivedData/Animera-gzeagjhsrxxguqcoscwzymctmade/Build/Products/Debug/Animera.app/Contents/MacOS/Animera
-
-Animera export << EOF
 {
   "output name": "sprites",
   "output directory": "src/util",
-  "generator": "cpp",
+  "generator": "cpp raw",
   "animations": [
     {
       "file": "animations/dot.animera",
@@ -25,4 +20,3 @@ Animera export << EOF
     }
   ]
 }
-EOF

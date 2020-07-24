@@ -5,138 +5,108 @@
 
 #include <cassert>
 #include <cstddef>
-
-#ifdef ANIMERA_SPRITE_RECT_HEADER
-#include ANIMERA_SPRITE_RECT_HEADER
-#endif
+#include <cstdint>
 
 namespace animera {
 
-#ifndef ANIMERA_SPRITE_RECT
-#define ANIMERA_SPRITE_RECT ::animera::SpriteRect
-struct SpriteRect {
-  int x = -1, y = -1;
-  int w = 0, h = 0;
+struct alignas(std::uint64_t) SpriteRect {
+  std::uint16_t x = 0, y = 0;
+  std::uint16_t w = 0, h = 0;
 };
-#else
-using SpriteRect = ANIMERA_SPRITE_RECT;
-#endif
 
-#ifndef ANIMERA_MAKE_SPRITE_RECT
-#define ANIMERA_MAKE_SPRITE_RECT(X, Y, W, H) ANIMERA_SPRITE_RECT{X, Y, W, H}
-#endif
+[[nodiscard]] constexpr bool operator==(const SpriteRect a, const SpriteRect b) noexcept {
+  return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h;
+}
+
+[[nodiscard]] constexpr bool operator!=(const SpriteRect a, const SpriteRect b) noexcept {
+  return !(a == b);
+}
+
+struct TextureInfo {
+  const unsigned char *data;
+  std::size_t size;
+  int width;
+  int height;
+};
 
 inline namespace sprites {
 
-constexpr int sprite_count = 35;
-constexpr int texture_width = 512;
-constexpr int texture_height = 512;
+extern const int texture_width;
+extern const int texture_height;
 extern const std::size_t texture_size;
 extern const unsigned char texture_data[];
+extern const SpriteRect sprite_rects[];
 
 enum class SpriteID {
-  null_ = -1,
-  dot = 0,
-  energizer = 1,
-  pacman_beg_ = 2,
-  pacman_0 = 2,
-  pacman_1 = 3,
-  pacman_2 = 4,
-  pacman_3 = 5,
-  pacman_4 = 6,
-  pacman_5 = 7,
-  pacman_6 = 8,
-  pacman_7 = 9,
-  pacman_end_ = 10,
-  scared_beg_ = 10,
-  scared_0 = 10,
-  scared_1 = 11,
-  scared_end_ = 12,
-  maze = 12,
-  win = 13,
-  lose = 14,
-  blinky_beg_ = 15,
-  blinky_up = 15,
-  blinky_right = 16,
-  blinky_down = 17,
-  blinky_left = 18,
-  blinky_end_ = 19,
-  pinky_beg_ = 19,
-  pinky_up = 19,
-  pinky_right = 20,
-  pinky_down = 21,
-  pinky_left = 22,
-  pinky_end_ = 23,
-  inky_beg_ = 23,
-  inky_up = 23,
-  inky_right = 24,
-  inky_down = 25,
-  inky_left = 26,
-  inky_end_ = 27,
-  clyde_beg_ = 27,
-  clyde_up = 27,
-  clyde_right = 28,
-  clyde_down = 29,
-  clyde_left = 30,
-  clyde_end_ = 31,
-  eyes_beg_ = 31,
-  eyes_up = 31,
-  eyes_right = 32,
-  eyes_down = 33,
-  eyes_left = 34,
-  eyes_end_ = 35,
+  null_ = 0,
+  dot = 1,
+  energizer = 2,
+  pacman_beg_ = 3,
+  pacman_0 = 3,
+  pacman_1 = 4,
+  pacman_2 = 5,
+  pacman_3 = 6,
+  pacman_4 = 7,
+  pacman_5 = 8,
+  pacman_6 = 9,
+  pacman_7 = 10,
+  pacman_end_ = 11,
+  scared_beg_ = 11,
+  scared_0 = 11,
+  scared_1 = 12,
+  scared_end_ = 13,
+  maze = 13,
+  win = 14,
+  lose = 15,
+  blinky_beg_ = 16,
+  blinky_up = 16,
+  blinky_right = 17,
+  blinky_down = 18,
+  blinky_left = 19,
+  blinky_end_ = 20,
+  pinky_beg_ = 20,
+  pinky_up = 20,
+  pinky_right = 21,
+  pinky_down = 22,
+  pinky_left = 23,
+  pinky_end_ = 24,
+  inky_beg_ = 24,
+  inky_up = 24,
+  inky_right = 25,
+  inky_down = 26,
+  inky_left = 27,
+  inky_end_ = 28,
+  clyde_beg_ = 28,
+  clyde_up = 28,
+  clyde_right = 29,
+  clyde_down = 30,
+  clyde_left = 31,
+  clyde_end_ = 32,
+  eyes_beg_ = 32,
+  eyes_up = 32,
+  eyes_right = 33,
+  eyes_down = 34,
+  eyes_left = 35,
+  eyes_end_ = 36,
+  count_ = 36,
 };
 
-constexpr SpriteRect sprite_rects[sprite_count] = {
-  ANIMERA_MAKE_SPRITE_RECT(493, 51, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 61, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 61, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 1, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 1, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(483, 1, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(493, 1, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(503, 1, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 11, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 11, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(483, 11, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(493, 11, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(155, 1, 152, 176),
-  ANIMERA_MAKE_SPRITE_RECT(309, 1, 152, 176),
-  ANIMERA_MAKE_SPRITE_RECT(1, 1, 152, 176),
-  ANIMERA_MAKE_SPRITE_RECT(503, 11, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 21, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 21, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(483, 21, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(493, 21, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(503, 21, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 31, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 31, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(483, 31, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(493, 31, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(503, 31, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 41, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 41, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(483, 41, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(493, 41, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(503, 41, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(463, 51, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(473, 51, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(483, 51, 8, 8),
-  ANIMERA_MAKE_SPRITE_RECT(503, 51, 8, 8),
-};
-
-[[nodiscard]] constexpr SpriteRect getSpriteRect(const SpriteID id) noexcept {
+[[nodiscard]] inline SpriteRect getSpriteRect(const SpriteID id) noexcept {
   assert(0 <= static_cast<int>(id));
-  assert(static_cast<int>(id) < sprite_count);
+  assert(static_cast<int>(id) < static_cast<int>(SpriteID::count_));
   return sprite_rects[static_cast<int>(id)];
+}
+
+[[nodiscard]] inline TextureInfo getTextureInfo(SpriteID = SpriteID::null_) noexcept {
+  return {texture_data, texture_size, texture_width, texture_height};
 }
 
 [[nodiscard]] constexpr SpriteID operator+(SpriteID id, const int off) noexcept {
   assert(0 <= static_cast<int>(id));
-  assert(static_cast<int>(id) < sprite_count);
+  assert(static_cast<int>(id) < static_cast<int>(SpriteID::count_));
   id = SpriteID{static_cast<int>(id) + off};
   assert(0 <= static_cast<int>(id));
-  assert(static_cast<int>(id) < sprite_count);
+  assert(static_cast<int>(id) < static_cast<int>(SpriteID::count_));
   return id;
 }
 
@@ -146,9 +116,9 @@ constexpr SpriteRect sprite_rects[sprite_count] = {
 
 [[nodiscard]] constexpr int operator-(const SpriteID a, const SpriteID b) noexcept {
   assert(0 <= static_cast<int>(a));
-  assert(static_cast<int>(a) <= sprite_count);
+  assert(static_cast<int>(a) <= static_cast<int>(SpriteID::count_));
   assert(0 <= static_cast<int>(b));
-  assert(static_cast<int>(b) < sprite_count);
+  assert(static_cast<int>(b) < static_cast<int>(SpriteID::count_));
   return static_cast<int>(a) - static_cast<int>(b);
 }
 

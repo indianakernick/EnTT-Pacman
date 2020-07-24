@@ -54,8 +54,6 @@ add_executable(pacman
     src/util/sprites.cpp
     src/util/sprites.hpp
     src/main.cpp
-    third_party/stb_image.c
-    third_party/stb_image.h
 )
 
 if(CMAKE_TOOLCHAIN_FILE)
@@ -91,13 +89,6 @@ target_include_directories(pacman
 target_compile_features(pacman
     PRIVATE
     cxx_std_17
-)
-
-target_compile_definitions(pacman
-    PRIVATE
-    STBI_ONLY_PNG
-    ANIMERA_SPRITE_RECT_HEADER=<SDL_rect.h>
-    ANIMERA_SPRITE_RECT=SDL_Rect
 )
 
 if(CMAKE_BUILD_TYPE MATCHES DEBUG)

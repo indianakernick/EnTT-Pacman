@@ -61,7 +61,7 @@ void Application::run() {
   ))};
   SDL_CHECK(SDL_RenderSetLogicalSize(renderer.get(), tilesPx.x, tilesPx.y));
 
-  SDL::Texture maze = SDL::loadTexture(renderer.get(), animera::texture_data, animera::texture_size);
+  SDL::Texture maze = SDL::loadTexture(renderer.get(), animera::getTextureInfo());
   SDL::QuadWriter writer{renderer.get(), maze.get()};
   Game game;
   game.init();
