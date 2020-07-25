@@ -1,7 +1,7 @@
 {
   "output name": "sprites",
   "output directory": "src/util",
-  "generator": "cpp raw",
+  "generator": "cpp deflated with inflate",
   "animations": [
     {
       "file": "animations/dot.animera",

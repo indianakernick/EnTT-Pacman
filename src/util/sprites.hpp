@@ -3,6 +3,7 @@
 #ifndef ANIMERA_SPRITES_HPP
 #define ANIMERA_SPRITES_HPP
 
+#include <memory>
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
@@ -25,14 +26,18 @@ struct alignas(std::uint64_t) SpriteRect {
 struct TextureInfo {
   const unsigned char *data;
   std::size_t size;
+  std::size_t pitch;
   int width;
   int height;
 };
+
+std::unique_ptr<const unsigned char []> decompressTexture(const TextureInfo &) noexcept;
 
 inline namespace sprites {
 
 extern const int texture_width;
 extern const int texture_height;
+extern const std::size_t texture_pitch;
 extern const std::size_t texture_size;
 extern const unsigned char texture_data[];
 extern const SpriteRect sprite_rects[];
@@ -98,7 +103,7 @@ enum class SpriteID {
 }
 
 [[nodiscard]] inline TextureInfo getTextureInfo(SpriteID = SpriteID::null_) noexcept {
-  return {texture_data, texture_size, texture_width, texture_height};
+  return {texture_data, texture_size, texture_pitch, texture_width, texture_height};
 }
 
 [[nodiscard]] constexpr SpriteID operator+(SpriteID id, const int off) noexcept {
