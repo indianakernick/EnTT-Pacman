@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <cassert>
+#include <utility>
 #include "pos.hpp"
 
 template <typename Elem>
