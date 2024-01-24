@@ -1,7 +1,5 @@
 # EnTT Pacman
 
-[![Build Status](https://travis-ci.org/Kerndog73/EnTT-Pacman.svg?branch=master)](https://travis-ci.org/Kerndog73/EnTT-Pacman)
-[![Build Status](https://ci.appveyor.com/api/projects/status/5ndjklgbe42b0q9b?svg=true)](https://ci.appveyor.com/project/Kerndog73/entt-example)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 An example of how to use the ECS part of the [EnTT Framework](https://github.com/skypjack/entt)
@@ -48,7 +46,7 @@ vcpkg install sdl2
 building this as easy as possible.
 
 ```
-git clone https://github.com/Kerndog73/EnTT-Pacman.git
+git clone https://github.com/indianakernick/EnTT-Pacman.git
 cd EnTT-Pacman/build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
